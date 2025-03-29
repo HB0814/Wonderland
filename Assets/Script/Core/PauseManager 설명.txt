@@ -1,0 +1,13 @@
+PauseManager: 일시정지 시스템 관리
+
+-pausePanel(Canvas):Canvas로 구성된 일시정지 패널
+-resumeButton(Button):게임 재개 버튼
+-mainMenuButton(Button):메인 메뉴로 이동하는 버튼
+-settingsButton(Button):게임 옵션(사운드 조절, 해상도, 그래픽 등등)을 조정하는 버튼
+
+-Esc키로 일시정지 토글
+-GameManager에 이벤트 발생
+-패널 페이드 인/아웃 시스템
+-게임 재개
+-세팅(미구현)
+-메인 메뉴로(미구현)
