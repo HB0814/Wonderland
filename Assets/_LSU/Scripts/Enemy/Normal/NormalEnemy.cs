@@ -38,17 +38,22 @@ public class NormalEnemy : MonoBehaviour
             Move(); //이동 함수 호출
         }
 
+
         if (Time.time - lastUpdateTime < 0.1f) //0.1초마다 레이어값 변경 함수를 실행하게
             return;
 
         lastUpdateTime = Time.time; //마지막 업데이트 시간 변경
-
         spriteUpdater.spriteRenderer.enabled = IsVisible(); //렌더링 함수
+        Flip(); //플립
+
+    }
+
+    void Flip()
+    {
         //현재 방향과 다를 때만 플립하게
         bool isFlip = (player.transform.position.x < transform.position.x) != spriteUpdater.spriteRenderer.flipX;
         if (isFlip)
             spriteUpdater.SpriteFlip(player.transform.position.x < transform.position.x); //스프라이트 렌더러 플립
-
     }
 
     //이동

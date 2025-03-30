@@ -22,7 +22,7 @@ public class RollApple : MonoBehaviour
     float timer; //타이머
     float attackRange; //공격범위
     float knockbackForce;  //넉백 크기
-    float projectileSpeed = 5; //투사체 속도
+    float projectileSpeed = 8.0f; //투사체 속도
 
 
     private void Update()

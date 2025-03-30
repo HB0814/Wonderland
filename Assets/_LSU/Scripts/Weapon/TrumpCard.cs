@@ -18,7 +18,7 @@ public class TrumpCard : MonoBehaviour
     float criticalRate; //치명타 확률
     float knockbackForce; //넉백 크기
     //int strike; //관통 카운트
-    float projectileSpeed = 20.0f; //투사체 속도
+    float projectileSpeed = 10.0f; //투사체 속도
     int projectileCount; //투사체 개수
 
     //bool hasDefenseDecrease; //방어력 감소 여부
