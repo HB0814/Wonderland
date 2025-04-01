@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f776889af527cd46b3ec34cfcca8bf9, type: 3}
+  m_Name: TrumpCardStats
+  m_EditorClassIdentifier: 
+  levelStats:
+  - currentLevel: 1
+    cardCount: 2
+    cardSpeed: 20
+    damage: 10
+    attackCooldown: 1.5
+    cardLifetime: 0.3
+  - currentLevel: 2
+    cardCount: 3
+    cardSpeed: 0
+    damage: 12
+    attackCooldown: 1.4
+    cardLifetime: 0.3
+  - currentLevel: 3
+    cardCount: 4
+    cardSpeed: 20
+    damage: 14
+    attackCooldown: 1.3
+    cardLifetime: 0.3
+  - currentLevel: 4
+    cardCount: 5
+    cardSpeed: 20
+    damage: 16
+    attackCooldown: 1.2
+    cardLifetime: 0.3
+  - currentLevel: 5
+    cardCount: 8
+    cardSpeed: 20
+    damage: 20
+    attackCooldown: 1
+    cardLifetime: 0.3
