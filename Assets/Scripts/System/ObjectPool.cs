@@ -38,6 +38,22 @@ public class ObjectPool : MonoBehaviour
     private GameObject CreateNewObject(GameObject prefab)
     {
         GameObject obj = Instantiate(prefab);
+        
+        // 보팔검 이펙트인 경우 플레이어를 부모로 설정
+        if(prefab.name.Contains("SwordEffect"))
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                obj.transform.SetParent(player.transform, false);
+                Debug.Log("VorpalSwordEffect parent set to Player");
+            }
+            else
+            {
+                Debug.LogWarning("Player not found for VorpalSwordEffect parent setting");
+            }
+        }
+        
         obj.SetActive(false);
         return obj;
     }

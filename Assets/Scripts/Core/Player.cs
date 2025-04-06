@@ -116,6 +116,36 @@ public class Player : MonoBehaviour
             WeaponManager.Instance.CreateWeapon(3);
             Debug.Log("Roll Apple Weapon Added");
         }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            // 무기 인덱스 0은 트럼프 카드 무기로 가정
+            WeaponManager.Instance.CreateWeapon(4);
+            Debug.Log("Tea Splash Weapon Added");
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            // 무기 인덱스 0은 트럼프 카드 무기로 가정
+            WeaponManager.Instance.CreateWeapon(5);
+            Debug.Log("Pipe Weapon Added");
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            // 무기 인덱스 0은 트럼프 카드 무기로 가정
+            WeaponManager.Instance.CreateWeapon(6);
+            Debug.Log("Firework Weapon Added");
+        }
+        if (Input.GetKeyDown(KeyCode.Comma))
+        {
+            // 무기 인덱스 0은 트럼프 카드 무기로 가정
+            WeaponManager.Instance.CreateWeapon(7);
+            Debug.Log("Vorpal Sword Weapon Added");
+        }
+        if (Input.GetKeyDown(KeyCode.Period))
+        {
+            // 무기 인덱스 0은 트럼프 카드 무기로 가정
+            WeaponManager.Instance.CreateWeapon(8);
+            Debug.Log("Pocket Watch Weapon Added");
+        }
     }
 
     private void HandleInput()

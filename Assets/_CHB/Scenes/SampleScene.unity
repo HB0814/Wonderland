@@ -1042,6 +1042,11 @@ MonoBehaviour:
   - {fileID: 9070012304011140128, guid: b4501df9ae12cce40ad2cb2a6d0da891, type: 3}
   - {fileID: 8293955809068326266, guid: 5be34ecaf79fa5541a50ffd39a5236eb, type: 3}
   - {fileID: 7151343548334380933, guid: 838c420f110632e4fa1e71b62b1be25b, type: 3}
+  - {fileID: 3365330563510674844, guid: 6b04e99d106c029468ac41be8a456f59, type: 3}
+  - {fileID: 3036795281394288694, guid: 01b9aaf39f55efc4ea56dcf8a0f1acc1, type: 3}
+  - {fileID: 8042503512758407278, guid: faeb7374ca9d19846a496021ff9088ff, type: 3}
+  - {fileID: 2679605194954354807, guid: 704c1d95f60c6bd4ba82979112d62b9b, type: 3}
+  - {fileID: 641060675639011213, guid: e273a58a2b0715043b5da7016956d9b2, type: 3}
 --- !u!1 &241374588
 GameObject:
   m_ObjectHideFlags: 0
@@ -8861,9 +8866,21 @@ MonoBehaviour:
   - tag: AppleProjectile
     prefab: {fileID: 8424900128823982233, guid: 6933ecd0116b03f4eac9af0cc490d9b9, type: 3}
     size: 5
-  - tag: SwordEffect
-    prefab: {fileID: 8424900128823982233, guid: 6933ecd0116b03f4eac9af0cc490d9b9, type: 3}
-    size: 5
+  - tag: TeaProjectile
+    prefab: {fileID: 3016881733507385439, guid: 1b473a04657765d4ba8e70359b322ae4, type: 3}
+    size: 40
+  - tag: PipeSmoke
+    prefab: {fileID: 5932183861414891408, guid: c673d0aed2fdd214b9c94722d6e2fc71, type: 3}
+    size: 2
+  - tag: FireworkEffect
+    prefab: {fileID: 7675107778357944660, guid: 9d09fc1fe57ca164a80963baeed52efd, type: 3}
+    size: 8
+  - tag: VorpalSwordEffect
+    prefab: {fileID: 6666185085956922512, guid: 46a7b027f5233ac4296cb1b070f3c95c, type: 3}
+    size: 2
+  - tag: PocketWatchEffect
+    prefab: {fileID: 421616884713869627, guid: 00656aa1ace40f7408577203de4e0d59, type: 3}
+    size: 6
 --- !u!4 &1779287746
 Transform:
   m_ObjectHideFlags: 0
