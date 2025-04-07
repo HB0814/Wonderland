@@ -8,12 +8,14 @@ N 키: 파이프 무기 (PipeWeapon)
 M 키: 축하 폭죽 무기 (FireworkWeapon)
 , (Comma) 키: 보팔 검 무기 (VorpalSwordWeapon)
 . (Period) 키: 회중시계 무기 (PocketWatchWeapon)
+/ (Slash) 키 : 채셔캣 무기(CheshireCatWeapon)
 
 -무기 레벨업-
+H: 사과 굴리기 무기
 J: 트럼프 카드 무기
 K: 책 던지기 무기
-H: 사과 굴리기 무기
 L: 모자 부메랑 무기
+I: 채셔캣 무기
 P: 홍차 뿌리기 무기, 축하 폭죽 무기
 O: 파이프 무기
 [ (LeftBracket): 보팔 검 무기
