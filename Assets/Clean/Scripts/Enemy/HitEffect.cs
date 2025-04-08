@@ -4,23 +4,26 @@ using UnityEngine;
 public class HitEffect : MonoBehaviour
 {
     [SerializeField]
+    private Dictionary<Collider2D, WeaponDataHolder> weaponCache = new();
+    [SerializeField]
+    private Dictionary<string, WeaponData> weaponDataMap => weaponDataManager.weaponDataMap;
+
+    [SerializeField]
     Enemy enemy;
     [SerializeField]
     WeaponDataManager weaponDataManager;
-    [SerializeField]
-    WeaponData weaponData;
 
-    float attackCooldown = 1.0f;
-    float attackTimer; //플레이어 공격 쿨타임 타이머
+    private Collider2D playerCol;
 
-    bool canAttack = false; //공격 가능 여부
-    Collider2D playerCol; //플레이어 콜라이더
+    private float attackCooldown = 1.0f;
+    private float attackTimer;
+    private bool canAttack = false;
 
-    float firecrackerTimer = 0.0f; //폭죽 피격 쿨타임 타이머
-    float f_hitCooldown = 0.1f; //폭죽 피격 쿨타임
+    private float firecrackerTimer = 0f;
+    private float f_hitCooldown = 0.1f;
 
-    float pipeTimer = 0.0f; //담배 파이프 피격 쿨타임 타이머
-    float p_hitCooldown = 0.2f; //담배 파이프 피격 쿨타임
+    private float pipeTimer = 0f;
+    private float p_hitCooldown = 0.2f;
 
     private void Start()
     {
@@ -30,69 +33,53 @@ public class HitEffect : MonoBehaviour
 
     private void Update()
     {
-        attackTimer += Time.deltaTime; //타이머 증가
-        firecrackerTimer += Time.deltaTime; //안생일 축하폭죽 타이머 증가
-        pipeTimer += Time.deltaTime; //파이프 타이머 증가
+        attackTimer += Time.deltaTime;
+        firecrackerTimer += Time.deltaTime;
+        pipeTimer += Time.deltaTime;
 
-        if (attackTimer >= attackCooldown) //쿨타임 완료
+        if (attackTimer >= attackCooldown)
         {
-            canAttack = true; //공격 가능
+            canAttack = true;
         }
-        if (canAttack && playerCol != null) //공격 가능하고 플레이어 콜라이더가 있다면
+
+        if (canAttack && playerCol != null)
         {
-            attackTimer = 0.0f; //타이머 쿨타임 초기화
-            canAttack = false; //공격 가능 여부 초기화
-            enemy.Attack(); //공격
+            attackTimer = 0f;
+            canAttack = false;
+            enemy.Attack();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //플레이어
-        string tag = other.tag;
-        if(tag == "Player")
+        switch (other.tag)
         {
-            playerCol = other;
-        }
+            case "Player":
+                playerCol = other;
+                break;
 
-        //무기
-        weaponData = weaponDataManager.GetWeaponData(other.tag); //무기 데이터 가져오기
-                                                                                                              // 태그랑 weaponData의 weaponTag가 일치해야함
-        if (weaponData != null)
-        {
-            int index = weaponData.currentLevel; //무기 데이터의 레벨 가져오기
-
-            float damage = weaponData.levelStats.damage[index]; //데미지
-            float knockback = weaponData.levelStats.knockbackForce[index]; //넉백 크기
-            float slow = weaponData.levelStats.slowForce[index]; //슬로우 크기
-            float slowDuration = weaponData.levelStats.slowDuration[index]; //슬로우 지속시간
-
-            enemy.TakeDamage(damage, knockback, slow, slowDuration); //데미지, 넉백, 슬로우 계산
+            case "Weapon":
+                HandleWeaponHit(other);
+                break;
         }
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        string tag = other.tag;
-
-        switch(tag)
+        switch (other.tag)
         {
             case "Player":
                 playerCol = other;
                 break;
 
             case "NonBirthdayFirecracker":
-                if(firecrackerTimer > f_hitCooldown)
-                {
-                    firecrackerTimer = 0.0f;
-                }
+                if (firecrackerTimer > f_hitCooldown)
+                    firecrackerTimer = 0f;
                 break;
 
             case "Pipe":
-                if(pipeTimer > p_hitCooldown)
-                {
-                    pipeTimer = 0.0f;
-                }
+                if (pipeTimer > p_hitCooldown)
+                    pipeTimer = 0f;
                 break;
         }
     }
@@ -103,5 +90,35 @@ public class HitEffect : MonoBehaviour
         {
             playerCol = null;
         }
+
+        //weaponCache.Remove(other); //캐싱 해제
+    }
+
+    private void HandleWeaponHit(Collider2D other)
+    {
+        if (!weaponCache.TryGetValue(other, out WeaponDataHolder holder))
+        {
+            holder = other.GetComponent<WeaponDataHolder>();
+            if (holder == null) return;
+
+            weaponCache[other] = holder; //최초 캐싱
+        }
+
+        WeaponData weaponData = holder.weaponData;
+        if (weaponData == null) return;
+
+        string tagKey = weaponData.weaponTag;
+
+        //WeaponData 가져오기
+        if (!weaponDataMap.TryGetValue(tagKey, out var data)) return;
+
+        int index = data.currentLevel;
+
+        enemy.TakeDamage(
+            data.levelStats.damage[index],
+            data.levelStats.knockbackForce[index],
+            data.levelStats.slowForce[index],
+            data.levelStats.slowDuration[index]
+        );
     }
 }
