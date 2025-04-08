@@ -4,7 +4,7 @@ using UnityEngine;
 public class WeaponDataManager : MonoBehaviour
 {
     public List<WeaponData> weaponDataList; // 등록된 모든 무기
-    private Dictionary<string, WeaponData> weaponDataMap = new Dictionary<string, WeaponData>();
+    public Dictionary<string, WeaponData> weaponDataMap = new Dictionary<string, WeaponData>();
 
     private void Awake()
     {
@@ -15,6 +15,7 @@ public class WeaponDataManager : MonoBehaviour
             {
                 weaponDataMap.Add(weapon.weaponTag, weapon);
             }
+            weapon.ResetLevel();
         }
     }
 

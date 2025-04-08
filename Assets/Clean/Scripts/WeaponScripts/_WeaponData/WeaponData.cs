@@ -5,6 +5,8 @@ public class WeaponData : ScriptableObject
 {
     [Header("무기 정보")]
     public string weaponTag; //무기 타입(이름)
+    [HideInInspector]
+    public int level = 0;
     public int currentLevel; //무기 레벨
     public Sprite icon; //무기 아이콘
     public string[] UpgradeDetails = new string[5]; //무기 업그레이드 내용
@@ -34,5 +36,10 @@ public class WeaponData : ScriptableObject
         [Header("사과, 폭죽, 채셔캣")]
         public float attackRangeX; //무기 공격 범위: 사과, 폭죽, 채셔캣
         public float attackRangeY; //무기 공격 범위: 사과, 폭죽, 채셔캣
+    }
+
+    public void ResetLevel()
+    {
+        currentLevel = level;
     }
 }
