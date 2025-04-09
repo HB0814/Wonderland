@@ -1,19 +1,16 @@
 fileFormatVersion: 2
-guid: 4d963974916557646828b51543e2a2b9
+guid: bc1fb0e8e645a094b9911276cb5f09b5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3593531162464549330
-    second: Heart Card Soldier_0
+      213: -6268023519088717812
+    second: Teapot_0
   - first:
-      213: 2810200443986098468
-    second: Heart Card Soldier_1
+      213: -9034830262991188515
+    second: Teapot_1
   - first:
-      213: 4142732177879832282
-    second: Heart Card Soldier_2
-  - first:
-      213: -4880572532468598054
-    second: Heart Card Soldier_3
+      213: 873910115255750934
+    second: Teapot_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,7 +57,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 150
+  spritePixelsToUnits: 400
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -118,43 +115,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Heart Card Soldier_1
+      name: Teapot_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 15
-        width: 129
-        height: 98
+        x: 57
+        y: 41
+        width: 397
+        height: 307
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,20 +134,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 429bf6b2a66dff620800000000000000
-      internalID: 2810200443986098468
+      spriteID: c005cec91d18309a0800000000000000
+      internalID: -6268023519088717812
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heart Card Soldier_2
+      name: Teapot_1
       rect:
         serializedVersion: 2
-        x: 129
-        y: 15
-        width: 129
-        height: 98
+        x: 565
+        y: 110
+        width: 394
+        height: 346
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,8 +156,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ada3eadd329b44cb0800000000000000
-      internalID: -4880572532468598054
+      spriteID: ddd06709eb5dd9280800000000000000
+      internalID: -9034830262991188515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teapot_2
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 55
+        width: 389
+        height: 338
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6119071ae90c02c00800000000000000
+      internalID: 873910115255750934
       vertices: []
       indices: 
       edges: []
@@ -195,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 81d852df0a82eda4fa7e3ee68b8e2961
+    spriteID: 9b7fbc2e469068d48aeba192e0e5d601
     internalID: 0
     vertices: []
     indices: 
@@ -205,7 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Heart Card Soldier_2: -4880572532468598054
+      Teapot_0: -6268023519088717812
+      Teapot_1: -9034830262991188515
+      Teapot_2: 873910115255750934
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
