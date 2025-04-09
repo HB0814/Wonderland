@@ -42,10 +42,8 @@ public class HeartQueen : Enemy
         nextSpecialAttackTime = Time.time + specialAttackCooldown;
     }
 
-    protected override void Update()
+    private new void Update()
     {
-        //base.Update();
-
         if(Input.GetKeyDown(KeyCode.V)) //테스트용 v키 입력 시 >>> 보스 위치 초기화
             SetBoundsCenter(); //위치가 초기화, 바운즈 센터 값 설정
 
@@ -53,7 +51,7 @@ public class HeartQueen : Enemy
 
         if (canMove) //이동 가능할 때
         {
-            MoveTowardsPlayer(); //부모 클래스의 MoveTowardsPlayer 호출
+            MoveToTarget();
         }
 
         // 페이즈 체크
@@ -87,7 +85,7 @@ public class HeartQueen : Enemy
         //바운즈의 센터를 플레이어 위치로 설정
         moveBounds.center = new Vector3(player.transform.position.x, 
                                         player.transform.position.y,
-                                        transform.position.z);
+                                        player.transform.position.z);
     }
 
     void SetTargetPosition()
@@ -99,7 +97,7 @@ public class HeartQueen : Enemy
         );
     }
 
-    protected override void MoveTowardsPlayer()
+    void MoveToTarget()
     {
         if (!canMove) return;
 
@@ -111,6 +109,8 @@ public class HeartQueen : Enemy
             moveTimer = 0.0f;
             moveTime = Random.Range(2.0f, 5.0f);
             SetTargetPosition(); //새로운 목표위치 설정
+            //목표 위치 x값 비교하여 플립 여부
+            //스프라이트 렌더러 레이어 순서 바꾸기 추가
         }
     }
 
