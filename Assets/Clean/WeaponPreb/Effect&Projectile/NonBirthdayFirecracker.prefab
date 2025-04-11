@@ -96,12 +96,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 549721217462872810}
+  - component: {fileID: -6426749542503059699}
   - component: {fileID: 1513787991172483997}
-  - component: {fileID: 2730258544074825875}
   - component: {fileID: 4316107581882420823}
   m_Layer: 7
   m_Name: NonBirthdayFirecracker
-  m_TagString: Projectile
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,12 +116,31 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3041571804945603801}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-6426749542503059699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7675107778357944660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e551c683e1bc6a9408c7af67eb008dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectDamage: 10
+  effectLifeTime: 1
+  effectSize: 1
+  knockbackForce: 1
+  slowForce: 3
+  slowDuration: 1
+  weaponType: 1
 --- !u!212 &1513787991172483997
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -177,27 +196,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2730258544074825875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7675107778357944660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84415dd5bb56c7e4797b613c97e6ee6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  duration: 1
-  radius: 1
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  hitEffect: {fileID: 0}
-  damageInterval: 1
-  effectScale: 1
 --- !u!70 &4316107581882420823
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -228,7 +226,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

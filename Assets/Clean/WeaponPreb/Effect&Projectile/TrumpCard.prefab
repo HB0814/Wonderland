@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2457734874424878935}
   m_Layer: 7
   m_Name: TrumpCard
-  m_TagString: Projectile
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.71716}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,18 +99,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4885748071765216917}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72c8373f4c556e44288dccd8d2430dd6, type: 3}
+  m_Script: {fileID: 11500000, guid: 6af694977be3a624d83b8230fd1422c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
-  speed: 10
-  lifetime: 3
-  rotationSpeed: 360
-  isEnemyProjectile: 0
-  poolTag: 
-  hitEffect: {fileID: 0}
-  damage: 10
-  lifetime: 3
+  projectileDamage: 10
+  projectileLifeTime: 1
+  projectileSize: 1
+  projectileSpeed: 1
+  direction: {x: 0, y: 0, z: 0}
+  knockbackForce: 1
+  slowForce: 3
+  slowDuration: 1
+  weaponType: 10
 --- !u!61 &149525549297281153
 BoxCollider2D:
   m_ObjectHideFlags: 0

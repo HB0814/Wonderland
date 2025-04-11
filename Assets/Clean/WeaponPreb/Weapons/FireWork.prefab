@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4106731484690269589}
-  - component: {fileID: 7981620175128796244}
+  - component: {fileID: 94007871979137847}
   m_Layer: 0
   m_Name: FireWork
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7981620175128796244
+--- !u!114 &94007871979137847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,26 +41,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8042503512758407278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36f3dae21cbf7f54c82587d6f6716195, type: 3}
+  m_Script: {fileID: 11500000, guid: e6462f4042d7f4d409b131ab61d41364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: FirwWork
-  description: "\uD50C\uB808\uC774\uC5B4 \uC8FC\uBCC0\uC758 \uBB34\uC791\uC704 \uC704\uCE58\uC5D0
-    \uC9C0\uC18D\uC801\uC778 \uB370\uBBF8\uC9C0\uB97C \uB123\uB294 \uC7A5\uD310\uC744
-    \uC0DD\uC131\uD569\uB2C8\uB2E4."
+  weaponName: Firecracker
+  description: 
   weaponIcon: {fileID: 0}
   maxLevel: 5
   currentLevel: 1
   baseDamage: 10
+  lifeTime: 1
   attackRange: 1.5
-  attackCooldown: 3.5
+  attackCooldown: 1
   nextAttackTime: 0
-  fireworkPoolTag: FireworkEffect
-  effectRadius: 1.5
-  effectScale: 1
-  damageInterval: 1
-  minEffectCount: 2
-  maxEffectCount: 4
-  effectDuration: 5
-  spawnRange: 3
-  weaponStats: {fileID: 11400000, guid: 037ad02a0f2d1e740b34ca2e30fd7631, type: 2}
+  firecrackerEffectPoolTag: FirecrackerEffect
+  detectionRange: 1
+  size: 1
+  count: 0
+  lifeTime: 0
+  weaponData: {fileID: 0}

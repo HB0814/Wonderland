@@ -9,12 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5766532812765186146}
+  - component: {fileID: 3876801969199400135}
   - component: {fileID: 4203357022393259556}
-  - component: {fileID: 8157112356297525000}
   - component: {fileID: 1201461059727380704}
+  - component: {fileID: 3113540155031287733}
   m_Layer: 7
   m_Name: PipeEffect
-  m_TagString: Projectile
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,6 +35,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3876801969199400135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5932183861414891408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e551c683e1bc6a9408c7af67eb008dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectDamage: 10
+  effectLifeTime: 1
+  effectSize: 1
+  knockbackForce: 1
+  slowForce: 3
+  slowDuration: 1
+  weaponType: 2
 --- !u!212 &4203357022393259556
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -89,28 +109,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8157112356297525000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5932183861414891408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ffd4c919ffc5c24e8b2e38841b1af3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  duration: 1
-  radius: 1
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  hitEffect: {fileID: 0}
-  expandSpeed: 2
-  maxRadius: 3
-  damageInterval: 0.58
 --- !u!95 &1201461059727380704
 Animator:
   serializedVersion: 7
@@ -133,3 +131,39 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!58 &3113540155031287733
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5932183861414891408}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 3

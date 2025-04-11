@@ -5,13 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
-  - Projectile
-  - Weapon
-  - CheshireCat
   - JabberwockyBreath
-  - NonBirthdayFirecracker
-  - RollApple
-  - TrumpCard_0
+  - Pipe
+  - Boss
+  - HeartQueen
+  - Firecracker
+  - PlayerWeapon
   layers:
   - Default
   - TransparentFX
@@ -21,7 +20,7 @@ TagManager:
   - UI
   - Player
   - PlayerWeapon
-  - 
+  - Col
   - 
   - 
   - 

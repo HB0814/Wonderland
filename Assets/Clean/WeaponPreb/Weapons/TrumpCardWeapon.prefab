@@ -51,10 +51,11 @@ MonoBehaviour:
   currentLevel: 1
   baseDamage: 10
   attackRange: 1.5
-  attackCooldown: 0.2
+  attackCooldown: 0.5
   nextAttackTime: 0
   cardPoolTag: TrumpCard
   cardCount: 2
   cardSpeed: 5
   angleStep: 15
-  weaponStats: {fileID: 11400000, guid: b0f53682ed27df942ad3cf83462b81ed, type: 2}
+  cardLifetime: 2
+  weaponData: {fileID: 11400000, guid: 0a165941fb1cc5347a613e3b45b6d036, type: 2}

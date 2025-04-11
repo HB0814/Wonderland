@@ -14,6 +14,7 @@ public class ObjectPool : MonoBehaviour
     }
 
     public List<Pool> pools;
+    public List<Pool> enemyPools;
     private Dictionary<string, Queue<GameObject>> poolDictionary;
 
     private void Awake()
@@ -90,13 +91,7 @@ public class ObjectPool : MonoBehaviour
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
-
-        IPooledObject pooledObj = objectToSpawn.GetComponent<IPooledObject>();
-        if (pooledObj != null)
-        {
-            pooledObj.OnObjectSpawn();
-        }
-
+        
         return objectToSpawn;
     }
 

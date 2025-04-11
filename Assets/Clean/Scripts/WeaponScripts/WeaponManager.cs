@@ -62,7 +62,7 @@ public class WeaponManager : MonoBehaviour
     {
         if (equippedWeapons.Contains(weapon))
         {
-            weapon.LevelUp();
+            weapon.LevelUpLogic();
         }
     }
 

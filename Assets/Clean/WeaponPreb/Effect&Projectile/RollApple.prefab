@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5335137484128049779}
   m_Layer: 7
   m_Name: RollApple
-  m_TagString: Projectile
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,9 +99,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8424900128823982233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f54934adccb40ec4ba0367aef2c19845, type: 3}
+  m_Script: {fileID: 11500000, guid: 6af694977be3a624d83b8230fd1422c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileDamage: 10
+  projectileLifeTime: 1
+  projectileSize: 1
+  projectileSpeed: 10
+  direction: {x: 0, y: 0, z: 0}
+  knockbackForce: 1
+  slowForce: 3
+  slowDuration: 1
+  weaponType: 8
 --- !u!58 &734466881397587997
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -132,7 +141,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

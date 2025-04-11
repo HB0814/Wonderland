@@ -49,14 +49,16 @@ MonoBehaviour:
   weaponIcon: {fileID: 0}
   maxLevel: 5
   currentLevel: 1
-  baseDamage: 25
-  attackRange: 5
+  count: 2
   attackCooldown: 1
-  nextAttackTime: 0
-  bookPoolTag: BookProjectile
-  bookSpeed: 15
+  damage: 10
   detectionRange: 5
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  weaponStats: {fileID: 11400000, guid: 8aeb550cc8da8a2408f890c1cda9ff26, type: 2}
+  lifeTime: 1
+  size: 1
+  speed: 1
+  knockbackForce: 1
+  slowForce: 3
+  slowDuration: 1
+  nextAttackTime: 0
+  weaponData: {fileID: 0}
+  bookProjectilePoolTag: BookProjectile

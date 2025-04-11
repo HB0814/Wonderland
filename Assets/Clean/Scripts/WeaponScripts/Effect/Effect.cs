@@ -1,32 +1,52 @@
 using UnityEngine;
 
-public abstract class Effect : MonoBehaviour
-{
+public class Effect : MonoBehaviour
+{    
     [Header("기본 속성")]
-    public float damage = 10f;
-    public float duration = 1f;
-    public float radius = 1f;
-    public LayerMask targetLayer;
-    public GameObject hitEffect;
+    public float effectDamage = 10f;
+    public float effectLifeTime = 1f;
+    public float effectSize = 1f;
 
-    [SerializeField]protected float currentDuration;
-    protected bool isActive = false;
+    [Header("부가 효과")]
+    public float knockbackForce = 1; // 넉백 강도
+    public float slowForce = 3; // 슬로우 강도
+    public float slowDuration = 1; // 슬로우 지속시간
 
-    public virtual void Initialize(float damage, float duration, float radius)
+    public WeaponType weaponType;
+    public WeaponData WeaponData { get; set; }
+    
+    private float currentLifeTime;
+    private bool isActive = false;
+
+    private void Start()
     {
-        this.damage = damage;
-        this.duration = duration;
-        this.radius = radius;
-        currentDuration = duration;
+        WeaponData = WeaponDataManager.Instance.GetWeaponData(weaponType);
+    }
+
+    public virtual void BaseInitialize(float damage, float size, float lifeTime)
+    {
+        this.effectDamage = damage;
+        this.effectSize = size;
+        this.effectLifeTime = lifeTime;
+
+        currentLifeTime = lifeTime;
         isActive = true;
+
+        transform.localScale = new Vector3(effectSize, effectSize, effectSize);
+    }
+    public virtual void DebuffInitialize(float knockbackForce, float slowForce, float slowDuration)
+    {
+        this.knockbackForce = knockbackForce;
+        this.slowForce = slowForce;
+        this.slowDuration = slowDuration;
     }
 
     protected virtual void Update()
     {
         if (!isActive) return;
 
-        currentDuration -= Time.deltaTime;
-        if (currentDuration <= 0)
+        currentLifeTime -= Time.deltaTime;
+        if (currentLifeTime <= 0)
         {
             Deactivate();
         }
@@ -37,31 +57,4 @@ public abstract class Effect : MonoBehaviour
         isActive = false;
         gameObject.SetActive(false);
     }
-
-    protected virtual void OnTriggerEnter2D(Collider2D other)
-    {
-        if (!isActive) return;
-
-        if (other.CompareTag("Enemy"))
-        {
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(damage);
-                SpawnHitEffect();
-            }
-        }
-    }
-
-    protected virtual void SpawnHitEffect()
-    {
-        if (hitEffect != null)
-        {
-            GameObject effect = WeaponManager.Instance.SpawnProjectile("HitEffect", transform.position, Quaternion.identity);
-            if (effect != null)
-            {
-                effect.transform.localScale = Vector3.one * radius;
-            }
-        }
-    }
-} 
+}

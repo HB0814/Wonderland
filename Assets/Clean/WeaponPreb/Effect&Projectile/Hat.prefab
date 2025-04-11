@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2472870044174701257}
   - component: {fileID: 7477111932247134925}
-  - component: {fileID: 6748990144590536965}
   - component: {fileID: 6599583476192633846}
+  - component: {fileID: 6748990144590536965}
   - component: {fileID: -4655827874297097017}
   m_Layer: 7
   m_Name: Hat
-  m_TagString: Projectile
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -90,6 +90,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6599583476192633846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4164171019685071705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6af694977be3a624d83b8230fd1422c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileDamage: 10
+  projectileLifeTime: 1
+  projectileSize: 1
+  projectileSpeed: 1
+  direction: {x: 0, y: 0, z: 0}
+  knockbackForce: 1
+  slowForce: 3
+  slowDuration: 1
+  weaponType: 4
 --- !u!61 &6748990144590536965
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -120,7 +141,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -136,26 +157,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6599583476192633846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4164171019685071705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bfe930d75d17254ea23d5a958591c47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 15
-  speed: 10
-  lifetime: 5
-  rotationSpeed: 360
-  isEnemyProjectile: 0
-  poolTag: HatProjectile
-  hitEffect: {fileID: 0}
-  damage: 15
 --- !u!50 &-4655827874297097017
 Rigidbody2D:
   serializedVersion: 5
