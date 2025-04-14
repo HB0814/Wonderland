@@ -151,9 +151,9 @@ TextureImporter:
       name: Heart Card Soldier_1
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 15
-        width: 129
+        width: 127
         height: 98
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -175,7 +175,7 @@ TextureImporter:
         serializedVersion: 2
         x: 129
         y: 15
-        width: 129
+        width: 127
         height: 98
       alignment: 7
       pivot: {x: 0.5, y: 0}
