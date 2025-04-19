@@ -45,14 +45,14 @@ public class EnemyManager : MonoBehaviour
         firstTimer += Time.deltaTime;
         secondTimer += Time.deltaTime;
 
-        if (firstTimer >= firstSpawnCool && onFirstEnemySpawn && firstSpawnCount < firstSpawnNum)
+        if (firstTimer >= firstSpawnCool && onFirstEnemySpawn )//&& firstSpawnCount < firstSpawnNum)
         {
             firstTimer = 0;
             SpawnEnemy(firstEnemyType);
             firstSpawnCount++;
         }
 
-        if (secondTimer >= secondSpawnCool && onSecondEnemySpawn && secondSpawnCount < secondSpawnNum)
+        if (secondTimer >= secondSpawnCool && onSecondEnemySpawn)// && secondSpawnCount < secondSpawnNum)
         {
             secondTimer = 0;
             SpawnEnemy(secondEnemyType);
