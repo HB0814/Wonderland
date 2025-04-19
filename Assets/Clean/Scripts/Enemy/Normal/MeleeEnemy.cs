@@ -6,5 +6,4 @@ public class MeleeEnemy : Enemy
     {
         base.Update();
     }
-    
 } 

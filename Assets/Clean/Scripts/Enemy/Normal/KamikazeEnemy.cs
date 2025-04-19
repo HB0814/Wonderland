@@ -6,9 +6,10 @@ public class KamikazeEnemy : Enemy
     public bool isReady = false;
     public float explosionReadyRange = 6.0f; //폭발 준비 시작 범위
     public float explosionMoveSpeed = 3.0f; //폭발 준비 시 이동속도
-    public float explosionRange = 0.5f; //폭발  범위
+    public float explosionRange = 1.0f; //폭발  범위
     public float explosionDamage = 50.0f; //폭발 데미지
     public GameObject explosionEffect; //폭발 이펙트 -> 게임오브젝트 대신 파티클시스템 사용할수도
+    public GameObject center;
 
     protected override void Update()
     {
@@ -28,7 +29,7 @@ public class KamikazeEnemy : Enemy
     void ExplodeReaby()
     {
         //폭발 애니메이션 실행
-        //animator.SetTrigger("Explode");
+        animator.SetTrigger("isReady");
         moveSpeed = explosionMoveSpeed; //이동속도 변경
 
         Invoke(nameof(Explode), 2.5f); //2.5초 뒤 폭발
@@ -63,5 +64,17 @@ public class KamikazeEnemy : Enemy
         gameObject.SetActive(false); //오브젝트 비활성화
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        isReady = false;
+        animator.ResetTrigger("isReady");
+    }
+
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.green;
+    //    Gizmos.DrawWireSphere(center.transform.position, explosionRange);
+    //}
 
 } 

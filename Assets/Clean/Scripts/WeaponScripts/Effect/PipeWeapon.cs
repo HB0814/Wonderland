@@ -10,6 +10,7 @@ public class PipeWeapon : WeaponBase
     private void Awake()
     {
         weaponData = WeaponDataManager.Instance.GetWeaponData(WeaponType.Pipe);
+        WeaponType = WeaponType.Pipe;
     }
     private void Start()
     {

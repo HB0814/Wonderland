@@ -5,12 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
-  - JabberwockyBreath
-  - Pipe
-  - Boss
-  - HeartQueen
-  - Firecracker
+  - Projectile
+  - Weapon
   - PlayerWeapon
+  - Boss
+  - ExpGem
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -21,7 +21,7 @@ TagManager:
   - Player
   - PlayerWeapon
   - Col
-  - 
+  - Item
   - 
   - 
   - 
@@ -47,6 +47,18 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Shadow
+    uniqueID: 3934622921
+    locked: 0
+  - name: Effect_
+    uniqueID: 3545294229
+    locked: 0
+  - name: Object
+    uniqueID: 2758873259
+    locked: 0
+  - name: Effect
+    uniqueID: 2276044263
     locked: 0
   m_RenderingLayers:
   - Default

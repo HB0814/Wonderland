@@ -15,13 +15,19 @@ public class ObjectPool : MonoBehaviour
 
     public List<Pool> pools;
     public List<Pool> enemyPools;
+    public List<Pool> expgemPools;
     private Dictionary<string, Queue<GameObject>> poolDictionary;
+    private Dictionary<string, Queue<GameObject>> poolDictionary_Enemy;
+    private Dictionary<string, Queue<GameObject>> poolDictionary_Expgem;
 
     private void Awake()
     {
         Instance = this;
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        poolDictionary_Enemy = new Dictionary<string, Queue<GameObject>>();
+        poolDictionary_Expgem = new Dictionary<string, Queue<GameObject>>();
 
+        //무기 풀링
         foreach (Pool pool in pools)
         {
             Queue<GameObject> objectPool = new Queue<GameObject>();
@@ -34,8 +40,37 @@ public class ObjectPool : MonoBehaviour
 
             poolDictionary.Add(pool.tag, objectPool);
         }
+
+        //몬스터 풀링
+        foreach (Pool pool in enemyPools)
+        {
+            Queue<GameObject> objectPool = new Queue<GameObject>();
+
+            for (int i = 0; i < pool.size; i++)
+            {
+                GameObject obj = CreateNewObject_Enemy(pool.prefab);
+                objectPool.Enqueue(obj);
+            }
+
+            poolDictionary_Enemy.Add(pool.tag, objectPool);
+        }
+        
+        //경험치 잼 풀링
+        foreach (Pool pool in expgemPools)
+        {
+            Queue<GameObject> objectPool = new Queue<GameObject>();
+
+            for (int i = 0; i < pool.size; i++)
+            {
+                GameObject obj = CreateNewObject_Enemy(pool.prefab);
+                objectPool.Enqueue(obj);
+            }
+
+            poolDictionary_Expgem.Add(pool.tag, objectPool);
+        }
     }
 
+    //무기 풀링
     private GameObject CreateNewObject(GameObject prefab)
     {
         GameObject obj = Instantiate(prefab);
@@ -58,7 +93,6 @@ public class ObjectPool : MonoBehaviour
         obj.SetActive(false);
         return obj;
     }
-
     public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
     {
         if (!poolDictionary.ContainsKey(tag))
@@ -94,10 +128,129 @@ public class ObjectPool : MonoBehaviour
         
         return objectToSpawn;
     }
-
     public void ReturnToPool(string tag, GameObject objectToReturn)
     {
         if (!poolDictionary.ContainsKey(tag))
+        {
+            Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
+            return;
+        }
+
+        objectToReturn.SetActive(false);
+    }
+
+
+    //몬스터 풀링
+    private GameObject CreateNewObject_Enemy(GameObject prefab)
+    {
+        GameObject obj = Instantiate(prefab);
+
+        obj.SetActive(false);
+        return obj;
+    }
+    public GameObject SpawnFromPool_Enemy(string tag, Vector3 position)
+    {
+        if (!poolDictionary_Enemy.ContainsKey(tag))
+        {
+            Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
+            return null;
+        }
+
+        Queue<GameObject> pool = poolDictionary_Enemy[tag];
+
+        // 비활성화된 오브젝트가 있는지 확인
+        GameObject objectToSpawn = null;
+        foreach (GameObject obj in pool)
+        {
+            if (!obj.activeInHierarchy)
+            {
+                objectToSpawn = obj;
+                break;
+            }
+        }
+
+        // 비활성화된 오브젝트가 없으면 새로 생성
+        if (objectToSpawn == null)
+        {
+            Pool poolSettings = enemyPools.Find(p => p.tag == tag);
+            objectToSpawn = CreateNewObject(poolSettings.prefab);
+            pool.Enqueue(objectToSpawn);
+        }
+
+        objectToSpawn.SetActive(true);
+        objectToSpawn.transform.position = position;
+
+        IPooledObject pooledObj = objectToSpawn.GetComponent<IPooledObject>();
+        if (pooledObj != null)
+        {
+            pooledObj.OnObjectSpawn();
+        }
+
+        return objectToSpawn;
+    }
+    public void ReturnToPool_Enemy(string tag, GameObject objectToReturn)
+    {
+        if (!poolDictionary_Enemy.ContainsKey(tag))
+        {
+            Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
+            return;
+        }
+
+        objectToReturn.SetActive(false);
+    }
+
+
+    //경험치 잼 풀링
+    private GameObject CreateNewObject_Expgem(GameObject prefab)
+    {
+        GameObject obj = Instantiate(prefab);
+
+        obj.SetActive(false);
+        return obj;
+    }
+    public GameObject SpawnFromPool_Expgem(string tag, Vector3 position)
+    {
+        if (!poolDictionary_Expgem.ContainsKey(tag))
+        {
+            Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
+            return null;
+        }
+
+        Queue<GameObject> pool = poolDictionary_Expgem[tag];
+
+        // 비활성화된 오브젝트가 있는지 확인
+        GameObject objectToSpawn = null;
+        foreach (GameObject obj in pool)
+        {
+            if (!obj.activeInHierarchy)
+            {
+                objectToSpawn = obj;
+                break;
+            }
+        }
+
+        // 비활성화된 오브젝트가 없으면 새로 생성
+        if (objectToSpawn == null)
+        {
+            Pool poolSettings = expgemPools.Find(p => p.tag == tag);
+            objectToSpawn = CreateNewObject(poolSettings.prefab);
+            pool.Enqueue(objectToSpawn);
+        }
+
+        objectToSpawn.SetActive(true);
+        objectToSpawn.transform.position = position;
+
+        IPooledObject pooledObj = objectToSpawn.GetComponent<IPooledObject>();
+        if (pooledObj != null)
+        {
+            pooledObj.OnObjectSpawn();
+        }
+
+        return objectToSpawn;
+    }
+    public void ReturnToPool_Expgem(string tag, GameObject objectToReturn)
+    {
+        if (!poolDictionary_Expgem.ContainsKey(tag))
         {
             Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
             return;

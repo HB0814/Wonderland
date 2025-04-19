@@ -5,8 +5,7 @@ public class HeartQueen : Enemy
 {
     HitEffect takeDamage;
 
-    [SerializeField]
-    Bounds moveBounds; //이동 범위 > 이동 범위를 설정하기 위함
+    [SerializeField] Bounds moveBounds; //이동 범위 > 이동 범위를 설정하기 위함
     Vector2 targetPos; //목표위치
     float moveTime = 0.0f; //이동 시간
     float moveTimer = 0.0f; //이동 타이머
@@ -42,10 +41,8 @@ public class HeartQueen : Enemy
         nextSpecialAttackTime = Time.time + specialAttackCooldown;
     }
 
-    protected override void Update()
+    private new void Update()
     {
-        //base.Update();
-
         if(Input.GetKeyDown(KeyCode.V)) //테스트용 v키 입력 시 >>> 보스 위치 초기화
             SetBoundsCenter(); //위치가 초기화, 바운즈 센터 값 설정
 
@@ -53,8 +50,9 @@ public class HeartQueen : Enemy
 
         if (canMove) //이동 가능할 때
         {
-            MoveTowardsPlayer(); //부모 클래스의 MoveTowardsPlayer 호출
+            MoveToTarget();
         }
+        UpdateSpriteLayer();
 
         // 페이즈 체크
         if (!isPhase2 && currentHealth <= maxHealth * phaseChangeHealth)
@@ -87,7 +85,7 @@ public class HeartQueen : Enemy
         //바운즈의 센터를 플레이어 위치로 설정
         moveBounds.center = new Vector3(player.transform.position.x, 
                                         player.transform.position.y,
-                                        transform.position.z);
+                                        player.transform.position.z);
     }
 
     void SetTargetPosition()
@@ -97,9 +95,16 @@ public class HeartQueen : Enemy
             Random.Range(moveBounds.min.x, moveBounds.max.x),
             Random.Range(moveBounds.min.y, moveBounds.max.y)
         );
+
+        //플립
+        bool shouldFlip = targetPos.x > transform.position.x;
+        if (shouldFlip != spriteRenderer.flipX)
+        {
+            spriteRenderer.flipX = shouldFlip;
+        }
     }
 
-    protected override void MoveTowardsPlayer()
+    void MoveToTarget()
     {
         if (!canMove) return;
 

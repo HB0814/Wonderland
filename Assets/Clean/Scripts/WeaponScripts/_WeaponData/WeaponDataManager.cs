@@ -44,6 +44,7 @@ public class WeaponDataManager : MonoBehaviour
             {
                 weaponDataMap.Add(weapon.weaponName, weapon);
             }
+            weapon.currentLevel = 0;
         }
     }
 

@@ -28,6 +28,7 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField]protected float nextAttackTime;
     protected GameObject player;
     protected Animator animator;
+    [SerializeField]protected GameObject projectilePrefab; // 투사체 프리팹
 
     public WeaponType WeaponType { get; protected set; }
     public WeaponData weaponData;
@@ -45,10 +46,15 @@ public abstract class WeaponBase : MonoBehaviour
     }
     public virtual void LevelUpLogic()
     {
-        if (weaponData != null && currentLevel < weaponData.UpgradeDetails.Length)
+        if (weaponData != null && currentLevel < maxLevel)
         {
             currentLevel++;
             UpdateStats();
+            Debug.Log($"{weaponName} upgraded to level {currentLevel}");
+        }
+        else
+        {
+            Debug.LogWarning($"Cannot upgrade {weaponName}. Current level: {currentLevel}, Max level: {maxLevel}");
         }
     }
 
@@ -56,17 +62,11 @@ public abstract class WeaponBase : MonoBehaviour
     {
         if (weaponData != null)
         {
-            int index = currentLevel - 1;
             var stats = weaponData.levelStats;
-
-            if (index < 0 || index >= stats.count.Length)
-            {
-                Debug.LogWarning($"Invalid level index: {index}. Current level: {currentLevel}");
-                return;
-            }
+            int index = currentLevel - 1;
 
             count = stats.count[index];
-            weaponData.currentLevel=currentLevel;
+            weaponData.currentLevel = currentLevel;
 
             attackCooldown = stats.attackCooldown[index];
             damage = stats.damage[index];
@@ -78,6 +78,8 @@ public abstract class WeaponBase : MonoBehaviour
             knockbackForce = stats.knockbackForce[index];
             slowForce = stats.slowForce[index];
             slowDuration = stats.slowDuration[index];
+
+            Debug.Log($"Updated {weaponName} stats - Level: {currentLevel}, Damage: {damage}");
         }
     }
     protected virtual void Update()
@@ -97,5 +99,24 @@ public abstract class WeaponBase : MonoBehaviour
     {
         currentLevel = 1;
         nextAttackTime = 0f;
+    }
+
+    protected void FireProjectile(Vector2 direction)
+    {
+        GameObject projectileObj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Projectile projectile = projectileObj.GetComponent<Projectile>();
+        
+        if (projectile != null)
+        {
+            projectile.BaseInitialize(damage, size, lifeTime, speed);
+            projectile.DebuffInitialize(knockbackForce, slowForce, slowDuration);
+            projectile.SetDirection(direction);
+        }
+
+        Rigidbody2D rb = projectileObj.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = direction * speed;
+        }
     }
 } 

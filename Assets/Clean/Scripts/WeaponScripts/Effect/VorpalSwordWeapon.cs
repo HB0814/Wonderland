@@ -12,6 +12,7 @@ public class VorpalSwordWeapon : WeaponBase
     private void Awake()
     {
         weaponData = WeaponDataManager.Instance.GetWeaponData(WeaponType.Sword);
+        WeaponType = WeaponType.Sword;
     }
     private void Start()
     {

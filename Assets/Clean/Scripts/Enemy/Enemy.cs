@@ -1,11 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using static EnemyManager;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public abstract class Enemy : MonoBehaviour
 {
-    WaitForSeconds hitCool = new(0.2f);
+    WaitForSeconds hitCool = new(0.1f);
     WaitForSeconds knockbackCool = new(0.1f);
 
     [Header("기본 속성")]
@@ -159,6 +160,7 @@ public abstract class Enemy : MonoBehaviour
             Debug.Log("플레이어가 피해를 입음!");
         }
     }
+
     //플레이어 방향으로 이동
     protected virtual void MoveTowardsPlayer()
     {
@@ -170,21 +172,6 @@ public abstract class Enemy : MonoBehaviour
     }
 
     //무기 피격
-    //public virtual void TakeDamage(float damage)
-    //{
-    //    float actualDamage = Mathf.Max(1, damage);
-    //    currentHealth -= actualDamage;
-
-    //    Debug.Log("Enemy TakeDamage: " + actualDamage);
-
-    //    StartCoroutine(HitEffect());
-
-    //    if (currentHealth <= 0.0f)
-    //    {
-    //        Die();
-    //    }
-    //}
-
     public virtual void TakeDamage(float damage, float knockbackForce, float slowForce, float slowDuration)
     {
         damage -= deffense; //damage = (damage * 플레이어 공격력 * 0.01) - 적 방어력
@@ -199,7 +186,9 @@ public abstract class Enemy : MonoBehaviour
             StartCoroutine(ApplyKnockback(knockbackForce));
         }
 
-        StartCoroutine(HitColor());
+        if(gameObject.activeSelf)
+            StartCoroutine(HitColor());
+
         if (slowForce > 0)
         {
             StartCoroutine(ApplySlow(slowForce, slowDuration));
@@ -240,49 +229,16 @@ public abstract class Enemy : MonoBehaviour
             spriteRenderer.color = originalColor;
         }
     }
-    //무기 넉백 적용
-    //public virtual void ApplyKnockback(Vector2 direction, float force)
-    //{
-    //    if (rb != null)
-    //    {
-    //        float actualForce = force * (1 - knockbackResistance);
-    //        rb.AddForce(direction * actualForce, ForceMode2D.Impulse);
-    //        isKnockback = true;
-    //        knockbackRecoveryTimer = 0.0f;
-    //    }
-    //}
-    //무기 슬로우 적용
-    //public virtual void ApplySlow(float slowAmount, float duration)
-    //{
-    //    if (!isSlowed || slowAmount > currentSlowAmount)
-    //    {
-    //        isSlowed = true;
-    //        currentSlowAmount = slowAmount;
-    //        slowEffectTimer = duration;
-    //        moveSpeed = originalMoveSpeed * (1.0f - slowAmount);
-    //    }
-    //    else
-    //    {
-    //        slowEffectTimer = Mathf.Max(slowEffectTimer, duration);
-    //    }
-    //}
-    //무기 슬로우 제거
-    //protected virtual void RemoveSlowEffect()
-    //{
-    //    isSlowed = false;
-    //    currentSlowAmount = 0.0f;
-    //    moveSpeed = originalMoveSpeed;
-    //}
 
     //죽음    //풀링 변경 필요
     protected virtual void Die()
     {
         StopAllCoroutines();
 
-        if (expGemPrefab != null)
-        {
-            Instantiate(expGemPrefab, transform.position, Quaternion.identity);
-        }
+        //if (expGemPrefab != null)
+        //{
+        //    Instantiate(expGemPrefab, transform.position, Quaternion.identity);
+        //}
 
         if (dropItems != null && dropItems.Length > 0 && Random.value <= dropChance)
         {
@@ -296,8 +252,31 @@ public abstract class Enemy : MonoBehaviour
             deathEffect.Play();
         }
 
+        CreateExpgem();
+
+        spriteRenderer.color = originalColor;
         gameObject.SetActive(false);
         //Destroy(gameObject);
+    }
+
+    protected virtual void CreateExpgem()
+    {
+        string rate;
+        
+        GameObject expgemToSpawn = ObjectPool.Instance.SpawnFromPool_Expgem("Common", transform.position);
+
+        if (expgemToSpawn != null)
+        {
+            // 초기화 및 활성화
+            expgemToSpawn.SetActive(true);
+            Debug.Log("몬스터 활성화");
+        }
+    }
+
+    protected virtual void OnEnable()
+    {
+        Initialize();
+        Debug.Log("몬스터 스탯 재설정");
     }
 
     //공격 범위 표시

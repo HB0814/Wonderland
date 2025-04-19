@@ -10,6 +10,7 @@ public class HatBoomerangWeapon : WeaponBase
     private void Awake()
     {
         weaponData = WeaponDataManager.Instance.GetWeaponData(WeaponType.Hat);
+        WeaponType = WeaponType.Hat;
     }
     private void Start()
     {

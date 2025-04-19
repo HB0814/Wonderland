@@ -8,6 +8,7 @@ public class FirecrackerWeapon : WeaponBase
     private void Awake()
     {
         weaponData = WeaponDataManager.Instance.GetWeaponData(WeaponType.Firecracker);
+        WeaponType = WeaponType.Firecracker;
     }
     private void Start()
     {

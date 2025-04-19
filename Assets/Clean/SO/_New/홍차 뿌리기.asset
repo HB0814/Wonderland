@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: "\uD64D\uCC28 \uBFCC\uB9AC\uAE30"
   m_EditorClassIdentifier: 
   weaponName: "\uD64D\uCC28 \uBFCC\uB9AC\uAE30"
-  currentLevel: 1
+  description:
+  - 
+  - 
+  - 
+  - 
+  - 
+  currentLevel: 0
   icon: {fileID: 0}
   UpgradeDetails:
   - "\uC5C5\uADF8\uB808\uC774\uB4DC \uB0B4\uC6A9"
@@ -21,7 +27,7 @@ MonoBehaviour:
   - 
   - 
   - 
-  weaponType: 9
+  weaponType: 8
   levelStats:
     damage:
     - 5
@@ -80,3 +86,5 @@ MonoBehaviour:
     count: 0100000002000000030000000500000008000000
     attackRangeX: 0
     attackRangeY: 0
+    pierceCount: []
+    coolDownDecrease: []

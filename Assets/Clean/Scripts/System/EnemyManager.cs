@@ -4,69 +4,66 @@ using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 using System.Collections.Generic;
 
-public class EnemyManager : Enemy
+public class EnemyManager : MonoBehaviour
 {
-    public int type;
-    public EnemyPool[] enemyPool;
+    public enum EnemyType
+    {
+        HeartCard, DiamondCard, SpadeCard, CloverCard,
+        ChessPawn, ChessRook,
+        Teapot
+    }
+    public EnemyType enemyType;
     public float enemySpawnTime;
     float timer;
-
-    int cardIndex = 0;
-    int pawnIndex = 0;
-    int rookIndex = 0;
+    //enemyType과 enemySpawnTime은 csv 파일 혹은 스크립터블을 사용하여 관리
 
     private void Update()
     {
         timer += Time.deltaTime;
-
         if (timer >= enemySpawnTime)
         {
             timer = 0;
+            Debug.Log("스폰 시도");
             SpawnEnemy();
         }
+
+        if (Input.GetKeyDown(KeyCode.Keypad0))
+            enemyType = EnemyType.HeartCard;
+
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+            enemyType = EnemyType.DiamondCard;
+
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+            enemyType = EnemyType.SpadeCard;
+
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+            enemyType = EnemyType.CloverCard;
+
+        if (Input.GetKeyDown(KeyCode.Keypad4))
+            enemyType = EnemyType.ChessPawn;
+
+        if (Input.GetKeyDown(KeyCode.Keypad5))
+            enemyType = EnemyType.ChessRook;
+
+        if (Input.GetKeyDown(KeyCode.Keypad6))
+            enemyType = EnemyType.Teapot;
     }
 
     private void SpawnEnemy()
     {
-        GameObject enemyToSpawn = null;
-        int index = 0;
+        Vector3 spawnPos = GetRandomSpawnPosition();
 
-        switch(type)
-        {
-            case 0:
-                enemyToSpawn = enemyPool[type].normalEnemyObjects[cardIndex];
-                index = cardIndex;
-                cardIndex = (cardIndex + 1) % enemyPool[type].normalEnemyObjects.Length;
-                break;
-
-            case 1:
-                enemyToSpawn = enemyPool[type].normalEnemyObjects[pawnIndex];
-                index = pawnIndex;
-                pawnIndex = (pawnIndex + 1) % enemyPool[type].normalEnemyObjects.Length;
-                break;
-
-            case 2:
-                enemyToSpawn = enemyPool[type].normalEnemyObjects[rookIndex];
-                index = rookIndex;
-                rookIndex = (rookIndex + 1) % enemyPool[type].normalEnemyObjects.Length;
-                break;
-        }
+        GameObject enemyToSpawn = ObjectPool.Instance.SpawnFromPool_Enemy(enemyType.ToString(), spawnPos);
 
         if (enemyToSpawn != null)
         {
-            SetRandomPos(enemyToSpawn);
+            // 초기화 및 활성화
             enemyToSpawn.SetActive(true);
-            
-            // 적 초기화
-            Enemy enemy = enemyToSpawn.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                enemy.Initialize();
-            }
+            Debug.Log("몬스터 활성화");
         }
     }
 
-    public void SetRandomPos(GameObject enemy)
+    public Vector3 GetRandomSpawnPosition()
     {
         Vector3 randomPos = Vector3.zero;
         float min = -0.2f; //화면에서 벗어나는 최소 거리
@@ -91,8 +88,7 @@ public class EnemyManager : Enemy
                 break;
         }
 
-        //월드 좌표로 변환. 월드 좌표는 카메라 기준으로 (0,0)이 왼쪽 아래, (1,1)이 오른쪽 위
-        randomPos = Camera.main.ViewportToWorldPoint(randomPos);
-        enemy.transform.position = randomPos;
+        Debug.Log("랜덤 좌표 실행");
+        return Camera.main.ViewportToWorldPoint(randomPos);
     }
 }

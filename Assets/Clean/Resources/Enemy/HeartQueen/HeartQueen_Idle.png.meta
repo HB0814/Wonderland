@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: db45730e5d416a24ca61ee66487c3d19
+guid: a61a6fc362f2edb458c734eb7d010838
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -146,8 +146,8 @@ TextureImporter:
         y: 127
         width: 330
         height: 594
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

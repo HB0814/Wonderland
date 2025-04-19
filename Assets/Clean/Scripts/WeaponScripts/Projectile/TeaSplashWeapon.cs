@@ -13,6 +13,7 @@ public class TeaSplashWeapon : WeaponBase
     private void Awake()
     {
         weaponData = WeaponDataManager.Instance.GetWeaponData(WeaponType.Tea);
+        WeaponType = WeaponType.Tea;
     }
     private void Start()
     {

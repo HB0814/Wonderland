@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6e84e1313ac0317498b41f49974aff75
+guid: 4d963974916557646828b51543e2a2b9
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -151,12 +151,12 @@ TextureImporter:
       name: Heart Card Soldier_1
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 15
-        width: 129
+        width: 127
         height: 98
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -175,10 +175,10 @@ TextureImporter:
         serializedVersion: 2
         x: 129
         y: 15
-        width: 129
+        width: 127
         height: 98
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

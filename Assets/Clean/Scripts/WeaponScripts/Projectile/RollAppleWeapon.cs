@@ -14,6 +14,7 @@ public class RollAppleWeapon : WeaponBase
     private void Awake()
     {
         weaponData = WeaponDataManager.Instance.GetWeaponData(WeaponType.Apple);
+        WeaponType = WeaponType.Apple;
     }
     private void Start()
     {
