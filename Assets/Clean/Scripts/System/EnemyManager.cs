@@ -6,36 +6,61 @@ using System.Collections.Generic;
 
 public class EnemyManager : MonoBehaviour
 {
-    public enum EnemyType {HeartCardSolider, ChessPawn, ChessRook, Teapot}
-    public EnemyType enemyType;
-    public float enemySpawnTime;
-    float timer;
-    //enemyType과 enemySpawnTime은 csv 파일 혹은 스크립터블을 사용하여 관리하면 될듯?
+    public enum EnemyType //적타입
+    {
+        HeartCard, DiamondCard, SpadeCard, CloverCard,
+        Pawn, Rook, Bishop, Rook_Event, Bishop_Event,
+        Teapot, CheshireCat
+    }
+    public EnemyType firstEnemyType; //첫번째 적 타입
+    public EnemyType secondEnemyType; //두번째 적 타입
+
+    public bool onFirstEnemySpawn = true; //첫번째 적 스폰 여부
+    public bool onSecondEnemySpawn = true; //두번째 적 스폰 여부
+
+    public float firstSpawnCool; //첫번째 적 스폰 시간
+    public float secondSpawnCool; //두번째 적 스폰 시간
+
+    private float firstTimer; //첫번째 적 타이머
+    private float secondTimer; //두번째 적 타이머
+
+    public int firstSpawnNum; //첫번째 적 소환 가능한 수
+    public int secondSpawnNum; //두번째 적 소환 가능한 수 
+
+    public int firstSpawnCount = 0; //몬스터 소환 카운트
+    public int secondSpawnCount = 0; //몬스터 소환 카운트
+
+    //enemyType과 enemySpawnTime은 csv 파일 혹은 스크립터블을 사용하여 관리
 
     private void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= enemySpawnTime)
-        {
-            timer = 0;
-            Debug.Log("스폰 시도");
-            SpawnEnemy();
-        }
+        SpawnCheck();
 
-        if (Input.GetKeyDown(KeyCode.U))
-            enemyType = EnemyType.HeartCardSolider;
-
-        if (Input.GetKeyDown(KeyCode.I))
-            enemyType = EnemyType.ChessPawn;
-
-        if (Input.GetKeyDown(KeyCode.O))
-            enemyType = EnemyType.ChessRook;
-
-        if (Input.GetKeyDown(KeyCode.P))
-            enemyType = EnemyType.Teapot;
+        //if (Input.GetKeyDown(KeyCode.Keypad0))
+        //     firstEnemyType = EnemyType.HeartCard;
     }
 
-    private void SpawnEnemy()
+    private void SpawnCheck()
+    {
+        firstTimer += Time.deltaTime;
+        secondTimer += Time.deltaTime;
+
+        if (firstTimer >= firstSpawnCool && onFirstEnemySpawn && firstSpawnCount < firstSpawnNum)
+        {
+            firstTimer = 0;
+            SpawnEnemy(firstEnemyType);
+            firstSpawnCount++;
+        }
+
+        if (secondTimer >= secondSpawnCool && onSecondEnemySpawn && secondSpawnCount < secondSpawnNum)
+        {
+            secondTimer = 0;
+            SpawnEnemy(secondEnemyType);
+            secondSpawnCount++;
+        }
+    }
+
+    private void SpawnEnemy(EnemyType enemyType)
     {
         Vector3 spawnPos = GetRandomSpawnPosition();
 
@@ -45,7 +70,6 @@ public class EnemyManager : MonoBehaviour
         {
             // 초기화 및 활성화
             enemyToSpawn.SetActive(true);
-            Debug.Log("몬스터 활성화");
         }
     }
 
@@ -73,8 +97,6 @@ public class EnemyManager : MonoBehaviour
                 randomPos = new Vector3(Random.Range(min, max), min, zPos);
                 break;
         }
-
-        Debug.Log("랜덤 좌표 실행");
         return Camera.main.ViewportToWorldPoint(randomPos);
     }
 }

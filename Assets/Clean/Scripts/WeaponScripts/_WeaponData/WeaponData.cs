@@ -7,6 +7,7 @@ public class WeaponData : ScriptableObject
 
     [Header("무기 기본 정보")]
     public string weaponName; // 에셋 이름과 동일하게 설정
+    public string[] description; // 무기 설명
     public int currentLevel = 0; // 현재 레벨
     public Sprite icon; // 무기 아이콘
     public string[] UpgradeDetails = new string[MAX_LEVEL]; // 레벨업 상세 정보
@@ -41,6 +42,12 @@ public class WeaponData : ScriptableObject
         [Header("검, 사과, 모자")]
         public float attackRangeX; // 공격 범위 X
         public float attackRangeY; // 공격 범위 Y
+        
+        [Header("책")]
+        public int[] pierceCount; // 관통 수
+        
+        [Header("모자")]
+        public float[] coolDownDecrease; // 쿨타임 감소량
     }
 
     private void OnValidate()

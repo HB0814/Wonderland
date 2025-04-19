@@ -9,6 +9,7 @@ public class TrumpCardWeapon : WeaponBase
     private void Awake()
     {
         weaponData = WeaponDataManager.Instance.GetWeaponData(WeaponType.Card);
+        WeaponType = WeaponType.Card;
     }
     private void Start()
     {

@@ -102,15 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af694977be3a624d83b8230fd1422c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileDamage: 10
-  projectileLifeTime: 1
-  projectileSize: 1
-  projectileSpeed: 1
-  direction: {x: 0, y: 0, z: 0}
-  knockbackForce: 1
-  slowForce: 3
-  slowDuration: 1
-  weaponType: 4
+  weaponType: 5
 --- !u!61 &6748990144590536965
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class CheshireCatWeapon : WeaponBase
     private void Awake()
     {
         weaponData = WeaponDataManager.Instance.GetWeaponData(WeaponType.Cat);
+        WeaponType = WeaponType.Cat;
     }
 
     private void Start()

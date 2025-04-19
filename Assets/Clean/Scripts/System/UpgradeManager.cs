@@ -1,318 +1,283 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
-public class LevelUpScript : MonoBehaviour
+public class UpgradeManager : MonoBehaviour
 {
-    //public PlayerScript playerScript; //ÇÃ·¹ÀÌ¾î ½ºÅ©¸³Æ® > ´É·ÂÄ¡ º¯µ¿ »çÇ× Àû¿ëÇÏ±â À§ÇÔ
-    public GameObject fade;
-    public Button pasue; //´É·Â ¼±ÅÃÃ¢ È°¼ºÈ­ ½Ã ¹öÆ° ±â´É ºñÈ°¼ºÈ­ÇÏ±â À§ÇÔ
+    // ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤
+    public static UpgradeManager Instance { get; private set; }
 
-    [Header("Upgrade")] //¹«±â¿Í ¹«±â ´É·Â ¼±ÅÃ Ä«µå
-    public GameObject upgradePanel; //¾÷±×·¹ÀÌµå ÆÇ³Ú °ÔÀÓ¿ÀºêÁ§Æ®
-    public GameObject[] tempUpgrades; //ÀÓ½Ã ¹«±â
-    public GameObject[] upgrades; //¾÷±×·¹ÀÌµå ¹è¿­
+    [Header("UI Components")]
+    public GameObject upgradePanel; // ì—…ê·¸ë ˆì´ë“œ ì„ íƒ íŒ¨ë„
+    public GameObject[] upgradeCards; // 4ê°œì˜ ì—…ê·¸ë ˆì´ë“œ ì¹´ë“œ
+    public Button[] cardButtons; // ì¹´ë“œ ì„ íƒ ë²„íŠ¼
+    public GameObject fadePanel; // í˜ì´ë“œ íš¨ê³¼ íŒ¨ë„
 
-    public GameObject trumpWeapon; //UI ¾÷±×·¹ÀÌµå ºÎ¸ğ·Î ÇÒ °ÔÀÓ¿ÀºêÁ§Æ®
-    public GameObject cheshireWeapon;
-    public GameObject jabberwockyWeapon;
-    public GameObject firecrackerWeapon;
-    public GameObject appleWeapon;
+    [Header("Weapon References")]
+    public WeaponDataManager weaponDataManager; // ë¬´ê¸° ë°ì´í„° ë§¤ë‹ˆì € ì°¸ì¡°
+    public List<ItemData> availableItems; // ì‚¬ìš© ê°€ëŠ¥í•œ ì•„ì´í…œë“¤
 
-    public GameObject[] trumpUpgrades; //¹Ì»çÀÏ ¾÷±×·¹ÀÌµå ¿ÀºêÁ§Æ®µé > ·¹º§ º°·Î ÇÏ³ª¾¿ ²¨³»¼­ »ç¿ë
-    public GameObject[] cheshireUpgrades; //¾ÆÀÌÄÜ, ÅØ½ºÆ®¸¦ µû·Î ¼³Á¤ÇÏ¿© ´ëÀÔ ½Ã ¿ÀºêÁ§Æ® ¹è¿­ »ç¿ë ÇÊ¿äx. ´Ù¸¸, csv ÆÄÀÏÀÌ³ª ÀÌ¹ÌÁö ½ºÇÁ¶óÀÌÆ® º¯°æ µî ÇÊ¿ä
-    public GameObject[] jabberwockyUpgrades;
-    public GameObject[] firecrackerUpgrades;
-    public GameObject[] appleUpgrades;
-    public GameObject[] unlockUpgrades;
+    [Header("Upgrade Settings")]
+    public int weaponUpgradeCount = 3; // ë¬´ê¸° ì—…ê·¸ë ˆì´ë“œ ì¹´ë“œ ìˆ˜
+    public int itemUpgradeCount = 1; // ì•„ì´í…œ ì—…ê·¸ë ˆì´ë“œ ì¹´ë“œ ìˆ˜
 
-    [Header("Data")] //¹«±â µ¥ÀÌÅÍ
-    public WeaponData trumpData;
-    public WeaponData cheshireData;
-    public WeaponData jabberwockyData;
-    public WeaponData firecrackerData;
-    public WeaponData appleData;
-    //public WeaponData ; //´Ù¸¥ ¹«±â µ¥ÀÌÅÍ Ãß°¡ ÀÛ¼º
-    //public WeaponData ;
-    //public WeaponData ;
-    //public WeaponData ;
-    //public WeaponData ;
-    //public WeaponData ;
-
-    //¹«±â ÇØ±İ ¿©ºÎ
-    public bool hasTrump = false;                     
-    public bool hasCheshire = false;
-    public bool hasJabberwocky = false;
-    public bool hasFirecracker = false;
-    public bool hasApple = false;
-    //public bool has = false; //´Ù¸¥ ¹«±â ÇØ±İ ¿©ºÎ Ãß°¡ ÀÛ¼º
-    //public bool has = false;
-    //public bool has = false;
-    //public bool has = false;
-    //public bool has = false;
-    //public bool has = false;
-
-
-    //¹«±â º° ·¹º§
-    int trumpCard_Lv = 0; //Æ®·³ÇÁ Ä«µå ·¹º§
-    int cheshireCat_Lv = 0; //Ã¤¼ÅÄ¹ ·¹º§
-    int jabberwockyBreath_Lv = 0; //Àç¹ö¿öÅ° ·¹º§
-    int nonBirthdayFirecracker_Lv = 0; //¾È»ıÀÏ ÃàÇÏ ÆøÁ× ·¹º§
-    int rollApple_Lv = 0; //±¼·¯´Ù´Ï´Â »ç°ú ·¹º§
-    //int _Lv = 0; //´Ù¸¥ ¹«±â ·¹º§ Ãß°¡ ÀÛ¼º
-    //int _Lv = 0;
-    //int _Lv = 0; 
-    //int _Lv = 0;
-    //int _Lv = 0;
-    //int _Lv = 0;
-
-    int index; //¾÷±×·¹ÀÌµå ¹è¿­ ÀÎµ¦½º Å©±â
-    int ran; //¾÷±×·¹ÀÌµå ¹è¿­ ·£´ı ÀÎµ¦½º °ª
-
-    //ÀÓ½Ã·Î ¹«±â ´É·ÂÀ» ÀúÀåÇÏ´Â ¿ÀºêÁ§Æ®
-    GameObject tempU_0;
-    GameObject tempU_1;
-    GameObject tempU_2;
-
-    public GameObject weaponGroup; //¹«±â ´É·Â ¿ÀºêÁ§Æ® ±×·ì
-    public Button reroll; //¸®·Ñ¹öÆ°
-    public Image rerollImage; //¸®·Ñ¹öÆ° ÀÌ¹ÌÁö
-
-    bool onUpgrade = false;
-
-    float time = 0;
+    private bool isUpgrading = false;
 
     private void Awake()
     {
-        SetStat(); //½ºÅÈ Àç¼³Á¤
-        SetWeapon(); //¹«±â ´É·Â ¼³Á¤
+        // ì‹±ê¸€í†¤ íŒ¨í„´ êµ¬í˜„
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
-    //½ºÅÈ Àç¼³Á¤
-    void SetStat()
+    private void Start()
     {
+        // ë²„íŠ¼ ì´ë²¤íŠ¸ ì—°ê²°
+        for (int i = 0; i < cardButtons.Length; i++)
+        {
+            int index = i; // í´ë¡œì € ë¬¸ì œ ë°©ì§€
+            cardButtons[i].onClick.AddListener(() => OnCardSelected(index));
+        }
+    }
+
+    // ë ˆë²¨ì—… ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+    public void ShowUpgradeOptions()
+    {
+        if (isUpgrading) return;
+
+        isUpgrading = true;
+        Time.timeScale = 0f; // ê²Œì„ ì¼ì‹œì •ì§€
+        fadePanel.SetActive(true);
+        upgradePanel.SetActive(true);
+
+        // ì—…ê·¸ë ˆì´ë“œ ì¹´ë“œ ìƒì„±
+        GenerateUpgradeCards();
+    }
+
+    // ì—…ê·¸ë ˆì´ë“œ ì¹´ë“œ ìƒì„±
+    private void GenerateUpgradeCards()
+    {
+        // ì‚¬ìš© ê°€ëŠ¥í•œ ë¬´ê¸°ì™€ ì•„ì´í…œ ëª©ë¡ ì´ˆê¸°í™”
+        List<WeaponData> availableWeaponUpgrades = new List<WeaponData>();
+        List<WeaponData> availableNewWeapons = new List<WeaponData>();
+        List<ItemData> availableItemUpgrades = new List<ItemData>();
+
+        // ëª¨ë“  ë¬´ê¸° ë°ì´í„° ê°€ì ¸ì˜¤ê¸°
+        var allWeapons = weaponDataManager.GetAllWeaponData();
         
-    }
-
-    //¹«±â º°·Î ÀÚ½Ä ¿ÀºêÁ§Æ®¿¡ ÀÖ´Â ´É·ÂÀ» °¢ ¹«±âÀÇ ¹è¿­¿¡ ³Ö±â
-    void SetWeapon()
-    {
-        for (int i = 0; i < trumpWeapon.transform.childCount; i++) //Æ®·³ÇÁ Ä«µå ¿ÀºêÁ§Æ® ±×·ìÀÇ ÀÚ½Ä¸¸Å­
+        // ë¬´ê¸° ë§¤ë‹ˆì €ì—ì„œ í˜„ì¬ ì¥ì°©ëœ ë¬´ê¸° ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
+        var equippedWeapons = WeaponManager.Instance.equippedWeapons;
+        var equippedWeaponTypes = new HashSet<WeaponType>();
+        foreach (var weapon in equippedWeapons)
         {
-            trumpUpgrades[i] = trumpWeapon.transform.GetChild(i).gameObject; //Æ®·³ÇÁ ¾÷±×·¹ÀÌµå ¹è¿­¿¡ Æ®·³ÇÁ ¿ÀºêÁ§Æ® ÀÚ½Ä º°·Î ´ëÀÔ
+            equippedWeaponTypes.Add(weapon.WeaponType);
         }
-        for (int i = 0; i < cheshireWeapon.transform.childCount; i++)
+
+        // ë¬´ê¸° ë¶„ë¥˜ (ì—…ê·¸ë ˆì´ë“œ ê°€ëŠ¥í•œ ë¬´ê¸°ì™€ ì‹ ê·œ ë¬´ê¸°)
+        foreach (var weapon in allWeapons)
         {
-            cheshireUpgrades[i] = cheshireWeapon.transform.GetChild(i).gameObject;
-        }
-        for (int i = 0; i < jabberwockyWeapon.transform.childCount; i++)
-        {
-            jabberwockyUpgrades[i] = jabberwockyWeapon.transform.GetChild(i).gameObject;
-        }
-        for (int i = 0; i < firecrackerWeapon.transform.childCount; i++)
-        {
-            firecrackerUpgrades[i] = firecrackerWeapon.transform.GetChild(i).gameObject;
-        }
-        for (int i = 0; i < appleWeapon.transform.childCount; i++)
-        {
-            appleUpgrades[i] = appleWeapon.transform.GetChild(i).gameObject;
-        }
-    }
-
-    //¹«±â Á¤·Ä > ¹«±â + ½ºÅÈÀ¸·Î ÇÒ ¿¹Á¤ÀÌ´Ï ÇÔ¼ö¸í°ú ³»¿ë ¼öÁ¤ ÇÊ¿ä >> ¼±ÅÃÁö 4°³µµ ÁÁÀ»µí
-    public void UpgradesArr()
-    {
-        index = 0;
-
-        TempUpgradesArr();                                                           //ÀÓ½Ã ¾÷±×·¹ÀÌµå ¹è¿­ °ª ¼³Á¤
-
-        upgrades = new GameObject[3];                                                //¹«±â ´É·Â ¼±ÅÃ¿¡ ¾µ ¹è¿­ Å©±â ÇÒ´ç
-
-        ran = Random.Range(0, index);                                                //¹è¿­ ÀÎµ¦½º n ·£´ı°ª
-        upgrades[0] = tempUpgrades[ran];                                             //¹«ÀÛÀ§ ¹«±â ´É·Â
-        tempU_0 = upgrades[0].transform.parent.gameObject;                           //¹«ÀÛÀ§ ¹«±â ´É·ÂÀÇ ºÎ¸ğ¸¦ ÀÓ½Ã·Î tempU_0¿¡ ³Ö´Â´Ù -> ³ªÁß¿¡ ºÎ¸ğ¸¦ º¯°æÇÑ µÚ¿¡ ´Ù½Ã µ¹·Á³õ±â À§ÇÔ
-        upgrades[0].transform.SetParent(upgradePanel.transform);                     //ÇØ´ç ¹«±â ´É·ÂÀÇ ºÎ¸ğ º¯°æ
-        upgrades[0].transform.localPosition = new Vector3(-720, 0, 0);               //¹«±â ´É·Â ¼±ÅÃ Ä«µåÀÇ À§Ä¡ Á¶Á¤
-        upgrades[0].SetActive(true);                                                 //¹«±â ´É·Â Ä«µå »óÅÂ È°¼ºÈ­
-
-        ran = Random.Range(0, index);
-        upgrades[1] = tempUpgrades[ran];
-        while (upgrades[0] == upgrades[1])                                           //Ã¹¹øÂ°¿Í µÎ¹øÂ° ´É·ÂÀÌ °°À» °æ¿ì ´Ù¸¥ ´É·ÂÀÌ ¼±ÅÃµÉ ¶§±îÁö ¹İº¹¹® ½ÇÇà
-        {
-            ran = Random.Range(0, index);
-            upgrades[1] = tempUpgrades[ran];
-        }
-        tempU_1 = upgrades[1].transform.parent.gameObject;
-        upgrades[1].transform.SetParent(upgradePanel.transform);
-        upgrades[1].transform.localPosition = new Vector3(0, 0, 0);
-        upgrades[1].SetActive(true);
-
-        ran = Random.Range(0, index);
-        upgrades[2] = tempUpgrades[ran];
-        while (upgrades[0] == upgrades[2] || upgrades[1] == upgrades[2])
-        {
-            ran = Random.Range(0, index);
-            upgrades[2] = tempUpgrades[ran];
-        }
-        tempU_2 = upgrades[2].transform.parent.gameObject;
-        upgrades[2].transform.SetParent(upgradePanel.transform);
-        upgrades[2].transform.localPosition = new Vector3(720, 0, 0);
-        upgrades[2].SetActive(true);
-
-    }
-
-    //ÀÓ½Ã ¾÷±×·¹ÀÌµå ¹è¿­ °ª ¼³Á¤
-    void TempUpgradesArr()
-    {
-        //¹«ÀÛÀ§ ¹«±â ¹è¿­ÀÇ ÃÖ´ë ÀÎµ¦½º °ª ÃÊ±âÈ­
-        if (hasTrump)
-        {
-            switch (trumpCard_Lv) //°¢ ¹«±â ·¹º§ º°·Î ¾÷±×·¹ÀÌµå ¿ÀºêÁ§Æ® ³Ö±â
+            if (weapon.currentLevel > 0 && weapon.currentLevel < weapon.UpgradeDetails.Length)
             {
-                case 0:
-                    tempUpgrades[index] = trumpUpgrades[trumpCard_Lv]; //ÀÓ½Ã ¿şÆù ¹è¿­¿¡ ÇØ´ç ¹«±â ´É·Â ¼±ÅÃ °ÔÀÓ¿ÀºêÁ§Æ® ÀúÀå
-                    index++; //¹è¿­ Å©±â Áõ°¡
-                    break;
-
-                case 1:
-                    tempUpgrades[index] = trumpUpgrades[trumpCard_Lv]; //ÀÓ½Ã ¿şÆù ¹è¿­¿¡ ÇØ´ç ¹«±â ´É·Â ¼±ÅÃ °ÔÀÓ¿ÀºêÁ§Æ® ÀúÀå
-                    index++; //¹è¿­ Å©±â Áõ°¡
-                    break;
-
-                case 2:
-                    tempUpgrades[index] = trumpUpgrades[trumpCard_Lv]; //ÀÓ½Ã ¿şÆù ¹è¿­¿¡ ÇØ´ç ¹«±â ´É·Â ¼±ÅÃ °ÔÀÓ¿ÀºêÁ§Æ® ÀúÀå
-                    index++; //¹è¿­ Å©±â Áõ°¡
-                    break;
-
-                case 3:
-                    tempUpgrades[index] = trumpUpgrades[trumpCard_Lv]; //ÀÓ½Ã ¿şÆù ¹è¿­¿¡ ÇØ´ç ¹«±â ´É·Â ¼±ÅÃ °ÔÀÓ¿ÀºêÁ§Æ® ÀúÀå
-                    index++; //¹è¿­ Å©±â Áõ°¡
-                    break;
-
-                case 4:
-                    tempUpgrades[index] = trumpUpgrades[trumpCard_Lv]; //ÀÓ½Ã ¿şÆù ¹è¿­¿¡ ÇØ´ç ¹«±â ´É·Â ¼±ÅÃ °ÔÀÓ¿ÀºêÁ§Æ® ÀúÀå
-                    index++; //¹è¿­ Å©±â Áõ°¡
-                    break;
+                // ì—…ê·¸ë ˆì´ë“œ ê°€ëŠ¥í•œ ë¬´ê¸° ì¶”ê°€
+                availableWeaponUpgrades.Add(weapon);
+            }
+            else if (!equippedWeaponTypes.Contains(weapon.weaponType) && 
+                     equippedWeapons.Count < WeaponManager.Instance.maxWeapons)
+            {
+                // ì‹ ê·œ ë¬´ê¸° ì¶”ê°€
+                availableNewWeapons.Add(weapon);
             }
         }
-        else if (!hasTrump) //¹ÌÇØ±İ ½Ã
+
+        // ì‚¬ìš© ê°€ëŠ¥í•œ ì•„ì´í…œ ì˜µì…˜ ì¶”ê°€
+        availableItemUpgrades.AddRange(availableItems);
+
+        // ì¹´ë“œ ì„ê¸°
+        ShuffleList(availableWeaponUpgrades);
+        ShuffleList(availableNewWeapons);
+        ShuffleList(availableItemUpgrades);
+
+        // ì¹´ë“œ ë°°ì¹˜
+        int weaponUpgradeIndex = 0;
+        int newWeaponIndex = 0;
+        int itemIndex = 0;
+
+        for (int i = 0; i < upgradeCards.Length; i++)
         {
-            tempUpgrades[index] = unlockUpgrades[0]; //ÇØ±İ ¿ÀºêÁ§Æ® ÀúÀå
-            index++; //¹è¿­ Å©±â Áõ°¡
-        }
-    }
+            // ë¬´ê¸° ì—…ê·¸ë ˆì´ë“œì™€ ì‹ ê·œ ë¬´ê¸°ì˜ í™•ë¥  ê³„ì‚°
+            float upgradeChance = 0.6f; // ì—…ê·¸ë ˆì´ë“œ í™•ë¥  60%
+            float newWeaponChance = 0.3f; // ì‹ ê·œ ë¬´ê¸° í™•ë¥  30%
+            float itemChance = 0.1f; // ì•„ì´í…œ í™•ë¥  10%
 
-    //ºÎ¸ğ°¡ º¯°æµÈ ¹«±â ´É·Â¸¦ ±âÁ¸ÀÇ ºÎ¸ğ·Î ´Ù½Ã º¯°æ, ´É·Â ¼±ÅÃ ½Ã ½ÇÇà
-    public void RelocationUpgrades()
-    {
-        upgrades[0].transform.SetParent(tempU_0.transform);
-        upgrades[1].transform.SetParent(tempU_1.transform);
-        upgrades[2].transform.SetParent(tempU_2.transform);
-    }
-
-    //ºÎ¸ğ°¡ º¯°æµÈ ¹«±â ´É·Â¸¦ ±âÁ¸ÀÇ ºÎ¸ğ·Î ´Ù½Ã º¯°æ, ¸®·Ñ ¹öÆ°À» ´­·¶À» ½Ã ½ÇÇà
-    public void UpgradesReroll()                                             
-    {
-        upgrades[0].transform.SetParent(tempU_0.transform);                         //ÀÓ½Ã·Î ³Ö¾îµĞ ºÎ¸ğ¸¦ ´Ù½Ã ºÒ·¯¿Í ¹«±â ´É·ÂÀÇ ºÎ¸ğ¸¦ ¿ø·¡´ë·Î µ¹·Á³õ±â±â
-        upgrades[1].transform.SetParent(tempU_1.transform);
-        upgrades[2].transform.SetParent(tempU_2.transform);
-
-        reroll.interactable = false;                                                //¸®·Ñ ¹öÆ° ±â´É ºñÈ°¼ºÈ­
-        rerollImage.color = new Color32(52, 255, 0, 60);                            //¸®·Ñ ºñÈ°¼ºÈ­ Ç¥½Ã¸¦ À§ÇÑ ¹öÆ° ÀÌ¹ÌÁöÀÇ ÄÃ·¯ °ª º¯°æ
-        UpgradesArr();
-    }
-
-    //Æ®·³ÇÁ Ä«µå Àá±İÇØÁ¦
-    public void UnlockUpgrades_0()
-    {
-        hasTrump = true;                                        //Æ®·³ÇÁ Ä«µå ÇØ±İ(º¸À¯) ¿©ºÎ
-    }
-
-    //Æ®·³ÇÁ Ä«µå ¾÷±×·¹ÀÌµå ±â´É ÇÔ¼ö
-    public void TrumpCardUpgrades()
-    {
-        switch (trumpCard_Lv) //°¢ ¹«±â ·¹º§ º° ¾÷±×·¹ÀÌµå
-        {
-            case 0:
-                //Æ®·³ÇÁ ¹«±âÀÇ ¼öÄ¡ º¯°æ
-                //¹«±â °ø°İ·Â Áõ°¡, ¼Óµµ Áõ°¡, °³¼ö Áõ°¡ µîµî
-                trumpCard_Lv++;
-                break;
-
-            case 1:
-                trumpCard_Lv++;
-                break;
-
-            case 2:
-                trumpCard_Lv++;
-                break;
-
-            case 3:
-                trumpCard_Lv++;
-                break;
-
-            case 4:
-                trumpCard_Lv++;
-                break;
-        }
-    }
-
-    //¹«±â ´É·Â ¼±ÅÃ È°¼ºÈ­ ÀÌº¥Æ®
-    public void UpgradeSelectEvent_0()
-    {
-        onUpgrade = true;                                           //¹«±â ´É·Â ¼±ÅÃ ÀÌº¥Æ® È°¼ºÈ­ ¿©ºÎ
-        pasue.interactable = false;                                //ÀÏ½ÃÁ¤Áö ¹öÆ° ±â´É ºñÈ°¼ºÈ­
-        Time.timeScale = 0.0f;                                     //Å¸ÀÓ½ºÄÉÀÏÀ» 0À¸·Î ÇÏ¿© Á¤Áö»óÅÂ
-        //gameManager.joystick.SetActive(false);                     //Á¶ÀÌ½ºÆ½ ºñÈ°¼ºÈ­
-        UpgradesArr();                                              //¹«ÀÛÀ§ ¹«±â ´É·Â Á¤ÇÏ±â
-        fade.SetActive(true);                                      //ÆäÀÌµå È°¼ºÈ­
-        upgradePanel.SetActive(true);                               //¹«±â ´É·Â ¼±ÅÃ ÆÇ³Ú È°¼ºÈ­
-        reroll.interactable = true;                                //¸®·Ñ ¹öÆ° ±â´É È°¼ºÈ­
-        rerollImage.color = new Color32(52, 255, 0, 255);          //¸®·Ñ ¹öÆ° ÀÌ¹ÌÁöÀÇ ÄÃ·¯ °ª ±âÁ¸´ë·Î º¯°æ
-    }
-
-    //¹«±â ´É·Â ¼±ÅÃ ºñÈ°¼ºÈ­ ÀÌº¥Æ®
-    public void UpgradeSelectEvent_1()
-    {
-        //gameManager.joystick.SetActive(true);                      //Á¶ÀÌ½ºÆ½ È°¼ºÈ­
-        TimeSlowUp();                                                //Å¸ÀÓ½ºÄÉÀÏÀ» 1·Î ÇÏ´Â ÇÔ¼ö
-        //joystick.handle.anchoredPosition = Vector2.zero;           //Á¶ÀÌ½ºÆ½ ÇÚµéÀÇ À§Ä¡ ÃÊ±âÈ­
-        //joystick.input = Vector2.zero;                             //Á¶ÀÌ½ºÆ½ÀÇ ÀÔ·Â°ª ÃÊ±âÈ­
-        upgradePanel.SetActive(false);                              //¹«±â ´É·Â ¼±ÅÃ ÆÇ³Ú ºñÈ°¼ºÈ­
-        onUpgrade = false;                                          //¹«±â ´É·Â ¼±ÅÃ ÀÌº¥Æ® È°¼ºÈ­ ¿©ºÎ
-    }
-
-    //¹«±â ´É·Â ¼±ÅÃ ÀÌº¥Æ® ÈÄ ÃµÃµÈ÷ Á¤Áö »óÅÂ Ç®¸®±â
-    public void TimeSlowUp()
-    {
-        if (Time.timeScale <= 1)                                   //Å¸ÀÓ½ºÄÉÀÏÀÌ 1°ú °°°Å³ª ÀÛÀ» ¶§ ½ÇÇà
-        {
-            if (fade.activeSelf == false)                          //ÆäÀÌµå ºñÈ°¼ºÈ­
-                fade.SetActive(true);
-
-            pasue.interactable = true;                             //ÀÏ½ÃÁ¤Áö ¹öÆ° ±â´É È°¼ºÈ­
-
-            time += 0.15f;                                         //°¡¼ÓÀûÀ¸·Î ÀÏ½ÃÁ¤Áö°¡ ÇØÁ¦ÇÏ±â À§ÇÑ ¿¬»ê
-            Time.timeScale += time;                                //Å¸ÀÓ½ºÄÉÀÏÀÇ °ªÀ» Å¸ÀÓ¸¸Å­ ´õÇÏ¿© ½Ã°£À» Èå¸£°Ô ÇÏ±â
-
-            if (Time.timeScale >= 1)                               //Å¸ÀÓ½ºÄÉÀÏÀÇ °ªÀÌ 1°ú °°°Å³ª 1º¸´Ù Å¬ °æ¿ì ½ÇÇà
+            // í™•ë¥ ì— ë”°ë¥¸ ì¹´ë“œ íƒ€ì… ê²°ì •
+            float randomValue = Random.value;
+            if (randomValue < upgradeChance && weaponUpgradeIndex < availableWeaponUpgrades.Count)
             {
-                fade.SetActive(false);                             //ÆäÀÌµå ºñÈ°¼ºÈ­
-                Time.timeScale = 1.0f;                             //Á¤»óÀûÀÎ °ÔÀÓ¼Óµµ¸¦ À§ÇØ Å¸ÀÓ½ºÄÉÀÏ¿¡ 1 ´ëÀÔ
-                time = 0;                                          //Å¸ÀÓ °ª 0À¸·Î ÃÊ±âÈ­
-                upgradePanel.SetActive(false);                      //¹«±â ´É·Â ¼±ÅÃ ÆÇ³Ú ºñÈ°¼ºÈ­
-                return;                                            //¸®ÅÏ
+                // ë¬´ê¸° ì—…ê·¸ë ˆì´ë“œ ì¹´ë“œ ì„¤ì •
+                SetupWeaponCard(upgradeCards[i], availableWeaponUpgrades[weaponUpgradeIndex], true);
+                weaponUpgradeIndex++;
+            }
+            else if (randomValue < upgradeChance + newWeaponChance && newWeaponIndex < availableNewWeapons.Count)
+            {
+                // ì‹ ê·œ ë¬´ê¸° ì¹´ë“œ ì„¤ì •
+                SetupWeaponCard(upgradeCards[i], availableNewWeapons[newWeaponIndex], false);
+                newWeaponIndex++;
+            }
+            else if (itemIndex < availableItemUpgrades.Count)
+            {
+                // ì•„ì´í…œ ì¹´ë“œ ì„¤ì •
+                SetupItemCard(upgradeCards[i], availableItemUpgrades[itemIndex]);
+                itemIndex++;
             }
             else
-                Invoke(nameof(TimeSlowUp), 0.06f);                       //ÀÎº¸Å©·Î Å¸ÀÓ½½·Î¿ì¾÷À» 0.06ÃÊÀÇ µô·¹ÀÌ¸¦ °¡Áö°í ½ÇÇà
+            {
+                // ë‚¨ì€ ì¹´ë“œëŠ” ë¹„í™œì„±í™”
+                upgradeCards[i].SetActive(false);
+            }
         }
     }
 
-    //¹«±â ¾÷±×·¹ÀÌµå ·¹º§ º°·Î ÇÔ¼ö¸¦ ÀÛ¼ºÇÏ°Å³ª ½ºÀ§Ä¡ ¹®À» È°¿ëÇÏ¿© ÇÏ³ªÀÇ ÇÔ¼ö·Î »ç¿ë
-    //public void trumpEvent_0()                                              //¹Ì»çÀÏ ´É·Â
-    //{
-    //    trumpData.damage += (trumpData.baseDamage / 100) * 30;            //¹Ì»çÀÏ µ¥¹ÌÁö Áõ°¡
-    //    mStar_0[trump_Lv_0].sprite = starSprite;                            //¹Ì»çÀÏ ´É·ÂÀÇ º° ÀÌ¹ÌÁö º¯°æ
-    //    trump_Lv_0++;                                                       //¹Ì»çÀÏ ·¹º§ Áõ°¡
-    //}
-}
+    // ë¬´ê¸° ì¹´ë“œ ì„¤ì • (isUpgrade: trueë©´ ì—…ê·¸ë ˆì´ë“œ, falseë©´ ì‹ ê·œ ë¬´ê¸°)
+    private void SetupWeaponCard(GameObject card, WeaponData weapon, bool isUpgrade)
+    {
+        card.SetActive(true);
+        var cardUI = card.GetComponent<UpgradeCardUI>();
+        if (cardUI != null)
+        {
+            cardUI.SetupWeaponCard(weapon, isUpgrade);
+        }
+    }
+
+    // ì•„ì´í…œ ì¹´ë“œ ì„¤ì •
+    private void SetupItemCard(GameObject card, ItemData item)
+    {
+        card.SetActive(true);
+        // ì¹´ë“œ UI ì—…ë°ì´íŠ¸
+        var cardUI = card.GetComponent<UpgradeCardUI>();
+        if (cardUI != null)
+        {
+            cardUI.SetupItemCard(item);
+        }
+    }
+
+    // ì¹´ë“œ ì„ íƒ ì‹œ í˜¸ì¶œ
+    private void OnCardSelected(int cardIndex)
+    {
+        var cardUI = upgradeCards[cardIndex].GetComponent<UpgradeCardUI>();
+        if (cardUI != null)
+        {
+            if (cardUI.isWeapon)
+            {
+                if (cardUI.isUpgrade)
+                {
+                    // ë¬´ê¸° ì—…ê·¸ë ˆì´ë“œ ì ìš©
+                    ApplyWeaponUpgrade(cardUI.weaponData);
+                }
+                else
+                {
+                    // ì‹ ê·œ ë¬´ê¸° ì¥ì°©
+                    EquipNewWeapon(cardUI.weaponData);
+                }
+            }
+            else
+            {
+                // ì•„ì´í…œ íš¨ê³¼ ì ìš©
+                ApplyItemEffect(cardUI.itemData);
+            }
+        }
+
+        // ì—…ê·¸ë ˆì´ë“œ ì™„ë£Œ
+        CompleteUpgrade();
+    }
+
+    // ë¬´ê¸° ì—…ê·¸ë ˆì´ë“œ ì ìš©
+    private void ApplyWeaponUpgrade(WeaponData weapon)
+    {
+        if (weapon != null)
+        {
+            // ë¬´ê¸° ë°ì´í„° ë ˆë²¨ ì—…
+            weapon.currentLevel++;
+            
+            // WeaponManagerë¥¼ í†µí•´ í•´ë‹¹ ë¬´ê¸° ì°¾ê¸°
+            var weaponManager = WeaponManager.Instance;
+            foreach (var equippedWeapon in weaponManager.equippedWeapons)
+            {
+                Debug.Log("equippedWeapon.WeaponType: " + equippedWeapon.WeaponType);
+                Debug.Log("weapon.weaponType: " + weapon.weaponType);
+                if (equippedWeapon.WeaponType == weapon.weaponType)
+                {
+                    Debug.Log("UpGrade!");
+                    // ë¬´ê¸° ì—…ê·¸ë ˆì´ë“œ ì ìš©
+                    equippedWeapon.LevelUpLogic();
+                    break;
+                }
+            }
+        }
+    }
+
+    // ì•„ì´í…œ íš¨ê³¼ ì ìš©
+    private void ApplyItemEffect(ItemData item)
+    {
+        // ì•„ì´í…œ íš¨ê³¼ ì ìš©
+        switch (item.effectType)
+        {
+            case ItemEffectType.Damage:
+                // ë°ë¯¸ì§€ ì¦ê°€
+                break;
+            case ItemEffectType.Speed:
+                // ì†ë„ ì¦ê°€
+                break;
+            case ItemEffectType.Health:
+                // ì²´ë ¥ ì¦ê°€
+                break;
+            // ê¸°íƒ€ íš¨ê³¼ë“¤...
+        }
+    }
+
+    // ì‹ ê·œ ë¬´ê¸° ì¥ì°©
+    private void EquipNewWeapon(WeaponData weapon)
+    {
+        if (weapon != null)
+        {
+            // ë¬´ê¸° ë°ì´í„°ì˜ í˜„ì¬ ë ˆë²¨ì„ 1ë¡œ ì„¤ì •
+            weapon.currentLevel = 1;
+            
+            // WeaponManagerë¥¼ í†µí•´ ìƒˆë¡œìš´ ë¬´ê¸° ìƒì„± ë° ì¥ì°©
+            var weaponManager = WeaponManager.Instance;
+            var newWeapon = weaponManager.CreateWeapon((int)weapon.weaponType);
+            if (newWeapon != null)
+            {
+                weaponManager.AddWeapon(newWeapon);
+            }
+        }
+    }
+
+    // ì—…ê·¸ë ˆì´ë“œ ì™„ë£Œ
+    private void CompleteUpgrade()
+    {
+        isUpgrading = false;
+        Time.timeScale = 1f; // ê²Œì„ ì¬ê°œ
+        fadePanel.SetActive(false);
+        upgradePanel.SetActive(false);
+    }
+
+    // ë¦¬ìŠ¤íŠ¸ ì„ê¸°
+    private void ShuffleList<T>(List<T> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            T temp = list[i];
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
+        }
+    }
+} 

@@ -5,8 +5,7 @@ public class HeartQueen : Enemy
 {
     HitEffect takeDamage;
 
-    [SerializeField]
-    Bounds moveBounds; //이동 범위 > 이동 범위를 설정하기 위함
+    [SerializeField] Bounds moveBounds; //이동 범위 > 이동 범위를 설정하기 위함
     Vector2 targetPos; //목표위치
     float moveTime = 0.0f; //이동 시간
     float moveTimer = 0.0f; //이동 타이머

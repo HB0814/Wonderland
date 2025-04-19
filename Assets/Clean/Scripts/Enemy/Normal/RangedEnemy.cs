@@ -8,10 +8,8 @@ public class RangedEnemy : Enemy
     public float projectileSpeed = 10.0f; // 투사체 속도
     public string projectilePoolTag = "EnemyProjectile"; // ObjectPool에서 사용할 태그
     bool canAttack = true;
-    [SerializeField]
-    private EnemyProjectile[] projectiles; //투사체 배열
-    [SerializeField]
-    private GameObject point; //공격이 시작되는 지점
+    [SerializeField] private EnemyProjectile[] projectiles; //투사체 배열
+    [SerializeField] private GameObject point; //공격이 시작되는 지점
                                               //스트라이트 플립에 맞춰서 해당 지점의 position 값도 변경해야할듯?
 
     protected float minAttackRange = 4.0f; // 최소 공격 거리

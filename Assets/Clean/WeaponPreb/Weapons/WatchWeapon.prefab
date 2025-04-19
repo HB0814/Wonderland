@@ -44,20 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b45c0c0045905438c45ba9f21f8c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: PocketWatch
-  description: "\uAC00\uC7A5 \uAC00\uAE4C\uC6B4 \uC801\uC744 \uACF5\uACA9\uD569\uB2C8\uB2E4."
-  weaponIcon: {fileID: 0}
-  maxLevel: 5
-  currentLevel: 1
-  baseDamage: 10
-  attackRange: 2.5
   attackCooldown: 1
   nextAttackTime: 0
+  weaponData: {fileID: 0}
   watchEffectPoolTag: PocketWatchEffect
-  effectRadius: 5
-  effectDuration: 3
-  weaponStats: {fileID: 11400000, guid: d835cd8f7d4f04c46a841fbb89cd53d7, type: 2}
-  detectionRange: 10
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 8

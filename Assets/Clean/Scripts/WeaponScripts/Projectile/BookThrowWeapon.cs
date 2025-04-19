@@ -8,6 +8,7 @@ public class BookThrowWeapon : WeaponBase
     private void Awake()
     {
         weaponData = WeaponDataManager.Instance.GetWeaponData(WeaponType.Book);
+        WeaponType = WeaponType.Book;
     }
     private void Start()
     {
@@ -25,7 +26,11 @@ public class BookThrowWeapon : WeaponBase
     }
     protected override void Attack()
     {
-        SpawnBook();
+        if (nextAttackTime >= attackCooldown)
+        {
+            SpawnBook();
+            nextAttackTime = 0f;
+        }
     }
     protected override void Update()
     {
@@ -35,6 +40,34 @@ public class BookThrowWeapon : WeaponBase
         }
         base.Update();
     }
+
+    private void SpawnBook()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
+        }
+
+        // 가장 가까운 적 찾기
+        Vector3 nearestEnemyDirection = GetNearestEnemyDirection(transform.position);
+        if (nearestEnemyDirection != Vector3.zero)
+        {
+            // 책 투사체 생성
+            GameObject projectileObj = ObjectPool.Instance.SpawnFromPool(bookProjectilePoolTag, transform.position, Quaternion.identity);
+            if (projectileObj != null)
+            {
+                Projectile projectile = projectileObj.GetComponent<Projectile>();
+                if (projectile != null)
+                {
+                    projectile.BaseInitialize(damage, size, lifeTime, speed);
+                    projectile.DebuffInitialize(knockbackForce, slowForce, slowDuration);
+                    projectile.PierceInitialize(weaponData.levelStats.pierceCount[currentLevel - 1]);
+                    projectile.SetDirection(nearestEnemyDirection);
+                }
+            }
+        }
+    }
+
     private Vector3 GetNearestEnemyDirection(Vector3 spawnPosition)
     {
         // 범위 내의 모든 콜라이더 검색
@@ -56,41 +89,10 @@ public class BookThrowWeapon : WeaponBase
             }
         }
 
-        // 적이 발견되면 그 방향으로, 아니면 랜덤 방향으로
-        if (nearestDistance < float.MaxValue)
+        if (nearestEnemyPosition != Vector3.zero)
         {
             return (nearestEnemyPosition - spawnPosition).normalized;
         }
-        else
-        {
-            // 랜덤한 각도 생성 (0~360도)
-            float randomAngle = Random.Range(0f, 360f);
-            float radian = randomAngle * Mathf.Deg2Rad;
-            return new Vector3(Mathf.Cos(radian), Mathf.Sin(radian), 0).normalized;
-        }
-    }
-
-    private void SpawnBook()
-    {
-        nextAttackTime = 0f;
-        // 랜덤 시작 위치 설정
-        Vector3 spawnPosition = transform.position;
-
-        // 책 생성
-        GameObject book = WeaponManager.Instance.SpawnProjectile(bookProjectilePoolTag, spawnPosition, Quaternion.identity);
-        if (book != null)
-        {
-            Projectile projectile = book.GetComponent<Projectile>();
-            if (projectile != null)
-            {
-                // 가장 가까운 적을 향한 방향 설정
-                Vector3 direction = GetNearestEnemyDirection(spawnPosition);
-                projectile.SetDirection(direction);
-
-                // 무기 속성 설정
-                projectile.BaseInitialize(damage, size, lifeTime, speed);
-                projectile.DebuffInitialize(knockbackForce, slowForce, slowDuration);
-            }
-        }
+        return Vector3.zero;
     }
 }

@@ -32,10 +32,24 @@ public class WeaponManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         objectPool = ObjectPool.Instance;
+
+        AddWeapon(WeaponManager.Instance.CreateWeapon((int)WeaponType.Card));
     }
 
     public bool AddWeapon(WeaponBase weapon)
     {
+        if (weapon == null) return false;
+
+        // 이미 같은 타입의 무기가 있는지 확인
+        foreach (var equippedWeapon in equippedWeapons)
+        {
+            if (equippedWeapon.WeaponType == weapon.WeaponType)
+            {
+                Debug.Log($"이미 {weapon.WeaponType} 타입의 무기가 장착되어 있습니다!");
+                return false;
+            }
+        }
+
         if (equippedWeapons.Count >= maxWeapons)
         {
             Debug.Log("최대 무기 수에 도달했습니다!");
@@ -83,6 +97,17 @@ public class WeaponManager : MonoBehaviour
             return null;
         }
 
+        // 이미 같은 타입의 무기가 있는지 확인
+        WeaponType weaponType = (WeaponType)weaponIndex;
+        foreach (var equippedWeapon in equippedWeapons)
+        {
+            if (equippedWeapon.WeaponType == weaponType)
+            {
+                Debug.Log($"이미 {weaponType} 타입의 무기가 장착되어 있습니다!");
+                return null;
+            }
+        }
+
         GameObject weaponObj = Instantiate(weaponPrefabs[weaponIndex]);
         WeaponBase weapon = weaponObj.GetComponent<WeaponBase>();
         
@@ -98,8 +123,11 @@ public class WeaponManager : MonoBehaviour
                 return null;
             }
         }
-
-        return null;
+        else
+        {
+            Destroy(weaponObj);
+            return null;
+        }
     }
 
     // ObjectPool을 통해 투사체 생성

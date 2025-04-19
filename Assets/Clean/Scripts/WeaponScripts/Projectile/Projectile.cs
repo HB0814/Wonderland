@@ -16,6 +16,10 @@ public class Projectile : MonoBehaviour
     private float slowForce = 3; // 슬로우 강도
     private float slowDuration = 1; // 슬로우 지속시간
 
+    [Header("관통 속성")]
+    private int maxPierceCount = 0; // 최대 관통 수
+    private int currentPierceCount = 0; // 현재 관통 수
+
     [Header("모자 부메랑 속성")]
     private float returnSpeed = 12f;
     private float maxDistance = 7f;
@@ -55,11 +59,18 @@ public class Projectile : MonoBehaviour
 
         transform.localScale = new Vector3(projectileSize, projectileSize, projectileSize);
     }
+
     public virtual void DebuffInitialize(float knockbackForce, float slowForce, float slowDuration)
     {
         this.knockbackForce = knockbackForce;
         this.slowForce = slowForce;
         this.slowDuration = slowDuration;
+    }
+
+    public virtual void PierceInitialize(int pierceCount)
+    {
+        this.maxPierceCount = pierceCount;
+        this.currentPierceCount = 0;
     }
 
     protected virtual void Update()
@@ -86,7 +97,6 @@ public class Projectile : MonoBehaviour
     public void SetDirection(Vector3 direction)
     {
         this.direction = direction;
-        
     }
 
     public void Move(Vector3 dir)
@@ -139,4 +149,22 @@ public class Projectile : MonoBehaviour
                 break;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(weaponType != WeaponType.Book) return;
+        if (other.CompareTag("Enemy"))
+        {
+            if (currentPierceCount < maxPierceCount)
+            {
+                currentPierceCount++;
+            }
+            else
+            {
+                Deactivate();
+            }
+        }
+    }
+
+
 } 

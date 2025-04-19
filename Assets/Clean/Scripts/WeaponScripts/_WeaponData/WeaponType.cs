@@ -1,14 +1,13 @@
 public enum WeaponType
 {
-    None,
+    Apple,
+    Book,
+    Card,
+    Cat,
     Firecracker,
+    Hat,
     Pipe,
     Sword,
-    Hat,
-    Cat,
-    Watch,
-    Book,
-    Apple,
     Tea,
-    Card
+    Watch,
 } 

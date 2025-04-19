@@ -102,15 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af694977be3a624d83b8230fd1422c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileDamage: 10
-  projectileLifeTime: 1
-  projectileSize: 1
-  projectileSpeed: 1
-  direction: {x: 0, y: 0, z: 0}
-  knockbackForce: 1
-  slowForce: 3
-  slowDuration: 1
-  weaponType: 7
+  weaponType: 1
 --- !u!61 &8963938408286591653
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -155,7 +147,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.65, y: 0.9}
   m_EdgeRadius: 0
 --- !u!50 &-5211933635867507421
 Rigidbody2D:

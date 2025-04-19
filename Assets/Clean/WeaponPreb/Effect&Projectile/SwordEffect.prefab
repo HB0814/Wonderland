@@ -53,7 +53,7 @@ MonoBehaviour:
   knockbackForce: 1
   slowForce: 3
   slowDuration: 1
-  weaponType: 3
+  weaponType: 7
 --- !u!212 &5078020906960542175
 SpriteRenderer:
   m_ObjectHideFlags: 0

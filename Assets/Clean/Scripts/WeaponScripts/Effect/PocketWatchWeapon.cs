@@ -8,6 +8,7 @@ public class PocketWatchWeapon : WeaponBase
     private void Awake()
     {
         weaponData = WeaponDataManager.Instance.GetWeaponData(WeaponType.Watch);
+        WeaponType = WeaponType.Watch;
     }
     private void Start()
     {

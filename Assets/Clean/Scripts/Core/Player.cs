@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float currentExp = 0f;
     [SerializeField] private float maxExp = 100f;
     [SerializeField] private int currentLevel = 1;
-
+    [SerializeField] private float insanityExp = 0.01f;
     // 경험치 변경 이벤트
     public System.Action<float, float> onExpChanged;  // (현재 경험치, 최대 경험치)
     public System.Action<int> onLevelChanged;         // (현재 레벨)
@@ -223,7 +223,7 @@ public class Player : MonoBehaviour
         // 경험치 획득 시 광기 2 증가
         if (insanitySystem != null)
         {
-            insanitySystem.AddInsanity(2f);
+            insanitySystem.AddInsanity(insanityExp);
             onInsanityChanged?.Invoke(insanitySystem.GetInsanity());
         }
     }
@@ -235,6 +235,7 @@ public class Player : MonoBehaviour
         maxExp *= 1.2f;
         onLevelChanged?.Invoke(currentLevel);
         onExpChanged?.Invoke(currentExp, maxExp);
+        UpgradeManager.Instance.ShowUpgradeOptions();
     }
 
     public void TakeDamage(float damage)

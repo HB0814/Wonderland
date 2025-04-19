@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static EnemyManager;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 
@@ -159,6 +160,7 @@ public abstract class Enemy : MonoBehaviour
             Debug.Log("플레이어가 피해를 입음!");
         }
     }
+
     //플레이어 방향으로 이동
     protected virtual void MoveTowardsPlayer()
     {
@@ -170,21 +172,6 @@ public abstract class Enemy : MonoBehaviour
     }
 
     //무기 피격
-    //public virtual void TakeDamage(float damage)
-    //{
-    //    float actualDamage = Mathf.Max(1, damage);
-    //    currentHealth -= actualDamage;
-
-    //    Debug.Log("Enemy TakeDamage: " + actualDamage);
-
-    //    StartCoroutine(HitEffect());
-
-    //    if (currentHealth <= 0.0f)
-    //    {
-    //        Die();
-    //    }
-    //}
-
     public virtual void TakeDamage(float damage, float knockbackForce, float slowForce, float slowDuration)
     {
         damage -= deffense; //damage = (damage * 플레이어 공격력 * 0.01) - 적 방어력
@@ -248,10 +235,10 @@ public abstract class Enemy : MonoBehaviour
     {
         StopAllCoroutines();
 
-        if (expGemPrefab != null)
-        {
-            Instantiate(expGemPrefab, transform.position, Quaternion.identity);
-        }
+        //if (expGemPrefab != null)
+        //{
+        //    Instantiate(expGemPrefab, transform.position, Quaternion.identity);
+        //}
 
         if (dropItems != null && dropItems.Length > 0 && Random.value <= dropChance)
         {
@@ -264,11 +251,27 @@ public abstract class Enemy : MonoBehaviour
         {
             deathEffect.Play();
         }
+
+        CreateExpgem();
+
         spriteRenderer.color = originalColor;
         gameObject.SetActive(false);
         //Destroy(gameObject);
     }
 
+    protected virtual void CreateExpgem()
+    {
+        string rate;
+        
+        GameObject expgemToSpawn = ObjectPool.Instance.SpawnFromPool_Expgem("Common", transform.position);
+
+        if (expgemToSpawn != null)
+        {
+            // 초기화 및 활성화
+            expgemToSpawn.SetActive(true);
+            Debug.Log("몬스터 활성화");
+        }
+    }
 
     protected virtual void OnEnable()
     {

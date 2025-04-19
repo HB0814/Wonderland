@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ChessEnemy : Enemy
 {
-    public enum ChessType { Rook_Black, Bishop_Black, Rook_White, Bishop_White, Pawn } //체스 말 종류
+    public enum ChessType {Pawn, Rook, Bishop, Rook_Event, Bishop_Event} //체스 말 종류
 
     [Header("이벤트형 체스")]
     public ChessType type; //체스 말 종류
@@ -13,35 +13,38 @@ public class ChessEnemy : Enemy
 
     private new void Update()
     {
-        switch(type)
+        switch (type)
         {
-            case ChessType.Rook_Black: //검정 룩: 십자 모양으로만 이동하는 이벤트형 체스말
-                if(!hasDir)
-                    moveDir = RookMove();
-
-                UpdateSprite();
-                rb.linearVelocity = moveDir * moveSpeed;
-                break;
-
-            case ChessType.Bishop_Black: //검정 비숍: 엑스자 모양으로만 이동하는 이벤트형 체스말
-                if (!hasDir)
-                    moveDir = BishopMove();
-
-                UpdateSprite();
-                rb.linearVelocity = moveDir * moveSpeed;
-                break;
-
-            case ChessType.Rook_White: //흰 룩: 플레이어 추격하는 일반형 체스말, 공격 추가할 수도?
-                base.Update();
-                break;
-
-            case ChessType.Bishop_White: //흰 비숍: 플레이어 추격하는 일반형 체스말, 공격 추가할 수도?
-                base.Update();
-                break;
-
-
             case ChessType.Pawn: //흰 폰: 플레이어 추격하는 일반형 체스말
                 base.Update();
+                break;
+
+            case ChessType.Rook: //흰 룩: 플레이어 추격하는 일반형 체스말, 공격 추가할 수도?
+                base.Update();
+                break;
+
+            case ChessType.Bishop: //흰 비숍: 플레이어 추격하는 일반형 체스말, 공격 추가할 수도?
+                base.Update();
+                break;
+
+            case ChessType.Rook_Event: //검정 룩: 십자 모양으로만 이동하는 이벤트형 체스말
+                if (!hasDir)
+                {
+                    moveDir = RookMove();
+                    UpdateSpriteFlip();
+                }
+                UpdateSpriteLayer();
+                rb.linearVelocity = moveDir * moveSpeed;
+                break;
+
+            case ChessType.Bishop_Event: //검정 비숍: 엑스자 모양으로만 이동하는 이벤트형 체스말
+                if (!hasDir)
+                {
+                    moveDir = BishopMove();
+                    UpdateSpriteFlip();
+                }
+                UpdateSpriteLayer();
+                rb.linearVelocity = moveDir * moveSpeed;
                 break;
         }
     }

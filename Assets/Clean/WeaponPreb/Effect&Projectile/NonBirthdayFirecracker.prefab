@@ -140,7 +140,7 @@ MonoBehaviour:
   knockbackForce: 1
   slowForce: 3
   slowDuration: 1
-  weaponType: 1
+  weaponType: 4
 --- !u!212 &1513787991172483997
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -193,7 +193,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!70 &4316107581882420823

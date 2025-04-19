@@ -7,17 +7,10 @@ TagManager:
   - Enemy
   - Projectile
   - Weapon
-  - CheshireCat
-  - JabberwockyBreath
-  - NonBirthdayFirecracker
-  - RollApple
-  - Book
-  - HatBoomerang
-  - Pipe
-  - PocketWatch
-  - Tea
-  - VorpalSword
-  - TrumpCard
+  - PlayerWeapon
+  - Boss
+  - ExpGem
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -28,8 +21,8 @@ TagManager:
   - Player
   - PlayerWeapon
   - Col
-  - 
-  - 
+  - Item
+  - EnemyAttackCol
   - 
   - 
   - 
