@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2048
     height: 1079.2001
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Project
   m_RootView: {fileID: 12}
   m_MinSize: {x: 875, y: 332}
   m_MaxSize: {x: 10000, y: 10000}
@@ -43,8 +43,8 @@ MonoBehaviour:
     y: 481.6
     width: 988
     height: 541.6
-  m_MinSize: {x: 51, y: 76}
-  m_MaxSize: {x: 4001, y: 4026}
+  m_MinSize: {x: 50, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 466
+  controlID: 28
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 50}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 326
+  controlID: 181
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 281
+  controlID: 180
   draggingID: 0
 --- !u!114 &9
 MonoBehaviour:
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 1
-  controlID: 86
+  controlID: 178
   draggingID: 0
 --- !u!114 &10
 MonoBehaviour:
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 87
+  controlID: 179
   draggingID: 0
 --- !u!114 &12
 MonoBehaviour:
@@ -704,7 +704,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Clean/EnemyPreb/Normal
+    - Assets/Clean/Scripts/System
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -714,16 +714,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Clean/EnemyPreb/Normal
+  - Assets/Clean/Scripts/System
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\LSU\UnityProject\Wonderland_
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 54c50000
-    m_LastClickedID: 50516
-    m_ExpandedIDs: 00000000a8b20000b8be0000babe0000bcbe0000bebe0000c0be0000c2be0000c4be0000c6be0000c8be00005cc50000
+    m_SelectedIDs: 10bd0000
+    m_LastClickedID: 48400
+    m_ExpandedIDs: 0000000076bc000078bc00007abc00007cbc00007ebc000080bc000082bc000084bc000086bc000088bc00008abc0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -752,7 +752,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000b8be0000babe0000bcbe0000bebe0000c0be0000c2be0000c4be0000c6be0000c8be0000
+    m_ExpandedIDs: 0000000076bc000078bc00007abc00007cbc00007ebc000080bc000082bc000084bc000086bc000088bc00008abc0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -900,21 +900,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: aef5ffff
+      m_ExpandedIDs: 08fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: GameManager
-        m_OriginalName: GameManager
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 47116
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
         m_ClientGUIView: {fileID: 4}
@@ -1506,7 +1506,7 @@ MonoBehaviour:
   m_Position:
     m_Target: {x: -1.6168166, y: -0.12803204, z: -0.039145105}
     speed: 2
-    m_Value: {x: -1.7704906, y: -0.12520121, z: -0.04131674}
+    m_Value: {x: -1.6168166, y: -0.12803204, z: -0.039145105}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1558,7 +1558,7 @@ MonoBehaviour:
   m_Size:
     m_Target: 4.608729
     speed: 2
-    m_Value: 4.8258944
+    m_Value: 4.608729
   m_Ortho:
     m_Target: 1
     speed: 2
