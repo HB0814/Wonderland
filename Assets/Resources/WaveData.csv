@@ -2,9 +2,8 @@ startTime,enemyType,spawnCount,spawnInterval
 0,HeartCard,15,2
 30,HeartCard,20,1.5
 30,DiamondCard,30,1
-90,HeartCard,20,1.5
-120,DiamondCard,30,1
-150,DiamondCard,30,1
-180,Pawn,20,1.5
-180,Rook_Event_NoMove,1,0
-180,HeartCard,10,3
+50,Teapot,5,4
+60,Pawn,20,1.5
+70,Rook_Event_NoMove,1,0
+70,HeartCard,20,2
+90,CheshireCat,20,3

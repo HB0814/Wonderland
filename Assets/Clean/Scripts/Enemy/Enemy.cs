@@ -1,8 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static EnemyManager;
-using static UnityEditor.Experimental.GraphView.GraphView;
-
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -235,11 +232,6 @@ public abstract class Enemy : MonoBehaviour
     {
         StopAllCoroutines();
 
-        //if (expGemPrefab != null)
-        //{
-        //    Instantiate(expGemPrefab, transform.position, Quaternion.identity);
-        //}
-
         if (dropItems != null && dropItems.Length > 0 && Random.value <= dropChance)
         {
             int randomIndex = Random.Range(0, dropItems.Length);
@@ -256,7 +248,6 @@ public abstract class Enemy : MonoBehaviour
 
         spriteRenderer.color = originalColor;
         gameObject.SetActive(false);
-        //Destroy(gameObject);
     }
 
     protected virtual void CreateExpgem()
