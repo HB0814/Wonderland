@@ -10654,7 +10654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b7e981a7fdc0f438ae5d07cda44e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 1387571368}
 --- !u!61 &1387571367
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11285,7 +11285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b7e981a7fdc0f438ae5d07cda44e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 1464889557}
 --- !u!61 &1464889556
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13768,15 +13768,18 @@ MonoBehaviour:
   - tag: DiamondCard
     prefab: {fileID: 5313222270877919379, guid: 0c539fac7a3f82b428386d5b5ae032ee, type: 3}
     size: 50
-  - tag: ChessPawn
+  - tag: Pawn
     prefab: {fileID: 4965795789343173482, guid: e5e8fdf1a86fc7f4a9c57e80c5eb2c27, type: 3}
     size: 50
-  - tag: ChessRook
+  - tag: Rook
     prefab: {fileID: 5547197353583117834, guid: 76500fa9c13fb2148be368580748eab0, type: 3}
     size: 50
   - tag: Teapot
     prefab: {fileID: 8568965045799324630, guid: 8883057eb095ea149adcc77f67c429fb, type: 3}
     size: 10
+  - tag: Rook_Event_NoMove
+    prefab: {fileID: 5547197353583117834, guid: 80cf570f6e0eec64c8c2fdee8fb0bbb8, type: 3}
+    size: 100
   expgemPools:
   - tag: Common
     prefab: {fileID: 4826287998482492041, guid: e0d53ffe5d3aded43a41cbb90fe950b6, type: 3}

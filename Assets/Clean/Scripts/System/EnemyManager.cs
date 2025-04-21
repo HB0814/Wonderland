@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 using System.Collections.Generic;
+using System.Collections;
+using static EnemyManager;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -30,41 +32,92 @@ public class EnemyManager : MonoBehaviour
     public int firstSpawnCount = 0; //몬스터 소환 카운트
     public int secondSpawnCount = 0; //몬스터 소환 카운트
 
-    //enemyType과 enemySpawnTime은 csv 파일 혹은 스크립터블을 사용하여 관리
+    [SerializeField] private List<WaveData> waveList;
+    [SerializeField] private float timer = 0f;
+    private int currentWaveIndex = 0;
+
+    Player player;
+    Transform target;
+    
+    private void Start()
+    {
+        player = GameObject.Find("Player").GetComponent<Player>();
+        target = player.transform;
+        waveList = CSVLoader.LoadWaveData("WaveData");
+    }
 
     private void Update()
     {
-        SpawnCheck();
+        timer += Time.deltaTime;
+
+        while (currentWaveIndex < waveList.Count && timer >= waveList[currentWaveIndex].startTime)
+        {
+            StartCoroutine(SpawnWave(waveList[currentWaveIndex]));
+            currentWaveIndex++;
+        }
 
         //if (Input.GetKeyDown(KeyCode.Keypad0))
         //     firstEnemyType = EnemyType.HeartCard;
+
+        //if(Input.GetKeyDown(KeyCode.Keypad0))
+        //{
+        //    EllipseSpawn(100, 14f, 9f, "Rook_Event_NoMove");
+        //}
     }
 
-    private void SpawnCheck()
+    private IEnumerator SpawnWave(WaveData wave)
     {
-        firstTimer += Time.deltaTime;
-        secondTimer += Time.deltaTime;
-
-        if (firstTimer >= firstSpawnCool && onFirstEnemySpawn )//&& firstSpawnCount < firstSpawnNum)
+        foreach (var subWave in wave.subWaves)
         {
-            firstTimer = 0;
-            SpawnEnemy(firstEnemyType);
-            firstSpawnCount++;
+            StartCoroutine(SpawnSubWave(subWave));
         }
+        yield return null;
+    }
 
-        if (secondTimer >= secondSpawnCool && onSecondEnemySpawn)// && secondSpawnCount < secondSpawnNum)
+    private IEnumerator SpawnSubWave(SubWaveData subWave)
+    {
+        for (int i = 0; i < subWave.spawnCount; i++)
         {
-            secondTimer = 0;
-            SpawnEnemy(secondEnemyType);
-            secondSpawnCount++;
+            SpawnEnemy(subWave.enemyType); // 실제 스폰
+            yield return new WaitForSeconds(subWave.spawnInterval);
         }
     }
 
-    private void SpawnEnemy(EnemyType enemyType)
+    /*
+    //첫번째, 두번째 적 스폰
+    //private void SpawnCheck()
+    //{
+    //    firstTimer += Time.deltaTime;
+    //    secondTimer += Time.deltaTime;
+
+    //    if (firstTimer >= firstSpawnCool && onFirstEnemySpawn )//&& firstSpawnCount < firstSpawnNum)
+    //    {
+    //        firstTimer = 0;
+    //        SpawnEnemy(firstEnemyType.ToString());
+    //        firstSpawnCount++;
+    //    }
+
+    //    if (secondTimer >= secondSpawnCool && onSecondEnemySpawn)// && secondSpawnCount < secondSpawnNum)
+    //    {
+    //        secondTimer = 0;
+    //        SpawnEnemy(secondEnemyType.ToString());
+    //        secondSpawnCount++;
+    //    }
+    //}
+    */
+
+    //EnemyType enemyType
+    private void SpawnEnemy(string enemyType)
     {
+        if (enemyType == "Rook_Event_NoMove")
+        {
+            EllipseSpawn(100, 14f, 9f, enemyType);
+            return;
+        }
+
         Vector3 spawnPos = GetRandomSpawnPosition();
 
-        GameObject enemyToSpawn = ObjectPool.Instance.SpawnFromPool_Enemy(enemyType.ToString(), spawnPos);
+        GameObject enemyToSpawn = ObjectPool.Instance.SpawnFromPool_Enemy(enemyType, spawnPos);
 
         if (enemyToSpawn != null)
         {
@@ -73,7 +126,8 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public Vector3 GetRandomSpawnPosition()
+    //일반 몬스터 스폰 -> 화면 밖에서 스폰
+    private Vector3 GetRandomSpawnPosition()
     {
         Vector3 randomPos = Vector3.zero;
         float min = -0.2f; //화면에서 벗어나는 최소 거리
@@ -98,5 +152,22 @@ public class EnemyManager : MonoBehaviour
                 break;
         }
         return Camera.main.ViewportToWorldPoint(randomPos);
+    }
+
+    //타원 모양으로 몬스터 스폰 -> 플레이어를 이동 제한
+    private void EllipseSpawn(int count, float a, float b, string enemyType) //몬스터 수, +- x값, +- y갑, 몬스터 타입
+    {
+        Vector3 center = target.transform.position;
+
+        for (int i = 0; i < count; i++)
+        {
+            float angle = (float)i / (float)count * 2 * Mathf.PI; //균등 분할
+            float x = a * Mathf.Cos(angle);
+            float y = b * Mathf.Sin(angle);
+
+            Vector3 spawnPos = center + new Vector3(x, y, 0f);
+            GameObject enemyToSpawn = ObjectPool.Instance.SpawnFromPool_Enemy(enemyType, spawnPos);
+        }
+
     }
 }

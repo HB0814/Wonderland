@@ -26,7 +26,7 @@ public class KamikazeEnemy : Enemy
     }
 
     //폭발 애니메이션 재생 -> 인보크로 일정 시간 뒤 폭발 -> 폭발 시 데미지
-    void ExplodeReaby()
+    private void ExplodeReaby()
     {
         //폭발 애니메이션 실행
         animator.SetTrigger("isReady");
@@ -35,7 +35,7 @@ public class KamikazeEnemy : Enemy
         Invoke(nameof(Explode), 2.5f); //2.5초 뒤 폭발
     }
 
-    void Explode()
+    private void Explode()
     {
         Debug.Log("자폭!!!");
         // 폭발 이펙트 생성 or 폭발 이펙트 재생

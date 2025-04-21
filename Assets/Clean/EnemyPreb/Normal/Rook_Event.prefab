@@ -262,7 +262,7 @@ MonoBehaviour:
   attackDamage: 10
   attackRange: 0.3
   attackCooldown: 1
-  knockbackResistance: 0.5
+  knockbackResistance: 10
   currentHealth: 0
   nextAttackTime: 0
   isKnockback: 0

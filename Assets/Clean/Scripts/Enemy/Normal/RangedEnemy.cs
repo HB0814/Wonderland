@@ -68,7 +68,7 @@ public class RangedEnemy : Enemy
     }
 
     //후퇴
-    void Retreat()
+    private void Retreat()
     {
         if (player != null && !isKnockback)
         {
@@ -78,7 +78,7 @@ public class RangedEnemy : Enemy
     }
 
     //공격
-    void RangedAttack()
+    private void RangedAttack()
     {
         nextAttackTime = Time.time + ranged_attackCooldown;
 

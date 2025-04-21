@@ -3,13 +3,17 @@ using UnityEngine;
 
 public class ChessEnemy : Enemy
 {
-    public enum ChessType {Pawn, Rook, Bishop, Rook_Event, Bishop_Event} //체스 말 종류
+    public enum ChessType {Pawn, Rook, Bishop, Rook_Event_Move, Bishop_Event_Move, Rook_Event_NoMove} //체스 말 종류
 
     [Header("이벤트형 체스")]
     public ChessType type; //체스 말 종류
     public Vector2 moveDir; //체스 말이 이동할 방향
     public int dirNum; //이동 방향 번호
     private bool hasDir = false; //방향이 정해졌는지에 대한 여부
+
+    private bool isSpawn = true;
+    private float lifeTime = 30.0f; //Rook_Event_NoMove 활성화 시간
+    private float timer = 0; //활성화 시간 타이머
 
     private new void Update()
     {
@@ -27,7 +31,7 @@ public class ChessEnemy : Enemy
                 base.Update();
                 break;
 
-            case ChessType.Rook_Event: //검정 룩: 십자 모양으로만 이동하는 이벤트형 체스말
+            case ChessType.Rook_Event_Move: //검정 룩: 십자 모양으로만 이동하는 이벤트형 체스말
                 if (!hasDir)
                 {
                     moveDir = RookMove();
@@ -37,7 +41,7 @@ public class ChessEnemy : Enemy
                 rb.linearVelocity = moveDir * moveSpeed;
                 break;
 
-            case ChessType.Bishop_Event: //검정 비숍: 엑스자 모양으로만 이동하는 이벤트형 체스말
+            case ChessType.Bishop_Event_Move: //검정 비숍: 엑스자 모양으로만 이동하는 이벤트형 체스말
                 if (!hasDir)
                 {
                     moveDir = BishopMove();
@@ -46,11 +50,21 @@ public class ChessEnemy : Enemy
                 UpdateSpriteLayer();
                 rb.linearVelocity = moveDir * moveSpeed;
                 break;
+
+            case ChessType.Rook_Event_NoMove: //검정 룩: 이동을 하지 않고, 타원형으로 생성되어 플레이어를 가두는 체스말
+                UpdateSpriteLayer();
+                UpdateSpriteFlip();
+                timer += Time.deltaTime;
+                if(timer >= lifeTime)
+                {
+                    gameObject.SetActive(false);
+                }
+                break;
         }
     }
 
     //룩의 이동방향
-    Vector2 RookMove()
+    private Vector2 RookMove()
     {
         hasDir = true;
         switch (dirNum)
@@ -67,7 +81,7 @@ public class ChessEnemy : Enemy
     }
 
     //비숍의 이동방향
-    Vector2 BishopMove()
+    private Vector2 BishopMove()
     {
         hasDir = true;
         switch (dirNum)
@@ -83,9 +97,9 @@ public class ChessEnemy : Enemy
         }
     }
 
-
     private void OnDisable()
     {
         hasDir = false;
+        timer = 0;
     }
 }

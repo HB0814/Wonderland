@@ -75,7 +75,7 @@ public class HeartQueen : Enemy
         }
     }
 
-    void SetBoundsCenter()
+    private void SetBoundsCenter()
     {
         //보스의 위치를 플레이어 위에서 나타나게 설정
         transform.position = new Vector3(player.transform.position.x,
@@ -88,7 +88,7 @@ public class HeartQueen : Enemy
                                         player.transform.position.z);
     }
 
-    void SetTargetPosition()
+    private void SetTargetPosition()
     {
         //목표 위치를 랜덤하게 설정
         targetPos = new Vector2(
@@ -104,7 +104,7 @@ public class HeartQueen : Enemy
         }
     }
 
-    void MoveToTarget()
+    private void MoveToTarget()
     {
         if (!canMove) return;
 

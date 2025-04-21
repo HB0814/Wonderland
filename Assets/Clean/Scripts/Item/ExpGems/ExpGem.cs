@@ -13,7 +13,8 @@ public class ExpGem : MonoBehaviour
     private Player player;
     private Transform target;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    private bool isAttracted = false; //자석 기능 여부
+    private bool isAttracting;
+    private bool OnMagnet = false; //자석 기능 여부
     private float currentSpeed;
     private float attractTimer = 0f; //자석 타이머
 
@@ -21,36 +22,38 @@ public class ExpGem : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         target = player.gameObject.transform.GetChild(0).transform;
+        spriteRenderer = GetComponent<SpriteRenderer>();
         currentSpeed = baseSpeed;
     }
 
     private void Update()
     {
         //기본 경험치 잼을 획득 시에도 자석 기능을 사용할 시 활성화
-        //if (player == null)
-        //    return;
+        if (player == null)
+            return;
 
-        //float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
-        //// 플레이어와의 거리가 자석 거리보다 가까우면
-        //if (distanceToPlayer <= magnetDistance)
-        //{
-        //    isAttracting = true;
-        //}
+        // 플레이어와의 거리가 자석 거리보다 가까우면
+        if (distanceToPlayer <= magnetDistance)
+        {
+            isAttracting = true;
+        }
 
-        //if (isAttracting)
-        //{
-        //    // 시간에 따라 속도 증가
-        //    attractTimer += Time.deltaTime;
-        //    currentSpeed = Mathf.Min(baseSpeed + (accelerationRate * attractTimer), maxSpeed);
+        //기본 자석 기능
+        if (isAttracting)
+        {
+            // 시간에 따라 속도 증가
+            attractTimer += Time.deltaTime;
+            currentSpeed = Mathf.Min(baseSpeed + (accelerationRate * attractTimer), maxSpeed);
 
-        //    // 플레이어 방향으로 이동
-        //    transform.position = Vector2.MoveTowards(transform.position, player.position, currentSpeed * Time.deltaTime);
-        //}
+            // 플레이어 방향으로 이동
+            transform.position = Vector2.MoveTowards(transform.position, target.position, currentSpeed * Time.deltaTime);
+        }
 
-
+        //자석 아이템 기능
         //자석 아이템 획득 시 플레이어 측으로 이동
-        if(isAttracted && player != null)
+        if (OnMagnet && player != null)
         {
             attractTimer += Time.deltaTime;
             currentSpeed = Mathf.Min(baseSpeed + (accelerationRate * attractTimer), maxSpeed);
@@ -60,16 +63,15 @@ public class ExpGem : MonoBehaviour
         //자석 아이템 기능 테스트용
         if (Input.GetKeyDown(KeyCode.G))
         {
-            isAttracted=true;
+            OnMagnet=true;
         }
-
 
     }
 
     //자석 아이템 획득
     public void StartAttraction()
     {
-        isAttracted = true;
+        OnMagnet = true;
     }
 
     //활성화 시
@@ -81,7 +83,8 @@ public class ExpGem : MonoBehaviour
     //비활성화 시
     private void OnDisable()
     {
-        isAttracted = false; //자석 비활성화
+        isAttracting = false;
+        OnMagnet = false; //자석 비활성화
         currentSpeed = baseSpeed; //속도 초기화
         attractTimer = 0; //타이머 초기화
     }
