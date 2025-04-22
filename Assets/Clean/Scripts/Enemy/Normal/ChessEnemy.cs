@@ -1,18 +1,23 @@
-using Microsoft.Win32.SafeHandles;
 using UnityEngine;
 
 public class ChessEnemy : Enemy
 {
-    public enum ChessType {Pawn, Rook, Bishop, Rook_Event_Move, Bishop_Event_Move, Rook_Event_NoMove} //체스 말 종류
+    public enum ChessType //체스 말 종류
+    {
+        Pawn, Rook, Bishop, //일반 적
+        Rook_Event_Move, Bishop_Event_Move, //이동하는 이벤트형 적
+        Rook_Event_NoMove //고정된 이벤트형 적
+    } 
 
-    [Header("이벤트형 체스")]
+    [Header("이벤트형 체스 관련")]
     public ChessType type; //체스 말 종류
     public Vector2 moveDir; //체스 말이 이동할 방향
     public int dirNum; //이동 방향 번호
     private bool hasDir = false; //방향이 정해졌는지에 대한 여부
 
-    private bool isSpawn = true;
-    private float lifeTime = 30.0f; //Rook_Event_NoMove 활성화 시간
+    //Rook_Event_NoMove 관련 변수
+    private bool isSpawn = true; //스폰 여부
+    private float lifeTime = 30.0f; //Rook_Event_NoMove의 활성화 시간
     private float timer = 0; //활성화 시간 타이머
 
     private new void Update()
@@ -20,44 +25,48 @@ public class ChessEnemy : Enemy
         switch (type)
         {
             case ChessType.Pawn: //흰 폰: 플레이어 추격하는 일반형 체스말
-                base.Update();
+                base.Update(); //상속한 Enemy의 Update 함수 호출
                 break;
 
             case ChessType.Rook: //흰 룩: 플레이어 추격하는 일반형 체스말, 공격 추가할 수도?
-                base.Update();
+                base.Update(); //상속한 Enemy의 Update 함수 호출
                 break;
 
             case ChessType.Bishop: //흰 비숍: 플레이어 추격하는 일반형 체스말, 공격 추가할 수도?
-                base.Update();
+                base.Update(); //상속한 Enemy의 Update 함수 호출
                 break;
 
             case ChessType.Rook_Event_Move: //검정 룩: 십자 모양으로만 이동하는 이벤트형 체스말
-                if (!hasDir)
+                if (!hasDir) //방향 보유 여부 거짓 시
                 {
-                    moveDir = RookMove();
-                    UpdateSpriteFlip();
+                    moveDir = RookMove(); //룩의 이동 방향 함수 결과 가져오기
+                    UpdateSpriteFlip(); //상속한 Enemy의 UpdateSpriteFlip 함수 호츨
                 }
-                UpdateSpriteLayer();
-                rb.linearVelocity = moveDir * moveSpeed;
+                UpdateSpriteLayer(); //상속한 Enemy의 UpdateSpriteLayer 함수 호출
+                rb.linearVelocity = moveDir * moveSpeed; //이동 방향으로 이동
                 break;
 
             case ChessType.Bishop_Event_Move: //검정 비숍: 엑스자 모양으로만 이동하는 이벤트형 체스말
                 if (!hasDir)
                 {
-                    moveDir = BishopMove();
-                    UpdateSpriteFlip();
+                    moveDir = BishopMove(); //비숍의 이동 방향 함수 결과 가져오기
+                    UpdateSpriteFlip(); //상속한 Enemy의 UpdateSpriteFlip 함수 호츨
                 }
-                UpdateSpriteLayer();
-                rb.linearVelocity = moveDir * moveSpeed;
+                UpdateSpriteLayer(); //상속한 Enemy의 UpdateSpriteLayer 함수 호출
+                rb.linearVelocity = moveDir * moveSpeed; //이동 방향으로 이동
                 break;
 
             case ChessType.Rook_Event_NoMove: //검정 룩: 이동을 하지 않고, 타원형으로 생성되어 플레이어를 가두는 체스말
-                UpdateSpriteLayer();
-                UpdateSpriteFlip();
-                timer += Time.deltaTime;
-                if(timer >= lifeTime)
+                if(!isSpawn) //스폰 여부 체크
                 {
-                    gameObject.SetActive(false);
+                    isSpawn= true; //스폰 여부 참
+                    UpdateSpriteFlip(); //상속한 Enemy의 UpdateSpriteFlip 함수 호츨
+                }
+                UpdateSpriteLayer(); //상속한 Enemy의 UpdateSpriteLayer 함수 호출
+                timer += Time.deltaTime; //타이머 값 증가
+                if(timer >= lifeTime) //활성화 시간 이상 달성
+                {
+                    gameObject.SetActive(false); //게임오브젝트 비활성화
                 }
                 break;
         }
@@ -66,40 +75,41 @@ public class ChessEnemy : Enemy
     //룩의 이동방향
     private Vector2 RookMove()
     {
-        hasDir = true;
+        hasDir = true; //방향 보유 여부 참
         switch (dirNum)
         {
             case 0: 
-                return Vector2.up;
+                return Vector2.up; //위
             case 1: 
-                return Vector2.down;
+                return Vector2.down; //아래
             case 2: 
-                return Vector2.left;
+                return Vector2.left; //왼쪽
             default: 
-                return Vector2.right;
+                return Vector2.right; //오른쪽
         }
     }
 
     //비숍의 이동방향
     private Vector2 BishopMove()
     {
-        hasDir = true;
+        hasDir = true; //방향 보유 여부 참
         switch (dirNum)
         {
             case 0: 
-                return new Vector2(1, 1).normalized;
+                return new Vector2(1, 1).normalized; //오른쪽 위
             case 1:
-                return new Vector2(1, -1).normalized;
+                return new Vector2(1, -1).normalized; //오른쪽 아래
             case 2: 
-                return new Vector2(-1, -1).normalized;
+                return new Vector2(-1, -1).normalized; //왼쪽 아래
             default: 
-                return new Vector2(-1, 1).normalized;
+                return new Vector2(-1, 1).normalized; //왼쪽 위
         }
     }
 
+    //비활성화 시
     private void OnDisable()
     {
-        hasDir = false;
-        timer = 0;
+        hasDir = false; //방향 보유 여부 거짓
+        timer = 0.0f; //타이머 초기화
     }
 }

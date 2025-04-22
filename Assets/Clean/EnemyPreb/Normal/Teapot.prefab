@@ -396,12 +396,8 @@ MonoBehaviour:
   expGemRate: Common
   currentHealth: 0
   nextAttackTime: 0
-  isKnockback: 0
-  knockbackRecoveryTimer: 0
+  isKnockbacked: 0
   isSlowed: 0
-  slowEffectTimer: 0
-  currentSlowAmount: 0
-  originalMoveSpeed: 0
   isReady: 0
   explosionReadyRange: 6
   explosionMoveSpeed: 2.5

@@ -2,32 +2,35 @@ using UnityEngine;
 
 public class MagnetItem : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer spriteRenderer; //스프라이트 렌더러
 
+    //충돌 시
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")) //플레이어 충돌 시
         {
-            AttractAllExpGems();
-            gameObject.SetActive(false);
+            AttractAllExpGems(); //경험치 잼 자석 기능 함수 호출
+            gameObject.SetActive(false); //자석 아이템 비활성화
         }
     }
 
+    //경험치 잼 자석 아이템
     private void AttractAllExpGems()
     {
-        GameObject[] gems = GameObject.FindGameObjectsWithTag("ExpGem");
+        GameObject[] gems = GameObject.FindGameObjectsWithTag("ExpGem"); //모든 경험치 잼 배열에 넣기
 
+        //반복문
         foreach (GameObject gem in gems)
         {
-            ExpGem expGem = gem.GetComponent<ExpGem>();
+            ExpGem expGem = gem.GetComponent<ExpGem>(); //ExpGem 스크립트 참조
             if (expGem != null)
             {
-                expGem.StartAttraction();
+                expGem.StartAttraction(); //자석 기능 활성화
             }
         }
     }
 
-    //활성화 시
+    //게임오브젝트 활성화 시
     private void OnEnable()
     {
         spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * -100); //활성화 시 레이어 순서 설정

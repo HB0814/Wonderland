@@ -824,7 +824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f3f4122fdf03047a172b2abcc4f770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 200
   moveSpeed: 2
   deffense: 0
   attackDamage: 10
@@ -835,7 +835,6 @@ MonoBehaviour:
   currentHealth: 0
   nextAttackTime: 0
   isKnockback: 0
-  knockbackRecoveryTimer: 0
   isSlowed: 0
   slowEffectTimer: 0
   currentSlowAmount: 0
