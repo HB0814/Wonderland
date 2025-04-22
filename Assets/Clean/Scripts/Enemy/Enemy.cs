@@ -14,6 +14,7 @@ public abstract class Enemy : MonoBehaviour
     public float attackRange = 0.1f;
     public float attackCooldown = 1.0f;
     public float knockbackResistance = 0.5f;
+    public string expGemRate;
 
     [Header("드롭 아이템")]
     protected GameObject[] dropItems;
@@ -154,7 +155,6 @@ public abstract class Enemy : MonoBehaviour
         if (_player != null)
         {
             _player.TakeDamage(attackDamage);
-            Debug.Log("플레이어가 피해를 입음!");
         }
     }
 
@@ -163,8 +163,8 @@ public abstract class Enemy : MonoBehaviour
     {
         if (player != null && !isKnockback)
         {
-            Vector2 direction = (player.transform.position - transform.position).normalized;
-            rb.linearVelocity = direction * moveSpeed;
+            Vector2 dir = (player.transform.position - transform.position).normalized;
+            rb.linearVelocity = dir * moveSpeed;
         }
     }
 
@@ -174,8 +174,6 @@ public abstract class Enemy : MonoBehaviour
         damage -= deffense; //damage = (damage * 플레이어 공격력 * 0.01) - 적 방어력
         float totalDamage = Mathf.Max(1, damage);
         currentHealth -= totalDamage;
-
-        Debug.Log($"몬스터가 {totalDamage}의 데미지를 입음");
 
         knockbackForce -= knockbackResistance;
         if(knockbackForce > 0 && !isKnockback)
@@ -252,22 +250,18 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void CreateExpgem()
     {
-        string rate;
-        
-        GameObject expgemToSpawn = ObjectPool.Instance.SpawnFromPool_Expgem("Common", transform.position);
+        GameObject expgemToSpawn = ObjectPool.Instance.SpawnFromPool_Expgem(expGemRate, transform.position);
 
         if (expgemToSpawn != null)
         {
             // 초기화 및 활성화
             expgemToSpawn.SetActive(true);
-            Debug.Log("몬스터 활성화");
         }
     }
 
     protected virtual void OnEnable()
     {
         Initialize();
-        Debug.Log("몬스터 스탯 재설정");
     }
 
     //공격 범위 표시

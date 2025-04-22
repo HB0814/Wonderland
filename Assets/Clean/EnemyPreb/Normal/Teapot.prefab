@@ -393,6 +393,7 @@ MonoBehaviour:
   attackRange: 0.1
   attackCooldown: 1
   knockbackResistance: 0.5
+  expGemRate: Common
   currentHealth: 0
   nextAttackTime: 0
   isKnockback: 0
@@ -403,7 +404,7 @@ MonoBehaviour:
   originalMoveSpeed: 0
   isReady: 0
   explosionReadyRange: 6
-  explosionMoveSpeed: 2.8
+  explosionMoveSpeed: 2.5
   explosionRange: 1
   explosionDamage: 50
   explosionEffect: {fileID: 3166401227987715664, guid: e0156672709b1e246a6d296a8cc0f07d, type: 3}

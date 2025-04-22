@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: 059390ce392ffb24d900116b5691c40b
+guid: 36310751b513dc041aef93baaefc33d5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7362425003299383696
-    second: Guillotione_0
+      213: -4231201514747016985
+    second: Guillotione_1_0
   - first:
-      213: 8016006217929737444
-    second: Guillotione_1
+      213: -4315482995283574036
+    second: Guillotione_1_1
   - first:
-      213: -6725823991528848688
-    second: Guillotione_2
+      213: -7640303065471965076
+    second: Guillotione_1_2
   - first:
-      213: 8472586262366531641
-    second: Guillotione_3
+      213: 7642252667914068022
+    second: Guillotione_1_3
   - first:
-      213: -8094254270554722432
-    second: Guillotione_4
+      213: 1397603349431631356
+    second: Guillotione_1_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +49,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -151,13 +151,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Guillotione_0
+      name: Guillotione_1_0
       rect:
         serializedVersion: 2
-        x: 60
-        y: 136
-        width: 136
-        height: 104
+        x: 59
+        y: 135
+        width: 138
+        height: 106
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,74 +166,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0992d1f58869c2660800000000000000
-      internalID: 7362425003299383696
+      spriteID: 7e8c864e3a0c745c0800000000000000
+      internalID: -4231201514747016985
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Guillotione_1
+      name: Guillotione_1_1
       rect:
         serializedVersion: 2
-        x: 316
-        y: 88
-        width: 136
-        height: 140
+        x: 315
+        y: 87
+        width: 138
+        height: 142
       alignment: 9
-      pivot: {x: 0.5, y: 0.36}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4e446014f239e3f60800000000000000
-      internalID: 8016006217929737444
+      spriteID: ce242e784135c14c0800000000000000
+      internalID: -4315482995283574036
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Guillotione_2
+      name: Guillotione_1_2
       rect:
         serializedVersion: 2
-        x: 572
-        y: 0
-        width: 136
-        height: 184
+        x: 571
+        y: 28
+        width: 138
+        height: 186
       alignment: 9
-      pivot: {x: 0.5, y: 0.27}
+      pivot: {x: 0.5, y: 0.28}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9303631e05ca49570800000000000000
-      internalID: 8472586262366531641
+      spriteID: 630acc2af4cbe0a60800000000000000
+      internalID: 7642252667914068022
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Guillotione_3
+      name: Guillotione_1_3
       rect:
         serializedVersion: 2
-        x: 828
-        y: 0
-        width: 136
-        height: 103
-      alignment: 9
-      pivot: {x: 0.5000009, y: 0.3}
+        x: 827
+        y: 46
+        width: 138
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 08fa5e940ae6baf80800000000000000
-      internalID: -8094254270554722432
+      spriteID: cfdb4cb67d8456310800000000000000
+      internalID: 1397603349431631356
       vertices: []
       indices: 
       edges: []
@@ -242,7 +242,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 08fff505d8574e142a3f715406bd3768
+    spriteID: 8a6df3eaea1f28f43a28d4a23a54fb96
     internalID: 0
     vertices: []
     indices: 
@@ -252,10 +252,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Guillotione_0: 7362425003299383696
-      Guillotione_1: 8016006217929737444
-      Guillotione_2: 8472586262366531641
-      Guillotione_3: -8094254270554722432
+      Guillotione_1_0: -4231201514747016985
+      Guillotione_1_1: -4315482995283574036
+      Guillotione_1_2: 7642252667914068022
+      Guillotione_1_3: 1397603349431631356
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

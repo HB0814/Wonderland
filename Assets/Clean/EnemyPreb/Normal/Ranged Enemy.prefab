@@ -831,6 +831,7 @@ MonoBehaviour:
   attackRange: 0.1
   attackCooldown: 1
   knockbackResistance: 0.5
+  expGemRate: Common
   currentHealth: 0
   nextAttackTime: 0
   isKnockback: 0
