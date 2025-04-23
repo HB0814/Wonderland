@@ -57,7 +57,7 @@ public class Guillotione : MonoBehaviour
         // Drop 애니메이션 준비 상태
         if (animator != null)
         {
-            animator.SetBool("isDrop", true); // 낙하 애니메이션 시작
+            animator.SetBool("isDrop", true); //공격 애니메이션 시작
         }
 
         Invoke(nameof(Drop), dropDelay);

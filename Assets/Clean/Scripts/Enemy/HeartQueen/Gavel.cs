@@ -1,21 +1,26 @@
+using System.Collections;
 using UnityEngine;
 
 public class Gavel : MonoBehaviour
 {
     private Vector3 targetPos;
-    private float dropDelay = 1f;
-    private bool isDrop = false;
+    private float animDelay = 1f;
+    private bool isAttack = false;
+    private float torqueForce = 10f;
+
+    WaitForSeconds nextAttackTime;
 
     [SerializeField] private float attackDamage;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float dropSpeed = 10.0f;
     [SerializeField] private Animator animator;
 
-    private Player player;
-    private Rigidbody rb;
+    [SerializeField] private Player player;
+    private Rigidbody2D rb;
     private BoxCollider2D boxCol;
     private SpriteRenderer spriteRenderer;
     private ParticleSystem dustParticle;
+
+    //왼쪽 오른쪽 좌표를 가지고 있는 자식 오브젝트로 왼쪽 오른쪽
 
     /*
      *  플레이어를 쫓아다니며 의사봉이 바닥을 세번 내려침
@@ -32,15 +37,20 @@ public class Gavel : MonoBehaviour
         animator = GetComponent<Animator>();
         boxCol = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
         dustParticle = gameObject.transform.GetChild(0).GetComponent<ParticleSystem>();
     }
 
     private void Update()
     {
-        if (player != null && !isDrop)
+        if(player != null && !isAttack)
         {
             Vector2 dir = (player.transform.position - transform.position).normalized;
             rb.linearVelocity = dir * moveSpeed;
+        }
+        else if(player != null && isAttack)
+        {
+            rb.linearVelocity = Vector2.zero;
         }
 
         if (spriteRenderer.color.a == 0.0f)
@@ -53,30 +63,51 @@ public class Gavel : MonoBehaviour
     {
         player = _player;
         Transform target = player.transform;
-        transform.position = new Vector3(target.position.x, target.position.y + 0.6f, transform.position.z);
+        transform.position = new Vector3(target.position.x + 0.8f, target.position.y + 0.6f, transform.position.z);
         targetPos = new Vector3(target.position.x, target.position.y, transform.position.z);
-        dropDelay = delay;
+        animDelay = delay;
+
+        nextAttackTime = new WaitForSeconds(1.0f);
 
         gameObject.SetActive(true);
 
-        // Drop 애니메이션 준비 상태
-        if (animator != null)
-        {
-            animator.SetBool("isAttack", true); // 낙하 애니메이션 시작
-        }
-
-        Invoke(nameof(Drop), dropDelay);
+        Invoke(nameof(Attack), delay);
     }
 
-    private void Drop()
+    private void Attack()
     {
-        isDrop = true;
+        isAttack = true;
+        animator.SetBool("isMove", false);
+        StartCoroutine("GavelAttack");
     }
 
     private void OnHit()
     {
         dustParticle.Play();
         //충격 먼지 파티클 실행
+    }
+
+    //공격 시 애니메이션 실행 -> 바닥에 닿았을 타이밍에 파티클 실행, 이후 의사봉 다시 들어올리기
+    //좌우 비교 이후 해당 방향을 내려 찍는 애니메이션 실행
+    private IEnumerator GavelAttack()
+    {
+        if(player.transform.position.x <= transform.position.x)
+            animator.SetBool("isAttack_L", true); //의사봉 내려찍기 애니메이션
+        else if(player.transform.position.x > transform.position.x)
+            animator.SetBool("isAttack_R", true); //의사봉 내려찍기 애니메이션
+
+        Invoke(nameof(OnHit), 0.5f);
+
+        yield return nextAttackTime;
+
+        animator.SetBool("isAttack_L", false);
+        animator.SetBool("isAttack_R", false);
+        animator.SetBool("isMove", true);
+        isAttack = false;
+
+        yield return nextAttackTime;
+
+        Attack();
     }
 
 
@@ -88,7 +119,7 @@ public class Gavel : MonoBehaviour
     private void OnDisable()
     {
         //animator.SetBool("isDrop", false);
-        isDrop = false;
+        isAttack = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -3,8 +3,9 @@ using UnityEngine;
 public class EnemyProjectile : MonoBehaviour
 {
     [Header("적 원거리 공격 설정")]
-    public float power; //이동 크기
+    public float speed; //이동 크기
     public float damage; //데미지
+    public float lifeTime = 5f; //지속시간
     [SerializeField] private Player player; //플레이어 스크립트
     private Rigidbody2D rb; //리지드바디
     string projectileType; //투사체의 타입
@@ -23,10 +24,10 @@ public class EnemyProjectile : MonoBehaviour
         if(player != null)
         {
             Vector2 dir = (player.transform.position - transform.position).normalized; //발사 방향
-            rb.AddForce(dir * power, ForceMode2D.Impulse); //AddForce함수로 순간적인 힘을 가해 발사
+            rb.AddForce(dir * speed, ForceMode2D.Impulse); //AddForce함수로 순간적인 힘을 가해 발사
         }
 
-        Invoke(nameof(DisableObject), 5f); //5초 뒤 투사체 비활성화 함수 실행
+        Invoke(nameof(DisableObject), lifeTime); //5초 뒤 투사체 비활성화 함수 실행
     }
 
     //비활성화 함수

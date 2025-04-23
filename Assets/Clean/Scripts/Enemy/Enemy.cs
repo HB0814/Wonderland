@@ -57,7 +57,7 @@ public abstract class Enemy : MonoBehaviour
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player");
 
-        if (player == null)
+        if (_player == null)
             _player = player.GetComponent<Player>();
 
         if (rb != null)

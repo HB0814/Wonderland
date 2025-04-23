@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using NUnit.Framework;
 
-public class HeartQueen : Enemy
+public class MadHatter : Enemy
 {
     HitEffect takeDamage;
 
