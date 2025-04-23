@@ -82,12 +82,12 @@ SpriteRenderer:
   m_SortingLayerID: 388590931
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2832753436376658571, guid: 3e48cc66c72cbd34295e41ba59ab8ed5, type: 3}
+  m_Sprite: {fileID: 7056831595738445951, guid: 11daba968583e6e4d8fb57fa55cf76f7, type: 3}
   m_Color: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.91, y: 0.76}
+  m_Size: {x: 0.49333334, y: 0.81333333}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -158,8 +158,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.49333334, y: 0.67333335}
-    newSize: {x: 0.91, y: 0.76}
+    oldSize: {x: 0.49333334, y: 0.81333333}
+    newSize: {x: 0.49333334, y: 0.81333333}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4b8d60f98e06c4fa40c852075becd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 10
   moveSpeed: 3
   deffense: 0
   attackDamage: 10
@@ -188,12 +188,8 @@ MonoBehaviour:
   expGemRate: Common
   currentHealth: 0
   nextAttackTime: 0
-  isKnockback: 0
-  knockbackRecoveryTimer: 0
+  isKnockbacked: 0
   isSlowed: 0
-  slowEffectTimer: 0
-  currentSlowAmount: 0
-  originalMoveSpeed: 0
   type: 4
   moveDir: {x: 0, y: 0}
   dirNum: 0
@@ -220,7 +216,7 @@ Animator:
   m_GameObject: {fileID: 4965795789343173482}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: aecd6086a9e96054a9ccc98eb372f4fc, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

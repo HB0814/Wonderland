@@ -33,7 +33,7 @@ public class WeaponManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         objectPool = ObjectPool.Instance;
 
-        AddWeapon(WeaponManager.Instance.CreateWeapon((int)WeaponType.Card));
+        AddWeapon(WeaponManager.Instance.CreateWeapon((int)WeaponType.Tea));
     }
 
     public bool AddWeapon(WeaponBase weapon)

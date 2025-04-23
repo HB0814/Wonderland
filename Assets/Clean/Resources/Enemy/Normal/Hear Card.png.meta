@@ -3,11 +3,11 @@ guid: f17a5bee95ca1b944979aaec198c90a1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8586525221078687593
-    second: Card_Red_heart__0
+      213: 2398069420005276506
+    second: Hear Card_0
   - first:
-      213: 2283081152499760358
-    second: Card_Red_heart__1
+      213: 4755523811857341266
+    second: Hear Card_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -112,53 +112,49 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Card_Red_heart__0
+      name: Hear Card_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 11
-        width: 96
-        height: 76
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 5
+        y: 32
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7902ca60ec886d880800000000000000
-      internalID: -8586525221078687593
+      spriteID: a5b34269e67a74120800000000000000
+      internalID: 2398069420005276506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hear Card_1
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 11
+        width: 82
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25b1ba606b30ff140800000000000000
+      internalID: 4755523811857341266
       vertices: []
       indices: 
       edges: []
@@ -167,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d77e0875474bdac4695e0db2de094a7c
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -176,9 +172,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Card_Red_heart__0: -8586525221078687593
-      Card_Red_heart__1: 2283081152499760358
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

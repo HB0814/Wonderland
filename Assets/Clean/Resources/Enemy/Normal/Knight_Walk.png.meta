@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 83b4c4353361e7e4ca5902df66f3900c
+guid: 47439e4b6fcb5c042b0e4a350d0e3493
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4410872531327871469
-    second: Chess_2_0
+      213: -6373373984769234828
+    second: Knight_Walk_0
+  - first:
+      213: 7005221569576858203
+    second: Knight_Walk_1
+  - first:
+      213: -147612535191686841
+    second: Knight_Walk_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,53 +115,71 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Chess_Rook
+      name: Knight_Walk_0
       rect:
         serializedVersion: 2
         x: 27
-        y: 8
-        width: 74
-        height: 113
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        y: 3
+        width: 78
+        height: 122
+      alignment: 9
+      pivot: {x: 0.46, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: de9635b8231963d30800000000000000
-      internalID: 4410872531327871469
+      spriteID: 4782d11e02a3d87a0800000000000000
+      internalID: -6373373984769234828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 3
+        width: 78
+        height: 118
+      alignment: 9
+      pivot: {x: 0.46, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b52788bf6eb873160800000000000000
+      internalID: 7005221569576858203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 3
+        width: 82
+        height: 122
+      alignment: 9
+      pivot: {x: 0.46, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 741318b6e2393fdf0800000000000000
+      internalID: -147612535191686841
       vertices: []
       indices: 
       edges: []
@@ -164,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 153cde088bd229544880309106ebe8c9
+    spriteID: bbd3b09cfbcca11449c5e3fedfa910c5
     internalID: 0
     vertices: []
     indices: 
@@ -174,7 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Chess_Rook: 4410872531327871469
+      Knight_Walk_0: -6373373984769234828
+      Knight_Walk_1: 7005221569576858203
+      Knight_Walk_2: -147612535191686841
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

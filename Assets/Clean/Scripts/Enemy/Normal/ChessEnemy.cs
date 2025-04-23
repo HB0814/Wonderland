@@ -62,6 +62,7 @@ public class ChessEnemy : Enemy
                     isSpawn= true; //스폰 여부 참
                     UpdateSpriteFlip(); //상속한 Enemy의 UpdateSpriteFlip 함수 호츨
                 }
+                base.Update();
                 UpdateSpriteLayer(); //상속한 Enemy의 UpdateSpriteLayer 함수 호출
                 timer += Time.deltaTime; //타이머 값 증가
                 if(timer >= lifeTime) //활성화 시간 이상 달성

@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 51578ea3b32291a4b9197b2392d529df
+guid: 11daba968583e6e4d8fb57fa55cf76f7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2832753436376658571
-    second: Chess_1_0
+      213: 7056831595738445951
+    second: Bishop_Walk_0
+  - first:
+      213: 3476556740560561200
+    second: Bishop_Walk_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,43 +112,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Chess_Pawn
+      name: Bishop_Walk_0
       rect:
         serializedVersion: 2
         x: 27
-        y: 8
+        y: 3
         width: 74
-        height: 101
+        height: 122
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +131,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 57d808812c900b8d0800000000000000
-      internalID: -2832753436376658571
+      spriteID: f783eb792f6eee160800000000000000
+      internalID: 7056831595738445951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bishop_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 3
+        width: 74
+        height: 118
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0342a9a9fe53f3030800000000000000
+      internalID: 3476556740560561200
       vertices: []
       indices: 
       edges: []
@@ -164,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 09178c1ad711dc84086e38f0ff6dfb40
+    spriteID: 454c5768375769943ba0b554d35595b1
     internalID: 0
     vertices: []
     indices: 
@@ -174,7 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Chess_Pawn: -2832753436376658571
+      Bishop_Walk_0: 7056831595738445951
+      Bishop_Walk_1: 3476556740560561200
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

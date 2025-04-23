@@ -7,7 +7,7 @@ public abstract class Enemy : MonoBehaviour
     WaitForSeconds knockbackCool = new(0.1f); //넉백 쿨타임
 
     [Header("기본 속성")]
-    public float maxHealth = 100.0f;  //최대 체력
+    public float maxHealth = 10.0f;  //최대 체력
     public float moveSpeed = 2.0f; //이동속도
     public float deffense = 0.0f; //방어력
     public float attackDamage = 10.0f; //피해량
@@ -176,7 +176,7 @@ public abstract class Enemy : MonoBehaviour
         float totalDamage = Mathf.Max(1, damage); //총합 데미지, 피해량 0을 방지하기 위한 Max() 함수
         currentHealth -= totalDamage; //현재 체력 감소
 
-        knockbackForce -= knockbackResistance; //넉백 크기 계산
+        knockbackForce = knockbackForce - (knockbackForce * knockbackResistance); //넉백 크기 계산
         if(knockbackForce > 0 && !isKnockbacked) //넉백의 크기가 있으며 넉백 중이 아닐 경우에만 넉백 실행
         {
             StartCoroutine(ApplyKnockback(knockbackForce)); //넉백 코루틴
@@ -203,7 +203,7 @@ public abstract class Enemy : MonoBehaviour
         Vector3 knockbackDir = transform.position - player.transform.position; //넉백 방향
         rb.AddForce(knockbackDir.normalized * knockbackForce, ForceMode2D.Impulse); //AddForce 함수로 순간적인 힘을 가한 넉백 효과
         yield return knockbackCool; //넉백 쿨타임 종료 후 호출
-        rb.linearVelocity = Vector2.zero; //넉백 종료
+        //rb.linearVelocity = Vector2.zero; //넉백 종료
         isKnockbacked = false; //넉백 상태 거짓 -> 이동 가능
     }
 

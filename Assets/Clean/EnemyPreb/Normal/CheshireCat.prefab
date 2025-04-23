@@ -325,7 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5dcd3b5a070aa244885e5e6080c34ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 30
   moveSpeed: 1.7
   deffense: 0
   attackDamage: 10
@@ -335,12 +335,8 @@ MonoBehaviour:
   expGemRate: Common
   currentHealth: 0
   nextAttackTime: 0
-  isKnockback: 0
-  knockbackRecoveryTimer: 0
+  isKnockbacked: 0
   isSlowed: 0
-  slowEffectTimer: 0
-  currentSlowAmount: 0
-  originalMoveSpeed: 0
 --- !u!114 &5046534071814841065
 MonoBehaviour:
   m_ObjectHideFlags: 0
