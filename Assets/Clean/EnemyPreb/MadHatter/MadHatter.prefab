@@ -284,7 +284,7 @@ MonoBehaviour:
   attackDamage: 10
   attackRange: 0.1
   attackCooldown: 1
-  knockbackResistance: 0.5
+  knockbackResistance: 1
   expGemRate: 
   currentHealth: 0
   nextAttackTime: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     WaitForSeconds hitCool = new(0.1f); //피격 쿨타임
-    WaitForSeconds knockbackCool = new(0.1f); //넉백 쿨타임
+    WaitForSeconds knockbackDuration = new(0.1f); //넉백 지속시간
 
     [Header("기본 속성")]
     public float maxHealth = 10.0f;  //최대 체력
@@ -30,6 +30,7 @@ public abstract class Enemy : MonoBehaviour
     protected Animator animator; //애니메이터
     protected GameObject player; //플레이어 게임오브젝트
     protected Player _player; //플레이어 스크립트
+    [SerializeField] protected Transform textPos;
 
     // 스프라이트 업데이트 관련 변수
     protected float lastUpdateTime = 0.0f; //마지막 업데이트 시간
@@ -40,11 +41,6 @@ public abstract class Enemy : MonoBehaviour
     //초기화
     public virtual void Initialize()
     {
-        currentHealth = maxHealth; //현재 체력을 최대체력으로 초기화
-        nextAttackTime = 0.0f; //다음 공격 시간 초기화
-        isKnockbacked = false; //넉백 상태 초기화
-        isSlowed = false; //슬로우 상태 초기화
-
         if (rb == null) //초기화 함수 호출 시 계속해서 컴포넌트 할당하지 않게 널일 때만 할당하게
             rb = GetComponent<Rigidbody2D>();
 
@@ -70,6 +66,13 @@ public abstract class Enemy : MonoBehaviour
         {
             originalColor = spriteRenderer.color; //스프라이트 렌더러 원래 색
         }
+
+
+        float time = Time.time;
+        currentHealth = (maxHealth + (time * 0.1f)) * (1 + (_player.Level * 0.01f)); ; //현재 체력을 시간과 플레이어 레벨에 맞게 증가하도록 변경
+        nextAttackTime = 0.0f; //다음 공격 시간 초기화
+        isKnockbacked = false; //넉백 상태 초기화
+        isSlowed = false; //슬로우 상태 초기화
     }
 
     protected virtual void Start()
@@ -172,10 +175,6 @@ public abstract class Enemy : MonoBehaviour
     //무기 피격                              //순서대로 무기 데미지, 넉백 크기, 슬로우 크기, 슬로우 지속시간
     public virtual void TakeDamage(float damage, float knockbackForce, float slowForce, float slowDuration)
     {
-        damage -= deffense; //damage = (damage * 플레이어 공격력 * 0.01) - 적 방어력 <- 이후 해당 식으로 변경 예정?
-        float totalDamage = Mathf.Max(1, damage); //총합 데미지, 피해량 0을 방지하기 위한 Max() 함수
-        currentHealth -= totalDamage; //현재 체력 감소
-
         knockbackForce = knockbackForce - (knockbackForce * knockbackResistance); //넉백 크기 계산
         if(knockbackForce > 0 && !isKnockbacked) //넉백의 크기가 있으며 넉백 중이 아닐 경우에만 넉백 실행
         {
@@ -190,9 +189,28 @@ public abstract class Enemy : MonoBehaviour
             StartCoroutine(ApplySlow(slowForce, slowDuration)); //슬로우 코루틴
         }
 
+        damage -= deffense; //damage = (damage * 플레이어 공격력 * 0.01) - 적 방어력 <- 이후 해당 식으로 변경 예정?
+        damage = Random.Range(damage - 1, damage + 1);
+        float totalDamage = Mathf.Max(1, damage); //총합 데미지, 피해량 0을 방지하기 위한 Max() 함수
+
+        DamageText(totalDamage);
+        currentHealth -= totalDamage; //현재 체력 감소
+
         if(currentHealth <= 0.0f) //현재 체력이 0이하일 경우 실행
         {
             Die(); //사망
+        }
+    }
+
+    public virtual void DamageText(float damage)
+    {
+        Vector3 spawnPos = textPos.position; //텍스트를 활성화할 위치 가져오기
+
+        GameObject textToSpawn = ObjectPool.Instance.SpawnFromPool_DamageText("DamageText", spawnPos, damage);
+
+        if (textToSpawn != null)
+        {
+            textToSpawn.SetActive(true); //스폰할 텍스트 활성화하기
         }
     }
 
@@ -202,7 +220,7 @@ public abstract class Enemy : MonoBehaviour
         isKnockbacked = true; //넉백 상태 참 -> 이동 불가능
         Vector3 knockbackDir = transform.position - player.transform.position; //넉백 방향
         rb.AddForce(knockbackDir.normalized * knockbackForce, ForceMode2D.Impulse); //AddForce 함수로 순간적인 힘을 가한 넉백 효과
-        yield return knockbackCool; //넉백 쿨타임 종료 후 호출
+        yield return knockbackDuration; //넉백 지속시간 종료 후 호출
         //rb.linearVelocity = Vector2.zero; //넉백 종료
         isKnockbacked = false; //넉백 상태 거짓 -> 이동 가능
     }

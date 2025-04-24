@@ -19,7 +19,7 @@ MonoBehaviour:
   - 
   - 
   - 
-  currentLevel: 0
+  currentLevel: 1
   icon: {fileID: 0}
   UpgradeDetails:
   - "\uC5C5\uADF8\uB808\uC774\uB4DC \uB0B4\uC6A9"
@@ -30,11 +30,11 @@ MonoBehaviour:
   weaponType: 0
   levelStats:
     damage:
-    - 5
-    - 5
-    - 5
-    - 5
-    - 5
+    - 10
+    - 15
+    - 20
+    - 25
+    - 30
     attackCooldown:
     - 2
     - 1.8
@@ -86,5 +86,5 @@ MonoBehaviour:
     count: 0100000002000000030000000500000008000000
     attackRangeX: 0
     attackRangeY: 0
-    pierceCount: []
+    pierceCount: 
     coolDownDecrease: []

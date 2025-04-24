@@ -59,6 +59,12 @@ public class KamikazeEnemy : Enemy
         gameObject.SetActive(false); //오브젝트 비활성화
     }
 
+    protected override void Die()
+    {
+        CancelInvoke();
+        base.Die();
+    }
+
     //활성화 시
     private new void OnEnable()
     {

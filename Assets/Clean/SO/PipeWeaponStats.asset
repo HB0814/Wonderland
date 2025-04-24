@@ -15,40 +15,30 @@ MonoBehaviour:
   levelStats:
   - currentLevel: 1
     damage: 5
-    attackCooldown: 2
-    smokeDuration: 3
     smokeRadius: 1
     smokeExpandSpeed: 2
     smokeMaxRadius: 3
-    smokeDamageInterval: 0.5
+    smokeDamageInterval: 1
   - currentLevel: 2
     damage: 7
-    attackCooldown: 1.8
-    smokeDuration: 3.5
     smokeRadius: 1.2
     smokeExpandSpeed: 2.2
     smokeMaxRadius: 3.5
     smokeDamageInterval: 0.45
   - currentLevel: 3
     damage: 10
-    attackCooldown: 1.6
-    smokeDuration: 4
     smokeRadius: 1.4
     smokeExpandSpeed: 2.4
     smokeMaxRadius: 4
     smokeDamageInterval: 0.4
   - currentLevel: 4
     damage: 12
-    attackCooldown: 1.4
-    smokeDuration: 4.5
     smokeRadius: 1.6
     smokeExpandSpeed: 2.6
     smokeMaxRadius: 4.5
     smokeDamageInterval: 0.35
   - currentLevel: 5
     damage: 15
-    attackCooldown: 1.2
-    smokeDuration: 5
     smokeRadius: 1.8
     smokeExpandSpeed: 2.8
     smokeMaxRadius: 5

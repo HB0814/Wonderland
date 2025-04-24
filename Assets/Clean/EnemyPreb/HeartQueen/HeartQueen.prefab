@@ -36,6 +36,7 @@ Transform:
   m_Children:
   - {fileID: 1777984950953891722}
   - {fileID: 8298531298330902336}
+  - {fileID: 5395860577971845447}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8776006853667926819
@@ -206,12 +207,13 @@ MonoBehaviour:
   attackDamage: 10
   attackRange: 0.1
   attackCooldown: 1
-  knockbackResistance: 0.5
+  knockbackResistance: 1
   expGemRate: 
   currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
+  textPos: {fileID: 5395860577971845447}
   moveBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 5, y: 5, z: 0}
@@ -378,3 +380,34 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.0821624, y: 1.1041938}
   m_EdgeRadius: 0
+--- !u!1 &6728946711894258564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5395860577971845447}
+  m_Layer: 3
+  m_Name: Text Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5395860577971845447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6728946711894258564}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.21, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3209445799392345457}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

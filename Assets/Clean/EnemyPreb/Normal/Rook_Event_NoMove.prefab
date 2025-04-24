@@ -78,6 +78,37 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.42566764, y: 0.31719196}
   m_EdgeRadius: 0
+--- !u!1 &2620683875456477569
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5728159093105427183}
+  m_Layer: 3
+  m_Name: Text Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5728159093105427183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2620683875456477569}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.64000005, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1654475711164151343}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5547197353583117834
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,6 +145,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4000543217562089138}
+  - {fileID: 5728159093105427183}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3300017373339461812
@@ -256,18 +288,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4b8d60f98e06c4fa40c852075becd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  moveSpeed: 0
+  maxHealth: 50
+  moveSpeed: 0.1
   deffense: 0
   attackDamage: 10
   attackRange: 0.3
   attackCooldown: 1
-  knockbackResistance: 10
+  knockbackResistance: 1
   expGemRate: Common
   currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
+  textPos: {fileID: 5728159093105427183}
   type: 5
   moveDir: {x: 0, y: 0}
   dirNum: 0

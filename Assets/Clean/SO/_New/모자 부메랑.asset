@@ -30,11 +30,11 @@ MonoBehaviour:
   weaponType: 5
   levelStats:
     damage:
-    - 5
-    - 5
-    - 5
-    - 5
-    - 5
+    - 8
+    - 12
+    - 14
+    - 16
+    - 20
     attackCooldown:
     - 4
     - 4
@@ -86,7 +86,7 @@ MonoBehaviour:
     count: 0100000002000000030000000500000008000000
     attackRangeX: 0
     attackRangeY: 0
-    pierceCount: []
+    pierceCount: 
     coolDownDecrease:
     - 0.2
     - 0.3

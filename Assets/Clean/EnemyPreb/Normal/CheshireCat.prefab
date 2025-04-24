@@ -146,6 +146,37 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.4}
   m_Radius: 0.15
+--- !u!1 &8315302846076251147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2879953307301884822}
+  m_Layer: 3
+  m_Name: Text Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2879953307301884822
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8315302846076251147}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.868, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5395955156475994692}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9117098845553011389
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,6 +214,7 @@ Transform:
   m_Children:
   - {fileID: 5651115707754796229}
   - {fileID: 4100289966352120180}
+  - {fileID: 2879953307301884822}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8679522094828199082
@@ -325,18 +357,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5dcd3b5a070aa244885e5e6080c34ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 18
   moveSpeed: 1.7
   deffense: 0
   attackDamage: 10
   attackRange: 0.3
   attackCooldown: 1
-  knockbackResistance: 0.5
+  knockbackResistance: 1
   expGemRate: Common
   currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
+  textPos: {fileID: 2879953307301884822}
 --- !u!114 &5046534071814841065
 MonoBehaviour:
   m_ObjectHideFlags: 0

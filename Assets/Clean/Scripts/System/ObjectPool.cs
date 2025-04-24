@@ -16,9 +16,13 @@ public class ObjectPool : MonoBehaviour
     public List<Pool> pools;
     public List<Pool> enemyPools;
     public List<Pool> expgemPools;
+    public List<Pool> damageTextPools;
     private Dictionary<string, Queue<GameObject>> poolDictionary;
     private Dictionary<string, Queue<GameObject>> poolDictionary_Enemy;
     private Dictionary<string, Queue<GameObject>> poolDictionary_Expgem;
+    private Dictionary<string, Queue<GameObject>> poolDictionary_DamageText;
+    private Dictionary<GameObject, DamageText> damageTextComponentMap = new();
+
 
     private void Awake()
     {
@@ -26,6 +30,7 @@ public class ObjectPool : MonoBehaviour
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
         poolDictionary_Enemy = new Dictionary<string, Queue<GameObject>>();
         poolDictionary_Expgem = new Dictionary<string, Queue<GameObject>>();
+        poolDictionary_DamageText = new Dictionary<string, Queue<GameObject>>();
 
         //무기 풀링
         foreach (Pool pool in pools)
@@ -54,7 +59,7 @@ public class ObjectPool : MonoBehaviour
 
             poolDictionary_Enemy.Add(pool.tag, objectPool);
         }
-        
+
         //경험치 잼 풀링
         foreach (Pool pool in expgemPools)
         {
@@ -67,6 +72,20 @@ public class ObjectPool : MonoBehaviour
             }
 
             poolDictionary_Expgem.Add(pool.tag, objectPool);
+        }
+
+        //데미지 텍스트 잼 풀링
+        foreach (Pool pool in damageTextPools)
+        {
+            Queue<GameObject> objectPool = new Queue<GameObject>();
+
+            for (int i = 0; i < pool.size; i++)
+            {
+                GameObject obj = CreateNewObject_DamageText(pool.prefab);
+                objectPool.Enqueue(obj);
+            }
+
+            poolDictionary_DamageText.Add(pool.tag, objectPool);
         }
     }
 
@@ -251,6 +270,72 @@ public class ObjectPool : MonoBehaviour
     public void ReturnToPool_Expgem(string tag, GameObject objectToReturn)
     {
         if (!poolDictionary_Expgem.ContainsKey(tag))
+        {
+            Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
+            return;
+        }
+
+        objectToReturn.SetActive(false);
+    }
+
+
+    //데미지 텍스트 풀링
+    private GameObject CreateNewObject_DamageText(GameObject prefab)
+    {
+        GameObject obj = Instantiate(prefab);
+        obj.SetActive(false);
+
+        DamageText dt = obj.GetComponent<DamageText>();
+        if (dt != null)
+        {
+            damageTextComponentMap[obj] = dt;
+        }
+
+        return obj;
+    }
+    public GameObject SpawnFromPool_DamageText(string tag, Vector3 position, float damage)
+    {
+        if (!poolDictionary_DamageText.ContainsKey(tag))
+        {
+            Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
+            return null;
+        }
+
+        Queue<GameObject> pool = poolDictionary_DamageText[tag];
+        GameObject objectToSpawn = null;
+
+        foreach (GameObject obj in pool)
+        {
+            if (!obj.activeInHierarchy)
+            {
+                objectToSpawn = obj;
+                break;
+            }
+        }
+
+        if (objectToSpawn == null)
+        {
+            Pool poolSettings = damageTextPools.Find(p => p.tag == tag);
+            objectToSpawn = CreateNewObject_DamageText(poolSettings.prefab);
+            pool.Enqueue(objectToSpawn);
+        }
+
+        objectToSpawn.SetActive(true);
+        objectToSpawn.transform.position = position;
+
+        if (!damageTextComponentMap.TryGetValue(objectToSpawn, out DamageText dt))
+        {
+            dt = objectToSpawn.GetComponent<DamageText>();
+            damageTextComponentMap[objectToSpawn] = dt;
+        }
+
+        dt?.Setup(damage, position);
+
+        return objectToSpawn;
+    }
+    public void ReturnToPool_DamageText(string tag, GameObject objectToReturn)
+    {
+        if (!poolDictionary_DamageText.ContainsKey(tag))
         {
             Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
             return;
