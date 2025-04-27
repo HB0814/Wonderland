@@ -75,7 +75,8 @@ public class EnemyManager : MonoBehaviour
             return;
         }
 
-        Vector3 spawnPos = GetRandomSpawnPosition(); //화면 밖 랜덤 스폰 함수의 값 가져오기
+        //Vector3 spawnPos = GetRandomSpawnPosition(); //화면 밖 랜덤 스폰 함수의 값 가져오기
+        Vector3 spawnPos = GetRandomSpawnPosition_Circle(); //화면 밖 랜덤 스폰 함수의 값 가져오기
 
         GameObject enemyToSpawn = ObjectPool.Instance.SpawnFromPool_Enemy(enemyType, spawnPos);
         //오브젝트 풀링에 해당 적의 타입과 위치의 값을 전달하여 가져오기
@@ -86,7 +87,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    //일반 몬스터 스폰 -> 화면 밖에서 스폰
+    //일반 몬스터 스폰 -> 화면 밖에서 스폰 (사각형 모양 스폰)
     private Vector3 GetRandomSpawnPosition()
     {
         Vector3 randomPos = Vector3.zero; //랜덤위치 초기화
@@ -113,6 +114,22 @@ public class EnemyManager : MonoBehaviour
         }
         return Camera.main.ViewportToWorldPoint(randomPos);
         //월드 좌표에서 뷰포트 좌표로 변환
+    }
+
+    private Vector3 GetRandomSpawnPosition_Circle()
+    {
+        float angle = Random.Range(0f, 2f * Mathf.PI); // 랜덤한 방향 각도 (0~360도)
+
+        float circleX = 0.7f; // x방향 반지름
+        float circleY = 0.7f; // y방향 반지름
+
+        float x = Mathf.Cos(angle) * circleX + 0.5f; // 중심을 기준으로 이동
+        float y = Mathf.Sin(angle) * circleY + 0.5f;
+
+        float zPos = 10f; // Z축 위치
+
+        Vector3 viewportPos = new Vector3(x, y, zPos);
+        return Camera.main.ViewportToWorldPoint(viewportPos);
     }
 
     //타원 모양으로 적 스폰 -> 플레이어를 이동 제한하는 Rook_Event_NoMove 적 스폰

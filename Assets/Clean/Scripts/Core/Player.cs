@@ -232,7 +232,7 @@ public class Player : MonoBehaviour
     {
         currentLevel++;
         currentExp = 0f;
-        maxExp *= 1.2f;
+        maxExp += 30;
         onLevelChanged?.Invoke(currentLevel);
         onExpChanged?.Invoke(currentExp, maxExp);
         UpgradeManager.Instance.ShowUpgradeOptions();
