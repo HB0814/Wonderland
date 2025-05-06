@@ -116,6 +116,7 @@ public class EnemyManager : MonoBehaviour
         //월드 좌표에서 뷰포트 좌표로 변환
     }
 
+    //일반 몬스터 스폰 -> 화면 밖에서 스폰 (원형 모양 스폰)
     private Vector3 GetRandomSpawnPosition_Circle()
     {
         float angle = Random.Range(0f, 2f * Mathf.PI); // 랜덤한 방향 각도 (0~360도)

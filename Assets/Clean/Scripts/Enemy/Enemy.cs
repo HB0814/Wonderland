@@ -9,6 +9,7 @@ public abstract class Enemy : MonoBehaviour
     [Header("기본 속성")]
     public float maxHealth = 10.0f;  //최대 체력
     public float moveSpeed = 2.0f; //이동속도
+    public float baseSpeed = 1.3f;
     public float deffense = 0.0f; //방어력
     public float attackDamage = 10.0f; //피해량
     public float attackRange = 0.1f; //공격 범위 -> 플레이어와의 최소 거리
@@ -73,6 +74,7 @@ public abstract class Enemy : MonoBehaviour
         nextAttackTime = 0.0f; //다음 공격 시간 초기화
         isKnockbacked = false; //넉백 상태 초기화
         isSlowed = false; //슬로우 상태 초기화
+        moveSpeed = baseSpeed;
     }
 
     protected virtual void Start()
@@ -228,7 +230,6 @@ public abstract class Enemy : MonoBehaviour
     //슬로우 적용 코루틴
     private IEnumerator ApplySlow(float slowForce, float slowDuration)
     {
-        float baseSpeed = moveSpeed; //현재 이동 속도 저장
         moveSpeed *= (1 - slowForce); //이동속도 감소
         yield return slowDuration; //슬로우 지속시간 종료 후 호출
 

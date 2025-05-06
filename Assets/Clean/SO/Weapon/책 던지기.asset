@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 792dd012024aec445bd48adcd4a7218f, type: 3}
+  m_Name: "\uCC45 \uB358\uC9C0\uAE30"
+  m_EditorClassIdentifier: 
+  weaponName: "\uCC45 \uB358\uC9C0\uAE30"
+  description:
+  - 
+  - 
+  - 
+  - 
+  - 
+  currentLevel: 2
+  icon: {fileID: 0}
+  UpgradeDetails:
+  - "\uC5C5\uADF8\uB808\uC774\uB4DC \uB0B4\uC6A9"
+  - 
+  - 
+  - 
+  - 
+  weaponType: 1
+  levelStats:
+    damage:
+    - 11
+    - 13
+    - 15
+    - 18
+    - 23
+    attackCooldown:
+    - 2.5
+    - 2.2
+    - 2
+    - 1.8
+    - 1.5
+    lifeTime:
+    - 4
+    - 4
+    - 4
+    - 4
+    - 4
+    size:
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    knockbackForce:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    slowForce:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    slowDuration:
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    detectionRange:
+    - 10
+    - 10
+    - 10
+    - 10
+    - 10
+    speed:
+    - 10
+    - 10
+    - 10
+    - 10
+    - 10
+    count: 0100000002000000030000000500000008000000
+    attackRangeX: 0
+    attackRangeY: 0
+    pierceCount: 0000000001000000020000000300000004000000
+    coolDownDecrease: []

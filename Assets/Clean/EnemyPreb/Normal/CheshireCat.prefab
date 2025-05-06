@@ -357,14 +357,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5dcd3b5a070aa244885e5e6080c34ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
-  moveSpeed: 1.6
+  maxHealth: 28
+  moveSpeed: 1.25
+  baseSpeed: 1.25
   deffense: 0
   attackDamage: 10
   attackRange: 0.3
   attackCooldown: 1
   knockbackResistance: 1
-  expGemRate: Common
+  expGemRate: Rare
   currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0

@@ -124,6 +124,15 @@ public class HitEffect : MonoBehaviour
             return;
         }
 
+        Effect effect = other.GetComponent<Effect>();
+        if (effect != null && effect.WeaponData != null)
+        {
+            if (effect.WeaponData.weaponType is WeaponType.Pipe or WeaponType.Firecracker)
+            {
+                return;
+            }
+        }
+
         ProcessWeaponHit(other);
     }
 
