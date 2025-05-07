@@ -276,6 +276,10 @@ public abstract class Enemy : MonoBehaviour
     //경험치 잼 생성
     protected virtual void CreateExpgem()
     {
+        float ran = Random.Range(0.0f, 100.0f);
+
+        expGemRate = SetExpGemRate(ran); //레벨 별 경험치 잼 확률
+
         GameObject expgemToSpawn = ObjectPool.Instance.SpawnFromPool_Expgem(expGemRate, transform.position);
         //오브젝트 풀링을 한 경험치 잼 가져오기
 
@@ -283,6 +287,59 @@ public abstract class Enemy : MonoBehaviour
         {
             expgemToSpawn.SetActive(true); //경험치 잼 활성화
         }
+    }
+
+    protected virtual string SetExpGemRate(float ran)
+    {
+        string rate = "Common";
+
+        if (_player.Level <= 5)
+        {
+                rate = "Common";
+        }
+        else if (_player.Level <= 10)
+        {
+            if (ran < 90)
+            {
+                rate = "Common";
+            }
+            else
+            {
+                rate = "Rare";
+            }
+        }
+        else if (_player.Level <= 15)
+        {
+            if (ran < 70)
+            {
+                rate = "Common";
+            }
+            else if (ran < 90)
+            {
+                rate = "Rare";
+            }
+            else
+            {
+                rate = "Unique";
+            }
+        }
+        else
+        {
+            if (ran < 60)
+            {
+                rate = "Common";
+            }
+            else if (ran < 85)
+            {
+                rate = "Rare";
+            }
+            else
+            {
+                rate = "Unique";
+            }
+        }
+
+        return rate;
     }
 
     //오브젝트가 활성화 상태가 됐을 경우

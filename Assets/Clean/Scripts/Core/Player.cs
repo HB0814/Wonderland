@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     private Vector2 currentVelocity;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    public bool isDead = false;
 
     // 프로퍼티
     public float CurrentHealth => currentHealth;
@@ -87,7 +88,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         HandleInput();
-        UpdateAnimation();
         WeaponAdd();
     }
     private void WeaponAdd()
@@ -167,28 +167,39 @@ public class Player : MonoBehaviour
         {
             moveInput = -moveInput;
         }
+    }    
+
+    private void FixedUpdate()
+    {
+        if (rb == null || isDead)
+            return;
+
+        UpdateAnimation(); //플립, 애니메이션
+        Move(); //이동
     }
 
     private void UpdateAnimation()
     {
-        if (animator != null)
-        {
-            animator.SetFloat("Speed", moveInput.magnitude);
-        }
-
         if (moveInput.x != 0 && spriteRenderer != null)
         {
             spriteRenderer.flipX = moveInput.x < 0;
         }
+
+        if (moveInput.x != 0 || moveInput.y != 0)
+        {
+            animator.SetBool("isWalk", true);
+        }
+        else
+        {
+            animator.SetBool("isWalk", false);
+        }
     }
 
-    private void FixedUpdate()
+    private void Move()
     {
-        if (rb == null) return;
-
         // 물리 기반 이동 처리
         Vector2 targetVelocity = moveInput * moveSpeed;
-        
+
         if (moveInput != Vector2.zero)
         {
             // 이동 중일 때 가속
@@ -210,6 +221,7 @@ public class Player : MonoBehaviour
 
         rb.linearVelocity = currentVelocity;
     }
+
     public void AddExperience(float amount)
     {
         currentExp += amount;
@@ -262,7 +274,7 @@ public class Player : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth - finalDamage);
         onHealthChanged?.Invoke(currentHealth, maxHealth);
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !isDead)
         {
             Die();
         }
@@ -278,6 +290,9 @@ public class Player : MonoBehaviour
     {
         Debug.Log($"[{nameof(Player)}] Player died!");
         // TODO: 사망 처리 로직 추가
+        rb.linearVelocity = Vector3.zero; //이동 정지
+        animator.SetTrigger("Die"); //죽음 애니메이션 실행
+        isDead = true; //죽음 여부 참
     }
 
     public void AddSpeedBonus(float bonus)

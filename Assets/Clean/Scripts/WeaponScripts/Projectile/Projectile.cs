@@ -25,6 +25,7 @@ public class Projectile : MonoBehaviour
     private float maxDistance = 7f;
     private bool isReturning = false;
     private Transform playerTransform;
+    private Transform playerCenter;
     private HatBoomerangWeapon hatWeapon;
     private Vector3 initialPosition; // 모자의 초기 위치 저장
 
@@ -42,6 +43,7 @@ public class Projectile : MonoBehaviour
         if(weaponType == WeaponType.Hat)
         {
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            playerCenter = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).transform;
             hatWeapon = playerTransform.GetComponentInChildren<HatBoomerangWeapon>();
         }
     }
