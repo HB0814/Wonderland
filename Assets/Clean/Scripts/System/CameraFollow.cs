@@ -3,7 +3,6 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public float cameraSpeed = 5.0f;
-
     public GameObject player;
 
     private void Update()

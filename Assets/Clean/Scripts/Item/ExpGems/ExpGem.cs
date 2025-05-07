@@ -32,7 +32,6 @@ public class ExpGem : MonoBehaviour
 
         float distanceToPlayer = Vector2.Distance(transform.position, target.position); //경험치 잼과 타겟의 거리
         
-
         // 플레이어와의 거리가 자석 거리보다 가까우면
         if (distanceToPlayer <= magnetDistance)
         {

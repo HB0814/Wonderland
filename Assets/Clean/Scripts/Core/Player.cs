@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using static UnityEditor.PlayerSettings;
+using static UnityEngine.InputManagerEntry;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -29,7 +32,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float baseSpeed = 5f;
     private float currentSpeedBonus = 0f;
     private float damageMultiplier = 1f;
-    
+
+
+    [Header("조이스틱")]
+    public FloatingJoystick joy;
+    Vector3 vec_Joy;
+    public float speed;
+
     private InsanitySystem insanitySystem;
     // 광기 변경 이벤트
     public System.Action<float> onInsanityChanged;
@@ -89,6 +98,8 @@ public class Player : MonoBehaviour
     {
         HandleInput();
         WeaponAdd();
+
+        Move_Joystick();
     }
     private void WeaponAdd()
     {
@@ -220,6 +231,34 @@ public class Player : MonoBehaviour
         }
 
         rb.linearVelocity = currentVelocity;
+    }
+
+    private void Move_Joystick()                                //플레이어 이동
+    {
+        float x = joy.Horizontal;              //조이스틱의 수평 값 대입
+        float y = joy.Vertical;                //조이스틱의 수직 값 대입
+
+        vec_Joy = new Vector3(x, y, 0);            //입력값 x, y 대입
+
+        transform.position += speed * Time.deltaTime * vec_Joy;                    //조이스틱의 입력값에 속도를 곱한 만큼 이동
+
+        if (x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (x > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+
+        if (x != 0 || y != 0)
+        {
+            animator.SetBool("isWalk", true);
+        }
+        else
+        {
+            animator.SetBool("isWalk", false);
+        }
     }
 
     public void AddExperience(float amount)
