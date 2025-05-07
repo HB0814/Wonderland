@@ -233,14 +233,14 @@ public class Player : MonoBehaviour
         rb.linearVelocity = currentVelocity;
     }
 
-    private void Move_Joystick()                                //플레이어 이동
+    private void Move_Joystick() //플레이어 조이스틱
     {
-        float x = joy.Horizontal;              //조이스틱의 수평 값 대입
-        float y = joy.Vertical;                //조이스틱의 수직 값 대입
+        float x = joy.Horizontal; //조이스틱의 수평 값 대입
+        float y = joy.Vertical; //조이스틱의 수직 값 대입
 
-        vec_Joy = new Vector3(x, y, 0);            //입력값 x, y 대입
+        vec_Joy = new Vector3(x, y, 0); //입력값 x, y 대입
 
-        transform.position += speed * Time.deltaTime * vec_Joy;                    //조이스틱의 입력값에 속도를 곱한 만큼 이동
+        transform.position += speed * Time.deltaTime * vec_Joy; //조이스틱의 입력값에 속도를 곱한 만큼 이동
 
         if (x < 0)
         {
