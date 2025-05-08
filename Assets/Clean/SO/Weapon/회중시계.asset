@@ -36,11 +36,11 @@ MonoBehaviour:
     - 17
     - 21
     attackCooldown:
-    - 2.2
-    - 2
     - 1.8
-    - 1.5
+    - 1.6
+    - 1.4
     - 1.2
+    - 1
     lifeTime:
     - 0.5
     - 0.5

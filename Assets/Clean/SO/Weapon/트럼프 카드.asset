@@ -19,7 +19,7 @@ MonoBehaviour:
   - 
   - 
   - 
-  currentLevel: 0
+  currentLevel: 2
   icon: {fileID: 0}
   UpgradeDetails:
   - "\uC5C5\uADF8\uB808\uC774\uB4DC \uB0B4\uC6A9"
@@ -36,11 +36,11 @@ MonoBehaviour:
     - 23
     - 28
     attackCooldown:
-    - 2.8
-    - 2.5
-    - 2.1
+    - 2.3
+    - 2
     - 1.8
-    - 1.5
+    - 1.6
+    - 1.4
     lifeTime:
     - 4
     - 4

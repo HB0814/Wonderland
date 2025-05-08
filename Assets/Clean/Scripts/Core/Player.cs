@@ -184,6 +184,7 @@ public class Player : MonoBehaviour
     {
         if (rb == null || isDead)
             return;
+        UpdateSpriteLayer();
 
         UpdateAnimation(); //플립, 애니메이션
         Move(); //이동
@@ -260,6 +261,13 @@ public class Player : MonoBehaviour
             animator.SetBool("isWalk", false);
         }
     }
+    private void UpdateSpriteLayer()
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * -100);
+        }
+    }
 
     public void AddExperience(float amount)
     {
@@ -268,7 +276,9 @@ public class Player : MonoBehaviour
         
         if (currentExp >= maxExp)
         {
-            LevelUp();
+            float temp = currentExp - maxExp; //경험치량 초과 시 저장 후 다시 증가
+
+            LevelUp(temp);
         }
 
         // 경험치 획득 시 광기 2 증가
@@ -279,12 +289,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void LevelUp()
+    private void LevelUp(float temp)
     {
         currentLevel++;
         currentExp = 0f;
         maxExp += GetRequiredExp(currentLevel);
         onLevelChanged?.Invoke(currentLevel);
+        currentExp += temp;
         onExpChanged?.Invoke(currentExp, maxExp);
         UpgradeManager.Instance.ShowUpgradeOptions();
     }

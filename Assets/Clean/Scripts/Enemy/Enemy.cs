@@ -168,7 +168,7 @@ public abstract class Enemy : MonoBehaviour
     //플레이어 공격
     public virtual void Attack()
     { 
-        if (_player != null)
+        if (_player != null && gameObject.activeSelf)
         {
             _player.TakeDamage(attackDamage); //플레이어의 몬스터의 피해량 값을 전달하여 피격 함수 실행
         }
@@ -183,7 +183,7 @@ public abstract class Enemy : MonoBehaviour
             StartCoroutine(ApplyKnockback(knockbackForce)); //넉백 코루틴
         }
 
-        if(gameObject.activeSelf) //게임오브젝트가 활성화 상태일 경우에만
+        if(spriteRenderer.isVisible) //게임오브젝트가 활성화 상태일 경우에만
             StartCoroutine(HitColor()); //피격 효과 코루틴 실행
 
         if (slowForce > 0) //슬로우의 크기가 있으면 실행
@@ -276,7 +276,7 @@ public abstract class Enemy : MonoBehaviour
     //경험치 잼 생성
     protected virtual void CreateExpgem()
     {
-        float ran = Random.Range(0.0f, 100.0f);
+        float ran = Random.value;
 
         expGemRate = SetExpGemRate(ran); //레벨 별 경험치 잼 확률
 
@@ -299,7 +299,7 @@ public abstract class Enemy : MonoBehaviour
         }
         else if (_player.Level <= 10)
         {
-            if (ran < 90)
+            if (ran < 0.95f)
             {
                 rate = "Common";
             }
@@ -310,11 +310,11 @@ public abstract class Enemy : MonoBehaviour
         }
         else if (_player.Level <= 15)
         {
-            if (ran < 70)
+            if (ran < 0.8f)
             {
                 rate = "Common";
             }
-            else if (ran < 90)
+            else if (ran < 0.95f)
             {
                 rate = "Rare";
             }
@@ -325,11 +325,11 @@ public abstract class Enemy : MonoBehaviour
         }
         else
         {
-            if (ran < 60)
+            if (ran < 0.7f)
             {
                 rate = "Common";
             }
-            else if (ran < 85)
+            else if (ran < 0.95f)
             {
                 rate = "Rare";
             }
