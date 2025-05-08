@@ -274,6 +274,7 @@ MonoBehaviour:
   type: 3
   moveDir: {x: 0, y: 0}
   dirNum: 0
+  lifeTime: 10
 --- !u!114 &9137377922930611280
 MonoBehaviour:
   m_ObjectHideFlags: 0
