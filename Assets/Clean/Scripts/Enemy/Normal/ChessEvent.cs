@@ -10,11 +10,26 @@ public class ChessEvent : MonoBehaviour
     [SerializeField] GameObject rook_L;
     [SerializeField] GameObject rook_R;
 
+    Transform rook_T_;
+    Transform rook_B_;
+    Transform rook_L_;
+    Transform rook_R_;
+
     int bishop;
     [SerializeField] GameObject bishop_TR;
     [SerializeField] GameObject bishop_TL;
     [SerializeField] GameObject bishop_BR;
     [SerializeField] GameObject bishop_BL;
+
+    Transform bishop_TR_;
+    Transform bishop_TL_;
+    Transform bishop_BR_;
+    Transform bishop_BL_;
+
+    private void Start()
+    {
+        rook_T_ = rook_T.transform;
+    }
 
     private void OnEnable()
     {
@@ -32,7 +47,7 @@ public class ChessEvent : MonoBehaviour
         if (ran == 0)
             RookEvent();
         else if (ran == 1)
-            RookEvent();
+            BishopEvent();
     }
 
     private void RookEvent()

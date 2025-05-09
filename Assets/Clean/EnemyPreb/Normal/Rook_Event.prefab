@@ -258,8 +258,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
-  moveSpeed: 3
-  baseSpeed: 3
+  moveSpeed: 0
+  baseSpeed: 0
   deffense: 0
   attackDamage: 10
   attackRange: 0.3
@@ -272,8 +272,6 @@ MonoBehaviour:
   isSlowed: 0
   textPos: {fileID: 1851313538781811099}
   type: 3
-  moveDir: {x: 0, y: 0}
-  dirNum: 0
   lifeTime: 10
 --- !u!114 &9137377922930611280
 MonoBehaviour:
