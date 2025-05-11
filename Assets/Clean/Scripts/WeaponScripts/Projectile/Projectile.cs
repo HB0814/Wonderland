@@ -43,9 +43,10 @@ public class Projectile : MonoBehaviour
         if(weaponType == WeaponType.Hat)
         {
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-            playerCenter = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).transform;
             hatWeapon = playerTransform.GetComponentInChildren<HatBoomerangWeapon>();
         }
+        playerCenter = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).transform;
+        transform.position = playerCenter.position;
     }
 
     public virtual void BaseInitialize(float damage, float size, float lifeTime, float speed)
@@ -122,7 +123,7 @@ public class Projectile : MonoBehaviour
                     transform.position += dir * projectileSpeed * Time.deltaTime;
                     
                     // 최대 거리 도달 체크
-                    if (Vector3.Distance(transform.position, playerTransform.position) >= maxDistance)
+                    if (Vector3.Distance(transform.position, playerCenter.position) >= maxDistance)
                     {
                         isReturning = true;
                     }
@@ -132,7 +133,7 @@ public class Projectile : MonoBehaviour
                     transform.position += (-dir) * returnSpeed * Time.deltaTime;
 
                     // 플레이어와의 거리 체크
-                    float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+                    float distanceToPlayer = Vector3.Distance(transform.position, playerCenter.transform.position);
                     if (distanceToPlayer < 0.5f)
                     {
                         // 쿨타임 감소 적용
@@ -167,6 +168,4 @@ public class Projectile : MonoBehaviour
             }
         }
     }
-
-
 } 

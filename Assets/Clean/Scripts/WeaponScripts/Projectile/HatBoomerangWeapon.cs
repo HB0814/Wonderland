@@ -54,6 +54,7 @@ public class HatBoomerangWeapon : WeaponBase
             // 가장 가까운 적을 향해 발사
             Vector3 direction = GetNearestEnemyDirection();
             projectile.SetDirection(direction);
+            nextAttackTime = 0f;
         }
     }
 

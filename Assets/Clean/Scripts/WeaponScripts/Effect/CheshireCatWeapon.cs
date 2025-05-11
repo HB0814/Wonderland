@@ -62,6 +62,7 @@ public class CheshireCatWeapon : WeaponBase
                     effect.DebuffInitialize(knockbackForce, slowForce, slowDuration);
                 }
             }
+            nextAttackTime = 0f;
         }
     }
     private GameObject FindRandomEnemyInRange()

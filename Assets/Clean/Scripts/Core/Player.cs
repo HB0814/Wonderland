@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
         HandleInput();
         WeaponAdd();
 
-        Move_Joystick();
+        //Move_Joystick();
     }
     private void WeaponAdd()
     {
@@ -184,12 +184,60 @@ public class Player : MonoBehaviour
     {
         if (rb == null || isDead)
             return;
-        UpdateSpriteLayer();
 
-        UpdateAnimation(); //플립, 애니메이션
-        Move(); //이동
+        MoveCombined(); //키보드, 조이스틱 이동
+        UpdateSpriteLayer(); //스프라이트 레이어 업데이트
+        //UpdateAnimation(); //플립, 애니메이션
+        //Move_Keyboard(); //키보드 이동
+        //Move_Joystick(); //조이스틱 이동
     }
 
+    private void MoveCombined()
+    {
+        // 키보드 입력
+        Vector2 keyboardInput = new Vector2(
+            Input.GetAxisRaw("Horizontal"),
+            Input.GetAxisRaw("Vertical")
+        );
+
+        // 조이스틱 입력
+        Vector2 joystickInput = new Vector2(joy.Horizontal, joy.Vertical);
+
+        // 조작 반전 적용
+        if (insanitySystem?.AreControlsInverted() ?? false)
+        {
+            keyboardInput = -keyboardInput;
+            joystickInput = -joystickInput;
+        }
+
+        // 입력 합산 (키보드 우선, 조이스틱은 아날로그 감도 적용)
+        Vector2 combinedInput = Vector2.zero;
+
+        if (keyboardInput != Vector2.zero)
+        {
+            combinedInput = keyboardInput.normalized;
+        }
+        else
+        {
+            combinedInput = joystickInput; // magnitude 유지
+        }
+
+        // 너무 작으면 정지 처리
+        if (combinedInput.magnitude < 0.01f)
+            combinedInput = Vector2.zero;
+
+        // 이동
+        rb.linearVelocity = combinedInput * speed;
+
+        // 스프라이트 방향
+        if (combinedInput.x != 0)
+            spriteRenderer.flipX = combinedInput.x < 0;
+
+        // 애니메이션
+        animator.SetBool("isWalk", combinedInput.magnitude > 0.01f);
+    }
+
+    //애니메이션, 플립
     private void UpdateAnimation()
     {
         if (moveInput.x != 0 && spriteRenderer != null)
@@ -207,7 +255,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Move()
+    //키보드 이동
+    private void Move_Keyboard()
     {
         // 물리 기반 이동 처리
         Vector2 targetVelocity = moveInput * moveSpeed;
@@ -234,14 +283,15 @@ public class Player : MonoBehaviour
         rb.linearVelocity = currentVelocity;
     }
 
-    private void Move_Joystick() //플레이어 조이스틱
+    //조이스틱 이동
+    private void Move_Joystick()
     {
         float x = joy.Horizontal; //조이스틱의 수평 값 대입
         float y = joy.Vertical; //조이스틱의 수직 값 대입
 
         vec_Joy = new Vector3(x, y, 0); //입력값 x, y 대입
-
-        transform.position += speed * Time.deltaTime * vec_Joy; //조이스틱의 입력값에 속도를 곱한 만큼 이동
+        rb.linearVelocity = vec_Joy * speed;
+        //transform.position += speed * Time.deltaTime * vec_Joy; //조이스틱의 입력값에 속도를 곱한 만큼 이동
 
         if (x < 0)
         {
@@ -261,6 +311,8 @@ public class Player : MonoBehaviour
             animator.SetBool("isWalk", false);
         }
     }
+    
+    //스프라이트 레이어 업데이트
     private void UpdateSpriteLayer()
     {
         if (spriteRenderer != null)
@@ -269,6 +321,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //경험치 추가
     public void AddExperience(float amount)
     {
         currentExp += amount;
@@ -276,7 +329,7 @@ public class Player : MonoBehaviour
         
         if (currentExp >= maxExp)
         {
-            float temp = currentExp - maxExp; //경험치량 초과 시 저장 후 다시 증가
+            float temp = currentExp - maxExp; //경험치량 초과분 저장
 
             LevelUp(temp);
         }
@@ -295,7 +348,7 @@ public class Player : MonoBehaviour
         currentExp = 0f;
         maxExp += GetRequiredExp(currentLevel);
         onLevelChanged?.Invoke(currentLevel);
-        currentExp += temp;
+        currentExp += temp; //초과된 경험치량 적용
         onExpChanged?.Invoke(currentExp, maxExp);
         UpgradeManager.Instance.ShowUpgradeOptions();
     }

@@ -11,11 +11,17 @@ public class ChessEnemy : Enemy
 
     [Header("이벤트형 체스 관련")]
     public ChessType type; //체스 말 종류
+    private bool isSpawn = false; //스폰 여부
+    [SerializeField] Vector3 vec;
 
     //Rook_Event_NoMove 관련 변수
-    private bool isSpawn = true; //스폰 여부
     [SerializeField] float lifeTime = 30.0f; //이벤트 활성화 시간
     private float timer = 0; //활성화 시간 타이머
+
+    private void Awake()
+    {
+        vec = transform.localPosition;
+    }
 
     private new void Update()
     {
@@ -34,23 +40,27 @@ public class ChessEnemy : Enemy
                 break;
 
             case ChessType.Rook_Event_Move: //검정 룩: 십자 모양으로만 이동하는 이벤트형 체스말
-                UpdateSpriteFlip(); //상속한 Enemy의 UpdateSpriteFlip 함수 호츨
+                if(transform.parent.gameObject.activeSelf == true && !isSpawn)
+                {
+                    isSpawn = true;
+                    UpdateSpriteFlip(); //상속한 Enemy의 UpdateSpriteFlip 함수 호츨
+                }
+
                 UpdateSpriteLayer(); //상속한 Enemy의 UpdateSpriteLayer 함수 호출
                 break;
 
             case ChessType.Bishop_Event_Move: //검정 비숍: 엑스자 모양으로만 이동하는 이벤트형 체스말
-                UpdateSpriteFlip(); //상속한 Enemy의 UpdateSpriteFlip 함수 호츨
+                if (transform.parent.gameObject.activeSelf == true && !isSpawn)
+                {
+                    isSpawn = true;
+                    UpdateSpriteFlip(); //상속한 Enemy의 UpdateSpriteFlip 함수 호츨
+                }
+
                 UpdateSpriteLayer(); //상속한 Enemy의 UpdateSpriteLayer 함수 호출
                 break;
 
             case ChessType.Rook_Event_NoMove: //검정 룩: 이동을 하지 않고, 타원형으로 생성되어 플레이어를 가두는 체스말
-                if(!isSpawn) //스폰 여부 체크
-                {
-                    isSpawn= true; //스폰 여부 참
-                    UpdateSpriteFlip(); //상속한 Enemy의 UpdateSpriteFlip 함수 호츨
-                }
                 base.Update();
-                UpdateSpriteLayer(); //상속한 Enemy의 UpdateSpriteLayer 함수 호출
                 timer += Time.deltaTime; //타이머 값 증가
                 if(timer >= lifeTime) //활성화 시간 이상 달성
                 {
@@ -59,4 +69,25 @@ public class ChessEnemy : Enemy
                 break;
         }
     }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        rb.linearVelocity = Vector3.zero;
+        transform.localPosition = vec;
+    }
+
+    private void OnDisable()
+    {
+        isSpawn= false;
+        
+        if(type == ChessType.Rook || type == ChessType.Bishop)
+        {
+            transform.localPosition = vec;
+            rb.linearVelocity= Vector3.zero;
+        }
+        
+        //Initialize();
+    }
+
 }

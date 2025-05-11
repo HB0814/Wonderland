@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ExpGem : MonoBehaviour
@@ -8,10 +9,13 @@ public class ExpGem : MonoBehaviour
     [SerializeField] private float baseSpeed = 5f;         //기본 속도
     [SerializeField] private float maxSpeed = 15f;         //최대 속도
     [SerializeField] private float accelerationRate = 2f;  //초당 속도 증가량
+    [SerializeField] private float force = 3f;
 
     private Player player; //플레이어 스크립트
     private Transform target; //플레이어 중심
     [SerializeField] private SpriteRenderer spriteRenderer; //스프라이트 렌더러
+    [SerializeField] private Rigidbody2D rb; //리지드바디2D
+
     private bool isAttracting; //기본 자석 기능 활성화 여부
     private bool OnMagnet = false; //자석 아이템 활성화 여부
     private float currentSpeed; //현재 속도
@@ -22,6 +26,7 @@ public class ExpGem : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         target = player.gameObject.transform.GetChild(0).transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
         currentSpeed = baseSpeed;
     }
 
@@ -65,10 +70,24 @@ public class ExpGem : MonoBehaviour
         OnMagnet = true; //자석 아이템 활성화
     }
 
+    //경험치 잼 튕기는 효과
+    private void Launch()
+    {
+        Vector2 randomDir = Random.insideUnitCircle.normalized;
+        force = Random.Range(0.5f, 1.5f);
+        rb.AddForce(randomDir * force, ForceMode2D.Impulse);
+        Invoke(nameof(AddForceZero), 0.1f);
+    }
+
+    private void AddForceZero()
+    {
+        rb.linearVelocity = Vector2.zero;
+    }
+
     //경험치 잼 활성화 시
     private void OnEnable()
     {
-        spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * -100); //활성화 시 레이어 순서 설정
+        Launch();
     }
 
     //비활성화 시
@@ -78,6 +97,7 @@ public class ExpGem : MonoBehaviour
         OnMagnet = false; //자석 아이템 비활성화
         currentSpeed = baseSpeed; //속도 초기화
         attractTimer = 0; //타이머 초기화
+        rb.linearVelocity = Vector2.zero;
     }
 
     //충돌 시

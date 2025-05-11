@@ -25,8 +25,6 @@ public class FirecrackerWeapon : WeaponBase
         base.UpdateStats();
     }
 
-
-
     protected override void Attack()
     {
         if (animator != null)
@@ -55,6 +53,8 @@ public class FirecrackerWeapon : WeaponBase
                     }
                 }
             }
+
+            nextAttackTime = 0f;
         }
     }
 

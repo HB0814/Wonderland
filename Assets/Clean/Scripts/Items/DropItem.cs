@@ -1,31 +1,46 @@
 using UnityEngine;
 
+[System.Serializable]
+public struct DropData
+{
+    public GameObject item;
+    public float dropChance;
+}
+
 public class DropItem : MonoBehaviour
 {
-    public GameObject magnet; //자석 아이템 -> 경험치 잼 당겨오기
-    public GameObject heal; //회복 아이템 -> 플레이어 체력 회복
-    public GameObject anvil; //모루 아이템 -> 무기 강화
-
-    float ran;
+    public enum Rate
+    {
+        Normal, Named
+    }
+    public Rate rate;
+    public DropData[] normalDrops;
+    public DropData[] namedDrops;
 
     private void OnDisable()
     {
-        ran = Random.value;
-        DropMagnet();
+        DropItems();
     }
 
-    private void DropMagnet()
+    private void DropItems()
     {
-        Instantiate(magnet, transform.position, Quaternion.identity);
-    }
+        DropData[] currentDrops = rate == Rate.Named ? namedDrops : normalDrops;
 
-    private void DropHeal()
-    {
-        Instantiate(heal, transform.position, Quaternion.identity);
-    }
+        float totalWeight = 0f;
+        foreach (var drop in currentDrops)
+            totalWeight += drop.dropChance;
 
-    private void DropAnvil()
-    {
-        Instantiate(anvil, transform.position, Quaternion.identity);
+        float rand = Random.value * totalWeight;
+        float sum = 0f;
+
+        foreach (var drop in currentDrops)
+        {
+            sum += drop.dropChance;
+            if (rand <= sum)
+            {
+                Instantiate(drop.item, transform.position, Quaternion.identity);
+                return;
+            }
+        }
     }
 }

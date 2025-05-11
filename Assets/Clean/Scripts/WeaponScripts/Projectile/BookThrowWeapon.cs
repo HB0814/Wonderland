@@ -29,7 +29,7 @@ public class BookThrowWeapon : WeaponBase
         if (nextAttackTime >= attackCooldown)
         {
             SpawnBook();
-            nextAttackTime = 0f;
+            //nextAttackTime = 0f;
         }
     }
     protected override void Update()
@@ -65,6 +65,7 @@ public class BookThrowWeapon : WeaponBase
                     projectile.SetDirection(nearestEnemyDirection);
                 }
             }
+            nextAttackTime = 0f;
         }
     }
 

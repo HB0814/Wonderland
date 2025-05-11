@@ -30,11 +30,11 @@ MonoBehaviour:
   weaponType: 6
   levelStats:
     damage:
+    - 3
+    - 4
+    - 5
+    - 6
     - 8
-    - 9
-    - 10
-    - 11
-    - 12
     attackCooldown:
     - 2
     - 1.8
@@ -72,11 +72,11 @@ MonoBehaviour:
     - 0.5
     - 0.5
     detectionRange:
-    - 10
-    - 10
-    - 10
-    - 10
-    - 10
+    - 3
+    - 3
+    - 3
+    - 3
+    - 3
     speed:
     - 10
     - 10

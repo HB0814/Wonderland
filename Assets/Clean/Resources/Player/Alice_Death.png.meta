@@ -174,7 +174,7 @@ TextureImporter:
         width: 78
         height: 122
       alignment: 9
-      pivot: {x: 0.58, y: 0}
+      pivot: {x: 0.55, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -196,7 +196,7 @@ TextureImporter:
         width: 78
         height: 122
       alignment: 9
-      pivot: {x: 0.58, y: 0}
+      pivot: {x: 0.55, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -213,12 +213,12 @@ TextureImporter:
       name: Alice_Death_2
       rect:
         serializedVersion: 2
-        x: 279
-        y: 3
+        x: 278
+        y: 2
         width: 78
         height: 122
       alignment: 9
-      pivot: {x: 0.58, y: 0}
+      pivot: {x: 0.55, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -262,7 +262,7 @@ TextureImporter:
         width: 78
         height: 122
       alignment: 9
-      pivot: {x: 0.58, y: 0}
+      pivot: {x: 0.55, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -284,7 +284,7 @@ TextureImporter:
         width: 78
         height: 122
       alignment: 9
-      pivot: {x: 0.58, y: 0}
+      pivot: {x: 0.55, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -306,7 +306,7 @@ TextureImporter:
         width: 78
         height: 122
       alignment: 9
-      pivot: {x: 0.58, y: 0}
+      pivot: {x: 0.55, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -328,7 +328,7 @@ TextureImporter:
         width: 78
         height: 122
       alignment: 9
-      pivot: {x: 0.58, y: 0}
+      pivot: {x: 0.55, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -350,7 +350,7 @@ TextureImporter:
         width: 78
         height: 122
       alignment: 9
-      pivot: {x: 0.58, y: 0}
+      pivot: {x: 0.55, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -372,7 +372,7 @@ TextureImporter:
         width: 78
         height: 122
       alignment: 9
-      pivot: {x: 0.58, y: 0}
+      pivot: {x: 0.55, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

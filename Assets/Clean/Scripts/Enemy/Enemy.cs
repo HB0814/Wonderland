@@ -289,6 +289,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    //레벨 별 경험치 잼 등급 확률 설정
     protected virtual string SetExpGemRate(float ran)
     {
         string rate = "Common";

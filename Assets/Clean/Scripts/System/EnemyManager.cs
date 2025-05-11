@@ -17,6 +17,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float timer = 0.0f; //타이머
     private int currentWaveIndex = 0; //현재 웨이브의 인덱스 
 
+    [SerializeField] private ChessEvent chessEvent;
+    float eventTimer = 30.0f;
+
     Player player; //플레이어 스크립트
     Transform target; //타겟의 위치
 
@@ -27,11 +30,19 @@ public class EnemyManager : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Player>(); //플레이어 스크립트 참조
         target = player.transform; //타겟에 플레이어 위치 값 저장
         waveList = CSVLoader.LoadWaveData("WaveData"); //CSVLoader의 WaveData 로드
+
+        eventTimer = 30.0f;
     }
 
     private void Update()
     {
         timer += Time.deltaTime; //타이머 증가
+
+        if(eventTimer <= Time.time)
+        {
+            eventTimer = Time.time + 30.0f;
+            chessEvent.Warn();
+        }
 
         //현재 웨이브 인덱스가 웨이브 리스트의 카운트보다 적고, 타이머가 웨이브 리스트의 시작시간보다 적을 동안 반복
         while (currentWaveIndex < waveList.Count && timer >= waveList[currentWaveIndex].startTime)

@@ -94,7 +94,6 @@ public abstract class WeaponBase : MonoBehaviour
         if (attackCooldown <= nextAttackTime)
         {
             Attack();
-            nextAttackTime = 0f;
         }
     }
 

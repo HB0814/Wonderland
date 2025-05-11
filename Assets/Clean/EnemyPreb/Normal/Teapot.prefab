@@ -388,8 +388,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 25
-  moveSpeed: 1.6
-  baseSpeed: 1.6
+  moveSpeed: 1.4
+  baseSpeed: 1.4
   deffense: 0
   attackDamage: 10
   attackRange: 0.1
@@ -403,9 +403,9 @@ MonoBehaviour:
   textPos: {fileID: 4100516580381042413}
   isReady: 0
   explosionReadyRange: 5
-  explosionMoveSpeed: 2.1
+  explosionMoveSpeed: 1.6
   explosionRange: 1
-  explosionDamage: 40
+  explosionDamage: 30
   explosionEffect: {fileID: 3166401227987715664, guid: e0156672709b1e246a6d296a8cc0f07d, type: 3}
   center: {fileID: 1186596148103241679}
 --- !u!114 &8501459909480053200

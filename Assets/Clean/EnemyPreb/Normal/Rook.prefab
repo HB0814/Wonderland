@@ -181,8 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 30
-  moveSpeed: 1.4
-  baseSpeed: 1.4
+  moveSpeed: 0.72
+  baseSpeed: 0.72
   deffense: 0
   attackDamage: 10
   attackRange: 0.3
@@ -195,8 +195,8 @@ MonoBehaviour:
   isSlowed: 0
   textPos: {fileID: 5520101520108708595}
   type: 1
-  moveDir: {x: 0, y: 0}
-  dirNum: 0
+  vec: {x: 0, y: 0, z: 0}
+  lifeTime: 30
 --- !u!114 &9137377922930611280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,4 +408,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.4}
-  m_Radius: 0.1
+  m_Radius: 0.15

@@ -44,17 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7918be72636bffa4785a70c8baa3e982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: RollAppleWeapon
-  description: 
-  weaponIcon: {fileID: 0}
-  maxLevel: 5
-  currentLevel: 1
-  baseDamage: 10
-  attackRange: 1.5
   attackCooldown: 1
   nextAttackTime: 0
+  projectilePrefab: {fileID: 0}
+  weaponData: {fileID: 0}
   applePoolTag: AppleProjectile
   knockbackForce: 5
-  attackRangeX: 5
-  attackRangeY: 5
-  weaponStats: {fileID: 11400000, guid: 6ede16d2c1bcab747a9a4a8802a97ab4, type: 2}
+  attackRangeX: 3
+  attackRangeY: 3

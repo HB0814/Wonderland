@@ -98,7 +98,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.3}
-  m_Radius: 0.1
+  m_Radius: 0.15
 --- !u!1 &4965795789343173482
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,8 +280,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 20
-  moveSpeed: 1.35
-  baseSpeed: 1.35
+  moveSpeed: 0.72
+  baseSpeed: 0.72
   deffense: 0
   attackDamage: 8
   attackRange: 0.35
@@ -294,8 +294,8 @@ MonoBehaviour:
   isSlowed: 0
   textPos: {fileID: 2949188264062576039}
   type: 0
-  moveDir: {x: 0, y: 0}
-  dirNum: 0
+  vec: {x: 0, y: 0, z: 0}
+  lifeTime: 30
 --- !u!114 &4527443159619667385
 MonoBehaviour:
   m_ObjectHideFlags: 0

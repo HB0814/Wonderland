@@ -860,8 +860,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 20
-  moveSpeed: 1
-  baseSpeed: 1
+  moveSpeed: 0.7
+  baseSpeed: 0.7
   deffense: 0
   attackDamage: 10
   attackRange: 0.1

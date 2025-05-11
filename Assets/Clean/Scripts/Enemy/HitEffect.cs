@@ -113,6 +113,11 @@ public class HitEffect : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        playerCol= null;
+    }
+
     /// <summary>
     /// 콜라이더 진입 시 처리
     /// </summary>

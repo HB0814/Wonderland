@@ -19,7 +19,7 @@ MonoBehaviour:
   - 
   - 
   - 
-  currentLevel: 0
+  currentLevel: 2
   icon: {fileID: 0}
   UpgradeDetails:
   - "\uC5C5\uADF8\uB808\uC774\uB4DC \uB0B4\uC6A9"
@@ -72,11 +72,11 @@ MonoBehaviour:
     - 0.5
     - 0.5
     detectionRange:
-    - 10
-    - 10
-    - 10
-    - 10
-    - 10
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
     speed:
     - 10
     - 10

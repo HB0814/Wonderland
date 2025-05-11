@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 4085468140931735384}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.262421, y: -2.8707118, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -242,9 +242,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc167f24d8ef5e4438a0faeb641b2544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magnet: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
-  heal: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
-  anvil: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
+  rate: 1
+  normalDrops:
+  - item: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
+    dropChance: 0.05
+  - item: {fileID: 3428670107856843108, guid: c8e112cb28bf31748b2e8b5153beaae5, type: 3}
+    dropChance: 0.1
+  - item: {fileID: 3428670107856843108, guid: e2a3b2ebdc1301049a4f488e7d944440, type: 3}
+    dropChance: 0.01
+  namedDrops:
+  - item: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
+    dropChance: 0.3
+  - item: {fileID: 3428670107856843108, guid: c8e112cb28bf31748b2e8b5153beaae5, type: 3}
+    dropChance: 0.5
+  - item: {fileID: 3428670107856843108, guid: e2a3b2ebdc1301049a4f488e7d944440, type: 3}
+    dropChance: 0.2
 --- !u!1 &6851470888106288281
 GameObject:
   m_ObjectHideFlags: 0
