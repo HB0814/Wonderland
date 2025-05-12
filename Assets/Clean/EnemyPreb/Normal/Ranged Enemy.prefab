@@ -694,6 +694,7 @@ GameObject:
   - component: {fileID: 5647118356176500637}
   - component: {fileID: 4951096272204057043}
   - component: {fileID: 7160192984104947324}
+  - component: {fileID: 991506890699614986}
   m_Layer: 3
   m_Name: Ranged Enemy
   m_TagString: Enemy
@@ -760,8 +761,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 388590931
-  m_SortingLayer: 0
+  m_SortingLayerID: 1031545193
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -860,8 +861,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 20
-  moveSpeed: 0.7
-  baseSpeed: 0.7
+  moveSpeed: 0.6
+  baseSpeed: 0.6
   deffense: 0
   attackDamage: 10
   attackRange: 0.1
@@ -895,3 +896,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allWeaponData: []
+--- !u!114 &991506890699614986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8433921410421109154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc167f24d8ef5e4438a0faeb641b2544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rate: 0
+  normalDrops:
+  - item: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
+    dropChance: 0.01
+  - item: {fileID: 3428670107856843108, guid: c8e112cb28bf31748b2e8b5153beaae5, type: 3}
+    dropChance: 0.03
+  - item: {fileID: 3428670107856843108, guid: e2a3b2ebdc1301049a4f488e7d944440, type: 3}
+    dropChance: 0.001
+  namedDrops:
+  - item: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
+    dropChance: 0.3
+  - item: {fileID: 3428670107856843108, guid: c8e112cb28bf31748b2e8b5153beaae5, type: 3}
+    dropChance: 0.5
+  - item: {fileID: 3428670107856843108, guid: e2a3b2ebdc1301049a4f488e7d944440, type: 3}
+    dropChance: 0.2

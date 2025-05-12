@@ -40,7 +40,8 @@ public class EnemyManager : MonoBehaviour
 
         if(eventTimer <= Time.time)
         {
-            eventTimer = Time.time + 30.0f;
+            float ran = Random.Range(25.0f, 35.0f);
+            eventTimer = Time.time + ran;
             chessEvent.Warn();
         }
 

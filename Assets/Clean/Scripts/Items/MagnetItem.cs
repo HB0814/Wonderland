@@ -1,9 +1,7 @@
 using UnityEngine;
 
-public class MagnetItem : MonoBehaviour
+public class MagnetItem : ItemAttract
 {
-    [SerializeField] private SpriteRenderer spriteRenderer; //스프라이트 렌더러
-
     //충돌 시
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -28,11 +26,5 @@ public class MagnetItem : MonoBehaviour
                 expGem.StartAttraction(); //자석 기능 활성화
             }
         }
-    }
-
-    //게임오브젝트 활성화 시
-    private void OnEnable()
-    {
-        spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * -100); //활성화 시 레이어 순서 설정
     }
 }

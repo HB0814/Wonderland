@@ -39,6 +39,9 @@ public class Player : MonoBehaviour
     Vector3 vec_Joy;
     public float speed;
 
+    [Header("파티클")]
+    public ParticleSystem healParticle;
+
     private InsanitySystem insanitySystem;
     // 광기 변경 이벤트
     public System.Action<float> onInsanityChanged;
@@ -386,6 +389,7 @@ public class Player : MonoBehaviour
     public void Heal(float amount)
     {
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        healParticle.Play();
         onHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 

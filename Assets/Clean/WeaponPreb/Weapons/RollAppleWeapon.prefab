@@ -50,5 +50,5 @@ MonoBehaviour:
   weaponData: {fileID: 0}
   applePoolTag: AppleProjectile
   knockbackForce: 5
-  attackRangeX: 3
-  attackRangeY: 3
+  attackRangeX: 5
+  attackRangeY: 5

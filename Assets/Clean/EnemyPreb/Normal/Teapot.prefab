@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 673095221693654346}
   - component: {fileID: 8501459909480053200}
   - component: {fileID: 840103128948206354}
+  - component: {fileID: 1548337674666159084}
   m_Layer: 3
   m_Name: Teapot
   m_TagString: Enemy
@@ -288,8 +289,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1536094037
-  m_SortingLayer: 0
+  m_SortingLayerID: 1031545193
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -6268023519088717812, guid: bc1fb0e8e645a094b9911276cb5f09b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -388,8 +389,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 25
-  moveSpeed: 1.4
-  baseSpeed: 1.4
+  moveSpeed: 0.8
+  baseSpeed: 0.8
   deffense: 0
   attackDamage: 10
   attackRange: 0.1
@@ -403,7 +404,7 @@ MonoBehaviour:
   textPos: {fileID: 4100516580381042413}
   isReady: 0
   explosionReadyRange: 5
-  explosionMoveSpeed: 1.6
+  explosionMoveSpeed: 1.2
   explosionRange: 1
   explosionDamage: 30
   explosionEffect: {fileID: 3166401227987715664, guid: e0156672709b1e246a6d296a8cc0f07d, type: 3}
@@ -443,6 +444,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1548337674666159084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8568965045799324630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc167f24d8ef5e4438a0faeb641b2544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rate: 0
+  normalDrops:
+  - item: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
+    dropChance: 0.01
+  - item: {fileID: 3428670107856843108, guid: c8e112cb28bf31748b2e8b5153beaae5, type: 3}
+    dropChance: 0.03
+  - item: {fileID: 3428670107856843108, guid: e2a3b2ebdc1301049a4f488e7d944440, type: 3}
+    dropChance: 0.001
+  namedDrops:
+  - item: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
+    dropChance: 0.3
+  - item: {fileID: 3428670107856843108, guid: c8e112cb28bf31748b2e8b5153beaae5, type: 3}
+    dropChance: 0.5
+  - item: {fileID: 3428670107856843108, guid: e2a3b2ebdc1301049a4f488e7d944440, type: 3}
+    dropChance: 0.2
 --- !u!1 &8573814092491250368
 GameObject:
   m_ObjectHideFlags: 0

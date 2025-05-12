@@ -19,6 +19,9 @@ public class DropItem : MonoBehaviour
 
     private void OnDisable()
     {
+        if (!gameObject.scene.isLoaded) 
+            return;
+
         DropItems();
     }
 
@@ -26,11 +29,7 @@ public class DropItem : MonoBehaviour
     {
         DropData[] currentDrops = rate == Rate.Named ? namedDrops : normalDrops;
 
-        float totalWeight = 0f;
-        foreach (var drop in currentDrops)
-            totalWeight += drop.dropChance;
-
-        float rand = Random.value * totalWeight;
+        float rand = Random.value;
         float sum = 0f;
 
         foreach (var drop in currentDrops)

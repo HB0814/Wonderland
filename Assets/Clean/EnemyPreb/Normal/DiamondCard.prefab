@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 6919283692030551992}
   - component: {fileID: 1290998748243305235}
   - component: {fileID: 5984448805882440197}
+  - component: {fileID: -3522386093509117938}
   m_Layer: 3
   m_Name: DiamondCard
   m_TagString: Enemy
@@ -180,8 +181,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 388590931
-  m_SortingLayer: 0
+  m_SortingLayerID: 1031545193
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7391480349497160112, guid: 1cf3a4e147ac6c447add51c2eb102383, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -280,7 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 17
-  moveSpeed: 0.71
+  moveSpeed: 0.6
   baseSpeed: 0.71
   deffense: 0
   attackDamage: 7
@@ -328,6 +329,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-3522386093509117938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313222270877919379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc167f24d8ef5e4438a0faeb641b2544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rate: 0
+  normalDrops:
+  - item: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
+    dropChance: 0.01
+  - item: {fileID: 3428670107856843108, guid: c8e112cb28bf31748b2e8b5153beaae5, type: 3}
+    dropChance: 0.03
+  - item: {fileID: 3428670107856843108, guid: e2a3b2ebdc1301049a4f488e7d944440, type: 3}
+    dropChance: 0.001
+  namedDrops:
+  - item: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
+    dropChance: 0.3
+  - item: {fileID: 3428670107856843108, guid: c8e112cb28bf31748b2e8b5153beaae5, type: 3}
+    dropChance: 0.5
+  - item: {fileID: 3428670107856843108, guid: e2a3b2ebdc1301049a4f488e7d944440, type: 3}
+    dropChance: 0.2
 --- !u!1 &7474693461324392576
 GameObject:
   m_ObjectHideFlags: 0

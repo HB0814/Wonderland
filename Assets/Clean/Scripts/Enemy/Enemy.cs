@@ -250,7 +250,7 @@ public abstract class Enemy : MonoBehaviour
     //죽음 
     protected virtual void Die()
     {
-        StopAllCoroutines(); //모든 코루틴 종료
+        
 
         //드랍 아이템 관련
         //수정 필요
@@ -270,6 +270,7 @@ public abstract class Enemy : MonoBehaviour
         CreateExpgem(); //경험치 잼 생성
 
         spriteRenderer.color = originalColor; //스프라이트 색 원래대로
+        StopAllCoroutines(); //모든 코루틴 종료
         gameObject.SetActive(false); //게임오브젝트 비활성화
     }
 

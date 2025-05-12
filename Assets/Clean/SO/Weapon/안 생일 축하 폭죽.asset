@@ -19,7 +19,7 @@ MonoBehaviour:
   - 
   - 
   - 
-  currentLevel: 2
+  currentLevel: 0
   icon: {fileID: 0}
   UpgradeDetails:
   - "\uC5C5\uADF8\uB808\uC774\uB4DC \uB0B4\uC6A9"
@@ -42,11 +42,11 @@ MonoBehaviour:
     - 3.5
     - 3
     lifeTime:
-    - 2
-    - 2.3
-    - 2.5
-    - 2.8
     - 3
+    - 3.2
+    - 3.4
+    - 3.6
+    - 4
     size:
     - 1
     - 1
@@ -60,17 +60,17 @@ MonoBehaviour:
     - 0
     - 0
     slowForce:
-    - 0
-    - 0.02
-    - 0.05
-    - 0.08
     - 0.1
+    - 0.15
+    - 0.2
+    - 0.25
+    - 0.3
     slowDuration:
-    - 0.5
-    - 0.5
-    - 0.5
-    - 0.5
-    - 0.5
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
     detectionRange:
     - 6
     - 6

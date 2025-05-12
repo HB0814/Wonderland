@@ -5804,7 +5804,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000850746833999aaab69217c3d8f7cd14f25721f44
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -16650,6 +16650,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533592244}
   m_CullTransparentMesh: 1
+--- !u!198 &1548393761 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7627072030405117731, guid: 75807386bf951894686c172e7e06294a, type: 3}
+  m_PrefabInstance: {fileID: 3867911131095265051}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1554065170
 GameObject:
   m_ObjectHideFlags: 0
@@ -23311,16 +23316,24 @@ PrefabInstance:
       objectReference: {fileID: 8066074523203993003}
     - target: {fileID: 506820814017238879, guid: 75807386bf951894686c172e7e06294a, type: 3}
       propertyPath: speed
-      value: 2
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 506820814017238879, guid: 75807386bf951894686c172e7e06294a, type: 3}
       propertyPath: maxExp
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 506820814017238879, guid: 75807386bf951894686c172e7e06294a, type: 3}
-      propertyPath: moveSpeed
-      value: 2
+      propertyPath: baseSpeed
+      value: 1.6
       objectReference: {fileID: 0}
+    - target: {fileID: 506820814017238879, guid: 75807386bf951894686c172e7e06294a, type: 3}
+      propertyPath: moveSpeed
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 506820814017238879, guid: 75807386bf951894686c172e7e06294a, type: 3}
+      propertyPath: healParticle
+      value: 
+      objectReference: {fileID: 1548393761}
     - target: {fileID: 565160383925707582, guid: 75807386bf951894686c172e7e06294a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -23384,6 +23397,14 @@ PrefabInstance:
     - target: {fileID: 5884687772530973880, guid: 75807386bf951894686c172e7e06294a, type: 3}
       propertyPath: m_FlipX
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5884687772530973880, guid: 75807386bf951894686c172e7e06294a, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5884687772530973880, guid: 75807386bf951894686c172e7e06294a, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1031545193
       objectReference: {fileID: 0}
     - target: {fileID: 7844230335127659624, guid: 75807386bf951894686c172e7e06294a, type: 3}
       propertyPath: m_Size.x

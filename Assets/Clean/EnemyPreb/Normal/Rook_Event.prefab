@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 2483973106001979518}
   - component: {fileID: 9137377922930611280}
   - component: {fileID: 2291059215061945585}
+  - component: {fileID: -1898297026017095309}
   m_Layer: 3
   m_Name: Rook_Event
   m_TagString: Enemy
@@ -158,8 +159,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 388590931
-  m_SortingLayer: 0
+  m_SortingLayerID: 1031545193
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -1115184585183574954, guid: f66ba75fcb7f4604a96476d25b3f0366, type: 3}
   m_Color: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 1}
@@ -271,7 +272,8 @@ MonoBehaviour:
   isKnockbacked: 0
   isSlowed: 0
   textPos: {fileID: 1851313538781811099}
-  type: 3
+  type: 5
+  vec: {x: 0, y: 0, z: 0}
   lifeTime: 10
 --- !u!114 &9137377922930611280
 MonoBehaviour:
@@ -308,6 +310,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-1898297026017095309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5547197353583117834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc167f24d8ef5e4438a0faeb641b2544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rate: 0
+  normalDrops:
+  - item: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
+    dropChance: 0.01
+  - item: {fileID: 3428670107856843108, guid: c8e112cb28bf31748b2e8b5153beaae5, type: 3}
+    dropChance: 0.03
+  - item: {fileID: 3428670107856843108, guid: e2a3b2ebdc1301049a4f488e7d944440, type: 3}
+    dropChance: 0.001
+  namedDrops:
+  - item: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
+    dropChance: 0.3
+  - item: {fileID: 3428670107856843108, guid: c8e112cb28bf31748b2e8b5153beaae5, type: 3}
+    dropChance: 0.5
+  - item: {fileID: 3428670107856843108, guid: e2a3b2ebdc1301049a4f488e7d944440, type: 3}
+    dropChance: 0.2
 --- !u!1 &6329902136509423176
 GameObject:
   m_ObjectHideFlags: 0

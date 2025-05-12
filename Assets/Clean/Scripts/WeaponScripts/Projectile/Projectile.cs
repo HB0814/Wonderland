@@ -46,7 +46,9 @@ public class Projectile : MonoBehaviour
             hatWeapon = playerTransform.GetComponentInChildren<HatBoomerangWeapon>();
         }
         playerCenter = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).transform;
-        transform.position = playerCenter.position;
+
+        if (weaponType != WeaponType.Apple) 
+            transform.position = playerCenter.position;
     }
 
     public virtual void BaseInitialize(float damage, float size, float lifeTime, float speed)

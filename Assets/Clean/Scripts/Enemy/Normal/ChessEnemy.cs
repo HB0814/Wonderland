@@ -4,7 +4,7 @@ public class ChessEnemy : Enemy
 {
     public enum ChessType //체스 말 종류
     {
-        Pawn, Rook, Bishop, //일반 적
+        Pawn, Rook, Bishop, Knight, //일반 적
         Rook_Event_Move, Bishop_Event_Move, //이동하는 이벤트형 적
         Rook_Event_NoMove //고정된 이벤트형 적
     } 
@@ -39,8 +39,12 @@ public class ChessEnemy : Enemy
                 base.Update(); //상속한 Enemy의 Update 함수 호출
                 break;
 
+            case ChessType.Knight:
+                base.Update();
+                break;
+
             case ChessType.Rook_Event_Move: //검정 룩: 십자 모양으로만 이동하는 이벤트형 체스말
-                if(transform.parent.gameObject.activeSelf == true && !isSpawn)
+                if (transform.parent.gameObject.activeSelf == true && !isSpawn)
                 {
                     isSpawn = true;
                     UpdateSpriteFlip(); //상속한 Enemy의 UpdateSpriteFlip 함수 호츨
@@ -62,7 +66,7 @@ public class ChessEnemy : Enemy
             case ChessType.Rook_Event_NoMove: //검정 룩: 이동을 하지 않고, 타원형으로 생성되어 플레이어를 가두는 체스말
                 base.Update();
                 timer += Time.deltaTime; //타이머 값 증가
-                if(timer >= lifeTime) //활성화 시간 이상 달성
+                if (timer >= lifeTime) //활성화 시간 이상 달성
                 {
                     gameObject.SetActive(false); //게임오브젝트 비활성화
                 }

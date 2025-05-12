@@ -12,7 +12,7 @@ public class HitEffect : MonoBehaviour
     // 각 무기별 쿨다운 시간 상수
     private const float ATTACK_COOLDOWN = 1.5f;  // 기본 공격 쿨다운
     private const float PIPE_EFFECT_COOLDOWN = 1f;  // Pipe 이펙트의 데미지 주기
-    private const float FIRECRACKER_EFFECT_COOLDOWN = 0.8f;  // 축하 폭죽 이펙트의 데미지 주기
+    private const float FIRECRACKER_EFFECT_COOLDOWN = 0.6f;  // 축하 폭죽 이펙트의 데미지 주기
 
     private float attackTimer;  // 공격 타이머
     private bool canAttack;  // 공격 가능 여부

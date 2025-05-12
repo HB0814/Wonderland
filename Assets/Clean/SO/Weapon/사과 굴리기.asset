@@ -36,11 +36,11 @@ MonoBehaviour:
     - 19
     - 25
     attackCooldown:
-    - 3.3
-    - 3.1
-    - 2.8
+    - 4
+    - 3.8
+    - 3.5
+    - 3
     - 2.5
-    - 2
     lifeTime:
     - 4
     - 4
@@ -60,11 +60,11 @@ MonoBehaviour:
     - 0
     - 0
     slowForce:
-    - 0.1
-    - 0.1
-    - 0.15
-    - 0.15
-    - 0.2
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
     slowDuration:
     - 0.5
     - 0.8
@@ -78,11 +78,11 @@ MonoBehaviour:
     - 10
     - 10
     speed:
-    - 8
-    - 8.5
     - 9
     - 9.5
     - 10
+    - 11
+    - 12
     count: 0100000002000000030000000500000008000000
     attackRangeX: 0
     attackRangeY: 0
