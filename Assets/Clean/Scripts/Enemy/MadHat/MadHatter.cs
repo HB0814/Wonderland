@@ -107,7 +107,7 @@ public class MadHatter : Enemy
         switch(pattern)
         {
             case "OnGuillotine":
-                guillotiones.Init(_player, 1.0f); //플레이어 스크립트, 무기 활성화 딜레이 시간
+                //guillotiones.Init(_player, 1.0f); //플레이어 스크립트, 무기 활성화 딜레이 시간
                 yield return patternDelay;
                 break;
 

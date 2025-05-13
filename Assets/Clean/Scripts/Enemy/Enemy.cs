@@ -70,7 +70,7 @@ public abstract class Enemy : MonoBehaviour
 
 
         float time = Time.time;
-        currentHealth = (maxHealth + (time * 0.1f)) * (1 + (_player.Level * 0.01f)); ; //현재 체력을 시간과 플레이어 레벨에 맞게 증가하도록 변경
+        currentHealth = (maxHealth + (time * 0.15f)) * (1 + (_player.Level * 0.01f)); ; //현재 체력을 시간과 플레이어 레벨에 맞게 증가하도록 변경
         nextAttackTime = 0.0f; //다음 공격 시간 초기화
         isKnockbacked = false; //넉백 상태 초기화
         isSlowed = false; //슬로우 상태 초기화

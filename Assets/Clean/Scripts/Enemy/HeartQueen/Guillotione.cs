@@ -4,60 +4,76 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Guillotione : MonoBehaviour
 {
-    private Vector3 targetPos;
-    private float dropDelay = 1f;
-    private bool isDrop = false;
+    public enum GuillotioneType
+    {
+        Moved, Fixed
+    }
+    public GuillotioneType type;
 
+    [Header("공통")]
     [SerializeField] private float attackDamage;
-    [SerializeField] private float dropSpeed = 10.0f;
+    [SerializeField] private float speed = 10.0f;
     [SerializeField] private Animator animator;
-
     private Player player;
     private BoxCollider2D boxCol;
-    private SpriteRenderer spriteRenderer;
-    private ParticleSystem dustParticle;
+    [SerializeField]private SpriteRenderer spriteRenderer;
+
+    [Header("Fixed")]
+    private Vector3 targetPos;
+    private float dropDelay = 2f;
+    private bool isPlay = false;
+    private bool isDrop = false;
+    [SerializeField] GameObject blade;
+    [SerializeField] private SpriteRenderer bladeSpriteRenderer;
+    [SerializeField]private ParticleSystem dustParticle;
+
+    //[Header("Moved")]
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         boxCol = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        dustParticle = gameObject.transform.GetChild(0).GetComponent<ParticleSystem>();
     }
 
     private void Update()
     {
+        if(type == GuillotioneType.Fixed)
+        {
+            FixedGuillotione();
+        }
+        else if(type == GuillotioneType.Moved)
+        {
+            MovedGuillotione();
+        }
+    }
+
+    private void FixedGuillotione()
+    {
         if (!isDrop)
             return;
 
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, dropSpeed * Time.deltaTime);
+        blade.transform.localPosition = Vector3.MoveTowards(blade.transform.localPosition, targetPos, speed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, targetPos) < 0.05f)
+        if (Vector3.Distance(blade.transform.localPosition, targetPos) < 0.05f)
         {
             // 바닥 도착 시 처리
             OnHit();
         }
 
-        if (spriteRenderer.color.a == 0.0f)
+        if (bladeSpriteRenderer.color.a == 0.0f)
         {
             gameObject.SetActive(false);
         }
     }
     
-    public void Init(Player _player, float delay)
+    public void Init_Fixed()
     {
-        player = _player;
-        Transform target = player.transform;
-        transform.position = new Vector3(target.position.x, target.position.y + 2, transform.position.z);
-        targetPos = new Vector3(target.position.x, target.position.y, transform.position.z);
-        dropDelay = delay;
+        targetPos = new Vector3(blade.transform.localPosition.x, blade.transform.localPosition.y - 1.05f, blade.transform.localPosition.z);
 
-        gameObject.SetActive(true);
-
-        // Drop 애니메이션 준비 상태
         if (animator != null)
         {
-            animator.SetBool("isDrop", true); //공격 애니메이션 시작
+            animator.SetBool("isReady", true); //공격 애니메이션 시작
         }
 
         Invoke(nameof(Drop), dropDelay);
@@ -66,6 +82,7 @@ public class Guillotione : MonoBehaviour
     private void Drop()
     {
         isDrop = true;
+        animator.SetBool("isDrop", true);
     }
 
     private void OnHit()
@@ -74,24 +91,42 @@ public class Guillotione : MonoBehaviour
         //충격 먼지 파티클 실행
     }
 
+    private void MovedGuillotione()
+    {
+
+    }
 
     private void OnEnable()
     {
-        
+        spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * -100);
+        bladeSpriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * -100);
     }
 
     private void OnDisable()
     {
-        animator.SetBool("isDrop", false);
-        isDrop = false;
+        if (type == GuillotioneType.Fixed)
+        {
+            animator.SetBool("isDrop", false);
+            animator.SetBool("isReady", false);
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
+            bladeSpriteRenderer.color = new Color(bladeSpriteRenderer.color.r, bladeSpriteRenderer.color.g, bladeSpriteRenderer.color.b, 1f);
+            blade.transform.localPosition = new Vector3(0, 1.3f, 0);
+            isDrop = false;
+            isPlay = false;
+        }
+        else if (type == GuillotioneType.Moved)
+        {
+
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && !isPlay)
         {
-            Debug.Log("길로틴!");
-            player.TakeDamage(attackDamage);
+            isPlay = true;
+            Init_Fixed();
         }
     }
 }
