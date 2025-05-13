@@ -23,7 +23,7 @@ TagManager:
   - Col
   - Item
   - EnemyAttackCol
-  - 
+  - Pit
   - 
   - 
   - 
@@ -47,6 +47,21 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BG
+    uniqueID: 2202404741
+    locked: 0
+  - name: Items
+    uniqueID: 1339128975
+    locked: 0
+  - name: Particle
+    uniqueID: 2880084281
+    locked: 0
+  - name: Object
+    uniqueID: 1031545193
+    locked: 0
+  - name: Over Particle
+    uniqueID: 1142911525
     locked: 0
   m_RenderingLayers:
   - Default
