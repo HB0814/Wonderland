@@ -1,89 +1,92 @@
 using System.Collections;
 using UnityEngine;
-using static EnemyManager;
-using static UnityEditor.Experimental.GraphView.GraphView;
-
 
 public abstract class Enemy : MonoBehaviour
 {
-    WaitForSeconds hitCool = new(0.1f);
-    WaitForSeconds knockbackCool = new(0.1f);
+    WaitForSeconds hitCool = new(0.1f); //피격 쿨타임
+    WaitForSeconds knockbackDuration = new(0.1f); //넉백 지속시간
 
     [Header("기본 속성")]
-    public float maxHealth = 100.0f;
-    public float moveSpeed = 2.0f;
-    public float deffense = 0.0f;
-    public float attackDamage = 10.0f;
-    public float attackRange = 0.1f;
-    public float attackCooldown = 1.0f;
-    public float knockbackResistance = 0.5f;
+    public float maxHealth = 10.0f;  //최대 체력
+    public float moveSpeed = 2.0f; //이동속도
+    public float baseSpeed = 1.3f;
+    public float deffense = 0.0f; //방어력
+    public float attackDamage = 10.0f; //피해량
+    public float attackRange = 0.1f; //공격 범위 -> 플레이어와의 최소 거리
+    public float attackCooldown = 1.0f; //공격 쿨타임
+    public float knockbackResistance = 0.5f; //넉백 저항력
 
     [Header("드롭 아이템")]
-    protected GameObject[] dropItems;
-    protected float dropChance = 0.3f;
-    protected GameObject expGemPrefab;
+    protected GameObject[] dropItems; //드랍 아이템
+    protected float dropChance = 0.3f; //아이템을 떨어트릴 확률
+    public string expGemRate; //경험치 잼 종류
 
-    public float currentHealth;
-    public float nextAttackTime;
-    public bool isKnockback;
-    public float knockbackRecoveryTimer;
-    public bool isSlowed;
-    public float slowEffectTimer;
-    public float currentSlowAmount;
-    public float originalMoveSpeed;
+    public float currentHealth; //현재 체력
+    public float nextAttackTime; //다음 공격 시간
+    public bool isKnockbacked; //넉백 상태 여부
+    public bool isSlowed; //슬로우 여부
 
-    protected Rigidbody2D rb;
-    protected SpriteRenderer spriteRenderer;
-    protected Color originalColor;
-    protected GameObject player;
-    protected Player _player;
-    protected Animator animator;
+    protected Rigidbody2D rb; //리지드바디2d
+    protected SpriteRenderer spriteRenderer; //스프라이트 렌더러
+    protected Animator animator; //애니메이터
+    protected GameObject player; //플레이어 게임오브젝트
+    protected Player _player; //플레이어 스크립트
+    [SerializeField] protected Transform textPos;
 
     // 스프라이트 업데이트 관련 변수
-    protected float lastUpdateTime = 0.0f;
-    protected bool isVisible = true;
-    protected float marginArea = 0.1f;
+    protected float lastUpdateTime = 0.0f; //마지막 업데이트 시간
+    protected bool isVisible = true; //활성화 여부
+    protected float marginArea = 0.1f; //여백 공간
+    protected Color originalColor; //원래 색깔
 
     //초기화
     public virtual void Initialize()
     {
-        currentHealth = maxHealth;
-        originalMoveSpeed = moveSpeed;
-        nextAttackTime = 0.0f;
-        isKnockback = false;
-        knockbackRecoveryTimer = 0.0f;
-        isSlowed = false;
-        slowEffectTimer = 0.0f;
-        currentSlowAmount = 0.0f;
+        if (rb == null) //초기화 함수 호출 시 계속해서 컴포넌트 할당하지 않게 널일 때만 할당하게
+            rb = GetComponent<Rigidbody2D>();
 
-        rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        _player = player.GetComponent<Player>(); //최적화를 위해 플레이어 스크립트를 해당 부분에서 가져오기
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
+
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player");
+
+        if (_player == null)
+            _player = player.GetComponent<Player>();
 
         if (rb != null)
         {
-            rb.gravityScale = 0.0f;
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb.gravityScale = 0.0f; //중력 없애기
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation; //충돌로 인한 회전 방지
         }
 
         if (spriteRenderer != null)
         {
-            originalColor = spriteRenderer.color;
+            originalColor = spriteRenderer.color; //스프라이트 렌더러 원래 색
         }
+
+
+        float time = Time.time;
+        currentHealth = (maxHealth + (time * 0.1f)) * (1 + (_player.Level * 0.01f)); ; //현재 체력을 시간과 플레이어 레벨에 맞게 증가하도록 변경
+        nextAttackTime = 0.0f; //다음 공격 시간 초기화
+        isKnockbacked = false; //넉백 상태 초기화
+        isSlowed = false; //슬로우 상태 초기화
+        moveSpeed = baseSpeed;
     }
 
     protected virtual void Start()
     {
-        Initialize(); //초기화
+        Initialize(); //초기화 실행
     }
 
     protected virtual void Update()
     {
-        if (isKnockback)
+        if (isKnockbacked) //넉백 중에는 이동 못하게
         {
-
+            return;
         }
         else //넉백 시 이동x
         {
@@ -91,7 +94,7 @@ public abstract class Enemy : MonoBehaviour
 
             if (dis > attackRange * attackRange) //추격 범위와의 비교를 통해 이동 여부
             {
-                MoveTowardsPlayer();
+                MoveTowardsPlayer(); //플레이어 방향으로 이동하는 함수
             }
             else
             {
@@ -99,18 +102,18 @@ public abstract class Enemy : MonoBehaviour
             }
         }
 
-        UpdateSprite();
+        UpdateSprite(); //스프라이트 관련 업데이트 함수
     }
 
     //스프라이트 관련 함수
     protected virtual void UpdateSprite()
     {
         UpdateSpriteLayer(); // 스프라이트 레이어 업데이트
-        if (Time.time - lastUpdateTime >= 0.1f) //0.1초 정도의 딜레이
+        if (Time.time - lastUpdateTime >= 0.1f) //0.1초 딜레이 주기
         {
-            lastUpdateTime = Time.time;
-            UpdateSpriteFlip();
-            spriteRenderer.enabled = IsVisible(); //렌더링
+            lastUpdateTime = Time.time; //마지막 업데이트 시간 갱신
+            UpdateSpriteFlip(); //스프라이트 플립 함수 실행
+            spriteRenderer.enabled = IsVisible(); //렌더링 기능 함수 실행 이후 해당 값 적용
         }
     }
     //스프라이트 렌더러 레이어 업데이트
@@ -119,6 +122,7 @@ public abstract class Enemy : MonoBehaviour
         if (spriteRenderer != null)
         {
             // Y 좌표가 낮을수록(화면 아래) 더 앞에 표시
+            // Y 좌표 값에 따른 레이어 값 변경
             spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * -100);
         }
     }
@@ -127,10 +131,10 @@ public abstract class Enemy : MonoBehaviour
     {
         if (spriteRenderer != null && player != null)
         {
-            bool shouldFlip = player.transform.position.x < transform.position.x;
-            if (shouldFlip != spriteRenderer.flipX)
+            bool shouldFlip = player.transform.position.x < transform.position.x; //플레이어 방향 체크
+            if (shouldFlip != spriteRenderer.flipX) //플립 여부 체크 -> 값이 달라지지 않았을 경우에는 넘어감
             {
-                spriteRenderer.flipX = shouldFlip;
+                spriteRenderer.flipX = shouldFlip; //플립 값 변경
             }
         }
     }
@@ -140,7 +144,7 @@ public abstract class Enemy : MonoBehaviour
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position); //월드 좌표를 뷰포트로 변환하여 범위 내 오브젝트 위치 확인
         bool newVisibility = screenPoint.x > -marginArea && screenPoint.x < 1 + marginArea &&
                              screenPoint.y > -marginArea && screenPoint.y < 1 + marginArea;
-        //화면 내에 있는지 여부 확인
+        //화면 내 여부에 대한 값
 
         if (isVisible != newVisibility) //화면 내 여부 변경 확인
         {
@@ -151,132 +155,197 @@ public abstract class Enemy : MonoBehaviour
         return isVisible; //상태 반환
     }
 
+    //플레이어 방향으로 이동
+    protected virtual void MoveTowardsPlayer()
+    {
+        if (player != null && !isKnockbacked)
+        {
+            Vector2 dir = (player.transform.position - transform.position).normalized; //플레이어 방향을 구한 뒤 벡터 정규화
+            rb.linearVelocity = dir * moveSpeed; //방향과 속도 값을 넣어 velocity 방식으로 이동
+        }
+    }
+
     //플레이어 공격
     public virtual void Attack()
     { 
         if (_player != null)
         {
-            _player.TakeDamage(attackDamage);
-            Debug.Log("플레이어가 피해를 입음!");
+            _player.TakeDamage(attackDamage); //플레이어의 몬스터의 피해량 값을 전달하여 피격 함수 실행
         }
     }
 
-    //플레이어 방향으로 이동
-    protected virtual void MoveTowardsPlayer()
-    {
-        if (player != null && !isKnockback)
-        {
-            Vector2 direction = (player.transform.position - transform.position).normalized;
-            rb.linearVelocity = direction * moveSpeed;
-        }
-    }
-
-    //무기 피격
+    //무기 피격                              //순서대로 무기 데미지, 넉백 크기, 슬로우 크기, 슬로우 지속시간
     public virtual void TakeDamage(float damage, float knockbackForce, float slowForce, float slowDuration)
     {
-        damage -= deffense; //damage = (damage * 플레이어 공격력 * 0.01) - 적 방어력
-        float totalDamage = Mathf.Max(1, damage);
-        currentHealth -= totalDamage;
-
-        Debug.Log($"몬스터가 {totalDamage}의 데미지를 입음");
-
-        knockbackForce -= knockbackResistance;
-        if(knockbackForce > 0 && !isKnockback)
+        knockbackForce = knockbackForce - (knockbackForce * knockbackResistance); //넉백 크기 계산
+        if(knockbackForce > 0 && !isKnockbacked) //넉백의 크기가 있으며 넉백 중이 아닐 경우에만 넉백 실행
         {
-            StartCoroutine(ApplyKnockback(knockbackForce));
+            StartCoroutine(ApplyKnockback(knockbackForce)); //넉백 코루틴
         }
 
-        if(gameObject.activeSelf)
-            StartCoroutine(HitColor());
+        if(gameObject.activeSelf) //게임오브젝트가 활성화 상태일 경우에만
+            StartCoroutine(HitColor()); //피격 효과 코루틴 실행
 
-        if (slowForce > 0)
+        if (slowForce > 0) //슬로우의 크기가 있으면 실행
         {
-            StartCoroutine(ApplySlow(slowForce, slowDuration));
+            StartCoroutine(ApplySlow(slowForce, slowDuration)); //슬로우 코루틴
         }
 
-        if(currentHealth <= 0.0f)
+        damage -= deffense; //damage = (damage * 플레이어 공격력 * 0.01) - 적 방어력 <- 이후 해당 식으로 변경 예정?
+        damage = Random.Range(damage - 1, damage + 1);
+        float totalDamage = Mathf.Max(1, damage); //총합 데미지, 피해량 0을 방지하기 위한 Max() 함수
+
+        DamageText(totalDamage);
+        currentHealth -= totalDamage; //현재 체력 감소
+
+        if(currentHealth <= 0.0f) //현재 체력이 0이하일 경우 실행
         {
-            Die();
+            Die(); //사망
         }
     }
 
+    public virtual void DamageText(float damage)
+    {
+        Vector3 spawnPos = textPos.position; //텍스트를 활성화할 위치 가져오기
+
+        GameObject textToSpawn = ObjectPool.Instance.SpawnFromPool_DamageText("DamageText", spawnPos, damage);
+
+        if (textToSpawn != null)
+        {
+            textToSpawn.SetActive(true); //스폰할 텍스트 활성화하기
+        }
+    }
+
+    //넉백 적용 코루틴
     private IEnumerator ApplyKnockback(float knockbackForce)
     {
-        isKnockback = true;
-        Vector3 knockbackDir = transform.position - player.transform.position;
-        rb.AddForce(knockbackDir.normalized * knockbackForce, ForceMode2D.Impulse);
-        yield return knockbackCool;
-        rb.linearVelocity = Vector2.zero;
-        isKnockback = false;
+        isKnockbacked = true; //넉백 상태 참 -> 이동 불가능
+        Vector3 knockbackDir = transform.position - player.transform.position; //넉백 방향
+        rb.AddForce(knockbackDir.normalized * knockbackForce, ForceMode2D.Impulse); //AddForce 함수로 순간적인 힘을 가한 넉백 효과
+        yield return knockbackDuration; //넉백 지속시간 종료 후 호출
+        //rb.linearVelocity = Vector2.zero; //넉백 종료
+        isKnockbacked = false; //넉백 상태 거짓 -> 이동 가능
     }
 
+    //슬로우 적용 코루틴
     private IEnumerator ApplySlow(float slowForce, float slowDuration)
     {
-        float baseSpeed = moveSpeed;
-        moveSpeed *= (1 - slowForce);
-        yield return slowDuration;
+        moveSpeed *= (1 - slowForce); //이동속도 감소
+        yield return slowDuration; //슬로우 지속시간 종료 후 호출
 
-        moveSpeed = baseSpeed;
+        moveSpeed = baseSpeed; //원래 이동속도로
     }
 
-    //무기 피격 효과
+    //피격 효과
     protected virtual System.Collections.IEnumerator HitColor()
     {
         if (spriteRenderer != null)
         {
-            spriteRenderer.color = Color.red;
-            yield return hitCool;
-            spriteRenderer.color = originalColor;
+            spriteRenderer.color = Color.red; //스프라이트 렌더러의 색을 빨간색으로
+            yield return hitCool; //피격 지속시간 종료 후 호출
+            spriteRenderer.color = originalColor; //스프라이트 렌더러의 색을 원래대로
         }
     }
 
-    //죽음    //풀링 변경 필요
+    //죽음 
     protected virtual void Die()
     {
-        StopAllCoroutines();
+        StopAllCoroutines(); //모든 코루틴 종료
 
-        //if (expGemPrefab != null)
-        //{
-        //    Instantiate(expGemPrefab, transform.position, Quaternion.identity);
-        //}
-
+        //드랍 아이템 관련
+        //수정 필요
         if (dropItems != null && dropItems.Length > 0 && Random.value <= dropChance)
         {
             int randomIndex = Random.Range(0, dropItems.Length);
             Instantiate(dropItems[randomIndex], transform.position, Quaternion.identity);
         }
 
+        //사망 파티클
         ParticleSystem deathEffect = GetComponent<ParticleSystem>();
         if (deathEffect != null)
         {
-            deathEffect.Play();
+            deathEffect.Play(); //파티클 실행
         }
 
-        CreateExpgem();
+        CreateExpgem(); //경험치 잼 생성
 
-        spriteRenderer.color = originalColor;
-        gameObject.SetActive(false);
-        //Destroy(gameObject);
+        spriteRenderer.color = originalColor; //스프라이트 색 원래대로
+        gameObject.SetActive(false); //게임오브젝트 비활성화
     }
 
+    //경험치 잼 생성
     protected virtual void CreateExpgem()
     {
-        string rate;
-        
-        GameObject expgemToSpawn = ObjectPool.Instance.SpawnFromPool_Expgem("Common", transform.position);
+        float ran = Random.Range(0.0f, 100.0f);
+
+        expGemRate = SetExpGemRate(ran); //레벨 별 경험치 잼 확률
+
+        GameObject expgemToSpawn = ObjectPool.Instance.SpawnFromPool_Expgem(expGemRate, transform.position);
+        //오브젝트 풀링을 한 경험치 잼 가져오기
 
         if (expgemToSpawn != null)
         {
-            // 초기화 및 활성화
-            expgemToSpawn.SetActive(true);
-            Debug.Log("몬스터 활성화");
+            expgemToSpawn.SetActive(true); //경험치 잼 활성화
         }
     }
 
+    protected virtual string SetExpGemRate(float ran)
+    {
+        string rate = "Common";
+
+        if (_player.Level <= 5)
+        {
+                rate = "Common";
+        }
+        else if (_player.Level <= 10)
+        {
+            if (ran < 90)
+            {
+                rate = "Common";
+            }
+            else
+            {
+                rate = "Rare";
+            }
+        }
+        else if (_player.Level <= 15)
+        {
+            if (ran < 70)
+            {
+                rate = "Common";
+            }
+            else if (ran < 90)
+            {
+                rate = "Rare";
+            }
+            else
+            {
+                rate = "Unique";
+            }
+        }
+        else
+        {
+            if (ran < 60)
+            {
+                rate = "Common";
+            }
+            else if (ran < 85)
+            {
+                rate = "Rare";
+            }
+            else
+            {
+                rate = "Unique";
+            }
+        }
+
+        return rate;
+    }
+
+    //오브젝트가 활성화 상태가 됐을 경우
     protected virtual void OnEnable()
     {
-        Initialize();
-        Debug.Log("몬스터 스탯 재설정");
+        Initialize(); //값 초기화
     }
 
     //공격 범위 표시
@@ -285,5 +354,4 @@ public abstract class Enemy : MonoBehaviour
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawWireSphere(transform.position, attackRange);
     //}
-
 } 

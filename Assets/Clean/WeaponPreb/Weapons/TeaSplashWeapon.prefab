@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 3365330563510674844}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,19 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de006c744c03e4438fbb410ca1cdf33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: TeaSplashWeapon
-  description: "\uC801\uC5D0\uAC8C \uBD80\uCC44\uAF34 \uBAA8\uC591\uC73C\uB85C \uD64D\uCC28\uB97C
-    \uBFCC\uB824 \uBC00\uC5B4\uB0C5\uB2C8\uB2E4."
-  weaponIcon: {fileID: 0}
-  maxLevel: 5
-  currentLevel: 1
-  baseDamage: 10
-  attackRange: 3
   attackCooldown: 1
   nextAttackTime: 0
+  projectilePrefab: {fileID: 0}
+  weaponData: {fileID: 0}
   teaPoolTag: TeaProjectile
   teaSpeed: 12
   spreadAngle: 30
   projectileCount: 3
   knockbackForce: 5
-  weaponStats: {fileID: 11400000, guid: 077fddf6712e9424096a48438f561bd7, type: 2}
+  weaponStats: {fileID: 0}

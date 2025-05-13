@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using static UnityEditor.PlayerSettings;
+using static UnityEngine.InputManagerEntry;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -29,7 +32,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float baseSpeed = 5f;
     private float currentSpeedBonus = 0f;
     private float damageMultiplier = 1f;
-    
+
+
+    [Header("조이스틱")]
+    public FloatingJoystick joy;
+    Vector3 vec_Joy;
+    public float speed;
+
     private InsanitySystem insanitySystem;
     // 광기 변경 이벤트
     public System.Action<float> onInsanityChanged;
@@ -38,6 +47,10 @@ public class Player : MonoBehaviour
     private Vector2 currentVelocity;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    public bool isDead = false;
+
+    private Color originalColor;
+    private bool isFlashing = false;
 
     // 프로퍼티
     public float CurrentHealth => currentHealth;
@@ -51,6 +64,12 @@ public class Player : MonoBehaviour
         InitializeComponents();
         SetupRigidbody();
         InitializeStats();
+        
+        // 스프라이트 렌더러 초기화
+        if (spriteRenderer != null)
+        {
+            originalColor = spriteRenderer.color;
+        }
     }
 
     private void InitializeComponents()
@@ -87,8 +106,9 @@ public class Player : MonoBehaviour
     private void Update()
     {
         HandleInput();
-        UpdateAnimation();
         WeaponAdd();
+
+        Move_Joystick();
     }
     private void WeaponAdd()
     {
@@ -167,28 +187,39 @@ public class Player : MonoBehaviour
         {
             moveInput = -moveInput;
         }
+    }    
+
+    private void FixedUpdate()
+    {
+        if (rb == null || isDead)
+            return;
+
+        UpdateAnimation(); //플립, 애니메이션
+        Move(); //이동
     }
 
     private void UpdateAnimation()
     {
-        if (animator != null)
-        {
-            animator.SetFloat("Speed", moveInput.magnitude);
-        }
-
         if (moveInput.x != 0 && spriteRenderer != null)
         {
             spriteRenderer.flipX = moveInput.x < 0;
         }
+
+        if (moveInput.x != 0 || moveInput.y != 0)
+        {
+            animator.SetBool("isWalk", true);
+        }
+        else
+        {
+            animator.SetBool("isWalk", false);
+        }
     }
 
-    private void FixedUpdate()
+    private void Move()
     {
-        if (rb == null) return;
-
         // 물리 기반 이동 처리
         Vector2 targetVelocity = moveInput * moveSpeed;
-        
+
         if (moveInput != Vector2.zero)
         {
             // 이동 중일 때 가속
@@ -210,6 +241,35 @@ public class Player : MonoBehaviour
 
         rb.linearVelocity = currentVelocity;
     }
+
+    private void Move_Joystick() //플레이어 조이스틱
+    {
+        float x = joy.Horizontal; //조이스틱의 수평 값 대입
+        float y = joy.Vertical; //조이스틱의 수직 값 대입
+
+        vec_Joy = new Vector3(x, y, 0); //입력값 x, y 대입
+
+        transform.position += speed * Time.deltaTime * vec_Joy; //조이스틱의 입력값에 속도를 곱한 만큼 이동
+
+        if (x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (x > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+
+        if (x != 0 || y != 0)
+        {
+            animator.SetBool("isWalk", true);
+        }
+        else
+        {
+            animator.SetBool("isWalk", false);
+        }
+    }
+
     public void AddExperience(float amount)
     {
         currentExp += amount;
@@ -232,11 +292,26 @@ public class Player : MonoBehaviour
     {
         currentLevel++;
         currentExp = 0f;
-        maxExp *= 1.2f;
+        maxExp += GetRequiredExp(currentLevel);
         onLevelChanged?.Invoke(currentLevel);
         onExpChanged?.Invoke(currentExp, maxExp);
         UpgradeManager.Instance.ShowUpgradeOptions();
     }
+
+    private int GetRequiredExp(int level)
+    {
+        if (level <= 20)
+            return 10 + (level - 1) * 5; // 10, 15, 20, 25, ...
+        else if (level <= 40)
+            return 100 + (level - 20) * 10; // 점점 커짐
+        else if (level <= 80)
+            return 300 + (level - 40) * 20;
+        else if (level <= 100)
+            return 1100 + (level - 80) * 30;
+        else
+            return 1700 + (level - 100) * 10; // 레벨 100 이후 완화
+    }
+
 
     public void TakeDamage(float damage)
     {
@@ -247,10 +322,38 @@ public class Player : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth - finalDamage);
         onHealthChanged?.Invoke(currentHealth, maxHealth);
 
-        if (currentHealth <= 0)
+        // 피격 시 빨간색 깜빡임 효과
+        if (!isFlashing)
+        {
+            StartCoroutine(FlashCoroutine());
+        }
+
+        if (currentHealth <= 0 && !isDead)
         {
             Die();
         }
+    }
+
+    private IEnumerator FlashCoroutine()
+    {
+        isFlashing = true;
+        
+        // 빨간색으로 변경
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = Color.red;
+        }
+        
+        // 0.1초 대기
+        yield return new WaitForSeconds(0.1f);
+        
+        // 원래 색상으로 복구
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = originalColor;
+        }
+        
+        isFlashing = false;
     }
 
     public void Heal(float amount)
@@ -263,6 +366,9 @@ public class Player : MonoBehaviour
     {
         Debug.Log($"[{nameof(Player)}] Player died!");
         // TODO: 사망 처리 로직 추가
+        rb.linearVelocity = Vector3.zero; //이동 정지
+        animator.SetTrigger("Die"); //죽음 애니메이션 실행
+        isDead = true; //죽음 여부 참
     }
 
     public void AddSpeedBonus(float bonus)

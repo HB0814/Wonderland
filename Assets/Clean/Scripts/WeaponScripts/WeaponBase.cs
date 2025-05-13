@@ -27,6 +27,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     [SerializeField]protected float nextAttackTime;
     protected GameObject player;
+    protected Player playerScript;
     protected Animator animator;
     [SerializeField]protected GameObject projectilePrefab; // 투사체 프리팹
 
@@ -36,6 +37,7 @@ public abstract class WeaponBase : MonoBehaviour
     protected virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        playerScript = player.GetComponent<Player>();
         animator = GetComponent<Animator>();
         nextAttackTime = 0f;
                 
@@ -84,6 +86,9 @@ public abstract class WeaponBase : MonoBehaviour
     }
     protected virtual void Update()
     {
+        if (playerScript.isDead)
+            return;
+
         nextAttackTime += Time.deltaTime;
 
         if (attackCooldown <= nextAttackTime)

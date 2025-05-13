@@ -16,6 +16,6 @@ MonoBehaviour:
   description: "\uD50C\uB808\uC774\uC5B4\uC758 \uC18D\uB3C4\uAC00 2\uC99D\uAC00 \uD558\uC9C0\uB9CC,
     \uAD11\uAE30 \uAC8C\uC774\uC9C0\uAC00 \uCD08\uB2F9 0.3\uC529 \uCC28\uC624\uB985\uB2C8\uB2E4."
   icon: {fileID: 0}
-  effectType: 0
+  effectType: 1
   effectValue: 2
   rarity: 2

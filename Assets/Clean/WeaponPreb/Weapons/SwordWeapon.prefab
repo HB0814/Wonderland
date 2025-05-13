@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2679605194954354807}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,19 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e00a92da090be7468b11afc81b3d8d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: VorpalSword
-  description: "\uD50C\uB808\uC774\uC5B4\uAC00 \uBC14\uB77C\uBCF4\uB294 \uBC29\uD5A5\uC73C\uB85C
-    \uD070 \uB370\uBBF8\uC9C0\uB97C \uC90D\uB2C8\uB2E4."
-  weaponIcon: {fileID: 0}
-  maxLevel: 5
-  currentLevel: 1
-  baseDamage: 10
-  attackRange: 1.5
   attackCooldown: 1
   nextAttackTime: 0
+  projectilePrefab: {fileID: 0}
+  weaponData: {fileID: 0}
   swordEffectPoolTag: VorpalSwordEffect
-  effectAngle: 120
-  effectLength: 3
-  knockbackForce: 5
-  effectDuration: 0.3
-  weaponStats: {fileID: 11400000, guid: ef1a6c4d25e7b2a4f898eaa94e4c868b, type: 2}
+  effectOffset: 0.5

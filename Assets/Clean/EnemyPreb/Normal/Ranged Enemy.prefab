@@ -129,8 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1dabf43aca08cb47ae343cd703592d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 5
+  speed: 0
   damage: 10
+  lifeTime: 5
   player: {fileID: 0}
 --- !u!61 &4279434567366758187
 BoxCollider2D:
@@ -177,6 +178,115 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 0.48, y: 0.48}
+  m_EdgeRadius: 0
+--- !u!1 &1179805257415000608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 843757031769300330}
+  m_Layer: 3
+  m_Name: Text Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &843757031769300330
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179805257415000608}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.597, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3257540858987759260}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3688383514881295382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4254633166133361566}
+  - component: {fileID: 6427113443290433051}
+  m_Layer: 10
+  m_Name: AttackCol
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4254633166133361566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3688383514881295382}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3257540858987759260}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &6427113443290433051
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3688383514881295382}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.17000002}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.5400666, y: 0.2815205}
   m_EdgeRadius: 0
 --- !u!1 &3714273483594136293
 GameObject:
@@ -307,8 +417,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1dabf43aca08cb47ae343cd703592d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 5
+  speed: 0
   damage: 10
+  lifeTime: 5
   player: {fileID: 0}
 --- !u!61 &9197245514667725461
 BoxCollider2D:
@@ -366,7 +477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5945816086380502584}
   m_Layer: 3
-  m_Name: Starting Point
+  m_Name: Shot Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -519,8 +630,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1dabf43aca08cb47ae343cd703592d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 5
+  speed: 0
   damage: 10
+  lifeTime: 5
   player: {fileID: 0}
 --- !u!61 &6206897650625215058
 BoxCollider2D:
@@ -603,6 +715,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5945816086380502584}
+  - {fileID: 4254633166133361566}
+  - {fileID: 843757031769300330}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4799667448847715021
@@ -745,21 +859,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f3f4122fdf03047a172b2abcc4f770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  moveSpeed: 2
+  maxHealth: 20
+  moveSpeed: 1
+  baseSpeed: 1
   deffense: 0
   attackDamage: 10
   attackRange: 0.1
   attackCooldown: 1
   knockbackResistance: 0.5
+  expGemRate: Common
   currentHealth: 0
   nextAttackTime: 0
-  isKnockback: 0
-  knockbackRecoveryTimer: 0
+  isKnockbacked: 0
   isSlowed: 0
-  slowEffectTimer: 0
-  currentSlowAmount: 0
-  originalMoveSpeed: 0
+  textPos: {fileID: 843757031769300330}
   ranged_attackRange: 6
   ranged_attackCooldown: 3
   projectileSpeed: 10

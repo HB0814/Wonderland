@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 110
+  spritePixelsToUnits: 120
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Alice_32_new2_0
+      name: Alice
       rect:
         serializedVersion: 2
         x: 22
@@ -147,7 +147,7 @@ TextureImporter:
         width: 79
         height: 121
       alignment: 9
-      pivot: {x: 0.58, y: 0.5}
+      pivot: {x: 0.58, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Alice_32_new2_0: -972761771705592722
+      Alice: -972761771705592722
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

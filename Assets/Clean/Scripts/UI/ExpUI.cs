@@ -60,6 +60,6 @@ public class ExpUI : MonoBehaviour
 
     private void UpdateLevelUI(int level)
     {
-        levelText.text = $"Lv.{level}";
+        levelText.text = $"{level}";
     }
 } 
