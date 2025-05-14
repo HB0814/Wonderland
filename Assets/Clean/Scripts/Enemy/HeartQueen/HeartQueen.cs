@@ -30,7 +30,12 @@ public class HeartQueen : Enemy
     public GameObject minionPrefab;         //소환할 미니언 프리팹
 
     [Header("보스 공격 패턴")]
-    public Guillotione guillotiones; //길로틴 스크립트
+    public MovedGuillotione movedGuillotione;
+    public FixedGuillotione[] fixedGuillotiones; //길로틴 스크립트
+    public GameObject[] fixedWarn;
+
+    Camera cam;
+
     public Gavel gavels; //의사봉 스크립트
 
     private bool isPhase2 = false; //두번째 페이즈 활성화 여부
@@ -42,6 +47,7 @@ public class HeartQueen : Enemy
     protected override void Start()
     {
         base.Start();
+        cam = Camera.main;
         takeDamage = GetComponent<HitEffect>();
 
         SetTargetPosition(); //목표위치 설정
@@ -56,7 +62,7 @@ public class HeartQueen : Enemy
 
         moveTimer += Time.deltaTime; //이동 타이머 증가
 
-        if (animator.GetBool("CanMove")) //이동 가능할 때
+        if (animator.GetBool("canMove")) //이동 가능할 때
         {
             MoveToTarget();
         }
@@ -84,15 +90,22 @@ public class HeartQueen : Enemy
         }
 
         //임시 길로틴 패턴 테스트용
+
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            StartCoroutine(PatternDelay("MovedGuillotine", 1.2f));
+        }
+
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            StartCoroutine(PatternDelay("OnGuillotine", 1.2f));
+            StartCoroutine(PatternDelay("FixedGuillotine", 1.2f));
         }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
             StartCoroutine(PatternDelay("OnGavel", 2.0f));
         }
+
 
     }
 
@@ -102,13 +115,47 @@ public class HeartQueen : Enemy
         patternDelay = new WaitForSeconds(delay); //패턴 별 딜레이 시간 변경
 
         animator.SetTrigger(pattern); //패턴 별 트리거 활성화
-        animator.SetBool("CanMove", false); //걷기 애니메이션 비활성화
+        animator.SetBool("canMove", false); //걷기 애니메이션 비활성화
 
         switch(pattern)
         {
-            case "OnGuillotine":
-                //guillotiones.Init_Fixed(_player, 1.0f); //플레이어 스크립트, 무기 활성화 딜레이 시간
+            case "MovedGuillotine":
                 yield return patternDelay;
+                movedGuillotione.gameObject.SetActive(true);
+                break;
+
+            case "FixedGuillotine":
+                //guillotiones.Init(_player, 1.0f); //플레이어 스크립트, 무기 활성화 딜레이 시간
+
+
+                for (int i = 0; i < fixedGuillotiones.Length; i++)
+                {
+                    fixedGuillotiones[i].gameObject.SetActive(false);
+                }
+
+                yield return patternDelay;
+
+                Vector2 bottomLeft = cam.ScreenToWorldPoint(new Vector3(0, 0, 0));
+                Vector2 topRight = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+
+                for (int i = 0; i < fixedGuillotiones.Length; i++)
+                {
+                    float x = Random.Range(bottomLeft.x, topRight.x);
+                    float y = Random.Range(bottomLeft.y, topRight.y);
+
+                    fixedWarn[i].transform.position = new Vector2(x, y);
+                    fixedWarn[i].SetActive(true);
+                    fixedGuillotiones[i].gameObject.transform.position = new Vector2(x, y);
+                    //fixedGuillotiones[i].gameObject.SetActive(true);
+                }
+                yield return patternDelay; 
+
+                for (int i = 0; i < fixedGuillotiones.Length; i++)
+                {
+                    fixedWarn[i].SetActive(false);
+                    fixedGuillotiones[i].gameObject.SetActive(true);
+                }
+
                 break;
 
             case "OnGavel":
@@ -123,7 +170,7 @@ public class HeartQueen : Enemy
     //다시 걷기 애니메이션 실행
     public void ReturnToWalk()
     {
-        animator.SetBool("CanMove", true);
+        animator.SetBool("canMove", true);
     }
 
     //바운즈 센터 값 설정 -> 보스 몬스터 스폰 시 실행되게 끔.
@@ -160,7 +207,7 @@ public class HeartQueen : Enemy
     //목표지점으로 이동
     private void MoveToTarget()
     {
-        if (!animator.GetBool("CanMove"))
+        if (!animator.GetBool("canMove"))
             return;
 
         Vector2 newPosition = Vector2.MoveTowards(rb.position, targetPos, moveSpeed * Time.fixedDeltaTime); //현재 위치에서 목표 위치로 속도에 따라 이동

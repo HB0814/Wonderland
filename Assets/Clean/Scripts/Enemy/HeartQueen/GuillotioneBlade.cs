@@ -3,6 +3,7 @@ using UnityEngine;
 public class GuillotioneBlade : MonoBehaviour
 {
     Player player;
+    [SerializeField] float damage;
 
     private void Awake()
     {
@@ -13,7 +14,7 @@ public class GuillotioneBlade : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            player.TakeDamage(15.0f);
+            player.TakeDamage(damage);
         }
     }
 }

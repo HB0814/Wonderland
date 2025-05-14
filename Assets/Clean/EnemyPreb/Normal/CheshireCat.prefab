@@ -424,7 +424,7 @@ MonoBehaviour:
   - item: {fileID: 3428670107856843108, guid: 269edf02ba258c545b022dbd7c6e7672, type: 3}
     dropChance: 0.01
   - item: {fileID: 3428670107856843108, guid: c8e112cb28bf31748b2e8b5153beaae5, type: 3}
-    dropChance: 0.03
+    dropChance: 0.02
   - item: {fileID: 3428670107856843108, guid: e2a3b2ebdc1301049a4f488e7d944440, type: 3}
     dropChance: 0.001
   namedDrops:
