@@ -1,11 +1,9 @@
 using UnityEngine;
 using System.Collections;
-using NUnit.Framework;
+using System.Collections.Generic;
 
 public class HeartQueen : Enemy
 {
-    HitEffect takeDamage;
-
     [SerializeField] Bounds moveBounds; //이동 범위 > 이동 범위를 설정하기 위함
     Vector2 targetPos; //목표위치
     float moveTime = 0.0f; //이동 시간
@@ -48,7 +46,6 @@ public class HeartQueen : Enemy
     {
         base.Start();
         cam = Camera.main;
-        takeDamage = GetComponent<HitEffect>();
 
         SetTargetPosition(); //목표위치 설정
         nextSummonTime = Time.time + summonCooldown;
@@ -125,9 +122,6 @@ public class HeartQueen : Enemy
                 break;
 
             case "FixedGuillotine":
-                //guillotiones.Init(_player, 1.0f); //플레이어 스크립트, 무기 활성화 딜레이 시간
-
-
                 for (int i = 0; i < fixedGuillotiones.Length; i++)
                 {
                     fixedGuillotiones[i].gameObject.SetActive(false);
@@ -135,20 +129,54 @@ public class HeartQueen : Enemy
 
                 yield return patternDelay;
 
+                Camera cam = Camera.main;
                 Vector2 bottomLeft = cam.ScreenToWorldPoint(new Vector3(0, 0, 0));
                 Vector2 topRight = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
 
+                List<Vector2> placedPositions = new List<Vector2>();
+                float minDistance = 2.5f; //길로틴 사이 최소 거리
+
                 for (int i = 0; i < fixedGuillotiones.Length; i++)
                 {
-                    float x = Random.Range(bottomLeft.x, topRight.x);
-                    float y = Random.Range(bottomLeft.y, topRight.y);
+                    Vector2 randomPos;
+                    int attempts = 0;
+                    bool positionValid;
 
-                    fixedWarn[i].transform.position = new Vector2(x, y);
+                    do
+                    {
+                        float x = Random.Range(bottomLeft.x, topRight.x);
+                        float y = Random.Range(bottomLeft.y, topRight.y);
+                        randomPos = new Vector2(x, y);
+
+                        positionValid = true;
+                        foreach (Vector2 placed in placedPositions)
+                        {
+                            if (Vector2.Distance(randomPos, placed) < minDistance)
+                            {
+                                positionValid = false;
+                                break;
+                            }
+                        }
+
+                        attempts++;
+                        if (attempts > 100)
+                        {
+                            break;
+                        }
+
+                    } while (!positionValid);
+
+                    placedPositions.Add(randomPos);
+
+                    // 경고 위치 및 활성화
+                    fixedWarn[i].transform.position = randomPos;
                     fixedWarn[i].SetActive(true);
-                    fixedGuillotiones[i].gameObject.transform.position = new Vector2(x, y);
-                    //fixedGuillotiones[i].gameObject.SetActive(true);
+
+                    // 길로틴 위치 설정
+                    fixedGuillotiones[i].transform.position = randomPos;
                 }
-                yield return patternDelay; 
+
+                yield return patternDelay;
 
                 for (int i = 0; i < fixedGuillotiones.Length; i++)
                 {
