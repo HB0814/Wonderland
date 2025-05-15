@@ -3134,7 +3134,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 11
+  m_SortingOrder: 9
   m_TargetDisplay: 0
 --- !u!224 &331859925
 RectTransform:
@@ -23515,6 +23515,10 @@ PrefabInstance:
       propertyPath: healParticle
       value: 
       objectReference: {fileID: 1548393761}
+    - target: {fileID: 506820814017238879, guid: 75807386bf951894686c172e7e06294a, type: 3}
+      propertyPath: currentHealth
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 565160383925707582, guid: 75807386bf951894686c172e7e06294a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -23749,6 +23753,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5989910768349025940, guid: fe1df3986fe08e64a8e8f9eb64e3f7a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8839023585049175546, guid: fe1df3986fe08e64a8e8f9eb64e3f7a2, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -23819,7 +23827,11 @@ PrefabInstance:
       objectReference: {fileID: 7746286430991855315}
     - target: {fileID: 121561913212574054, guid: fc3c644aeb7b4e64285fde891e11a372, type: 3}
       propertyPath: baseSpeed
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 121561913212574054, guid: fc3c644aeb7b4e64285fde891e11a372, type: 3}
+      propertyPath: moveSpeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 121561913212574054, guid: fc3c644aeb7b4e64285fde891e11a372, type: 3}
       propertyPath: guillotiones

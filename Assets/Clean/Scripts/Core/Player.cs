@@ -334,7 +334,7 @@ public class Player : MonoBehaviour
         {
             float temp = currentExp - maxExp; //경험치량 초과분 저장
 
-            LevelUp(temp);
+            LevelUp(temp); //레벨업 함수에 초과 경험치 값 전달
         }
 
         // 경험치 획득 시 광기 2 증가
@@ -347,13 +347,13 @@ public class Player : MonoBehaviour
 
     private void LevelUp(float temp)
     {
-        currentLevel++;
-        currentExp = 0f;
-        maxExp += GetRequiredExp(currentLevel);
-        onLevelChanged?.Invoke(currentLevel);
-        currentExp += temp; //초과된 경험치량 적용
-        onExpChanged?.Invoke(currentExp, maxExp);
-        UpgradeManager.Instance.ShowUpgradeOptions();
+        currentLevel++; //현재 레벨 증가
+        currentExp = 0f; //현재 경험치 초기화
+        maxExp += GetRequiredExp(currentLevel); //최대 경험치 증가
+        onLevelChanged?.Invoke(currentLevel); //레벨 변경
+        currentExp += temp; //초과된 경험치량만큼 현재 경험치량 증가
+        onExpChanged?.Invoke(currentExp, maxExp); //경험치 변경
+        UpgradeManager.Instance.ShowUpgradeOptions(); //업그레이드 옵션 보여주기
     }
 
     private int GetRequiredExp(int level)

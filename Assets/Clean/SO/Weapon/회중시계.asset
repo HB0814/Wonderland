@@ -19,8 +19,8 @@ MonoBehaviour:
   - 
   - 
   - 
-  currentLevel: 5
-  icon: {fileID: 0}
+  currentLevel: 0
+  icon: {fileID: -6038342703473049663, guid: 1ebd6917aed811e4e920e735aca6fb1e, type: 3}
   UpgradeDetails:
   - "\uC5C5\uADF8\uB808\uC774\uB4DC \uB0B4\uC6A9"
   - 

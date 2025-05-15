@@ -31,6 +31,8 @@ public abstract class Enemy : MonoBehaviour
     protected Animator animator; //애니메이터
     protected GameObject player; //플레이어 게임오브젝트
     protected Player _player; //플레이어 스크립트
+    protected HitEffect hitEffect;
+    ParticleSystem deathEffect;
     [SerializeField] protected Transform textPos;
 
     // 스프라이트 업데이트 관련 변수
@@ -57,6 +59,11 @@ public abstract class Enemy : MonoBehaviour
         if (_player == null)
             _player = player.GetComponent<Player>();
 
+        if(hitEffect == null)
+            hitEffect = GetComponent<HitEffect>();
+
+        if (deathEffect == null)
+            deathEffect = GetComponent<ParticleSystem>();
         if (rb != null)
         {
             rb.gravityScale = 0.0f; //중력 없애기
@@ -250,8 +257,6 @@ public abstract class Enemy : MonoBehaviour
     //죽음 
     protected virtual void Die()
     {
-        
-
         //드랍 아이템 관련
         //수정 필요
         if (dropItems != null && dropItems.Length > 0 && Random.value <= dropChance)
@@ -261,14 +266,18 @@ public abstract class Enemy : MonoBehaviour
         }
 
         //사망 파티클
-        ParticleSystem deathEffect = GetComponent<ParticleSystem>();
         if (deathEffect != null)
         {
             deathEffect.Play(); //파티클 실행
         }
 
-        CreateExpgem(); //경험치 잼 생성
+        if (hitEffect != null)
+        {
+            hitEffect.StopAttack(); //공격 정지 함수 실행 -> 몬스터가 사망 시에도 플레이어에게 피해를 입히는 현상 방지
+        }
 
+        CreateExpgem(); //경험치 잼 생성
+        attackDamage = 0; //데미지 0 초기화
         spriteRenderer.color = originalColor; //스프라이트 색 원래대로
         StopAllCoroutines(); //모든 코루틴 종료
         gameObject.SetActive(false); //게임오브젝트 비활성화

@@ -17,8 +17,8 @@ public class Projectile : MonoBehaviour
     private float slowDuration = 1; // 슬로우 지속시간
 
     [Header("관통 속성")]
-    private int maxPierceCount = 0; // 최대 관통 수
-    private int currentPierceCount = 0; // 현재 관통 수
+    public int maxPierceCount = 0; // 최대 관통 수
+    public int currentPierceCount = 0; // 현재 관통 수
 
     [Header("모자 부메랑 속성")]
     private float returnSpeed = 12f;
@@ -83,7 +83,7 @@ public class Projectile : MonoBehaviour
         if (!isActive) return;
 
         currentLifeTime -= Time.deltaTime;
-        if (currentLifeTime <= 0)
+        if (currentLifeTime <= 0 || currentPierceCount > maxPierceCount)
         {
             Deactivate();
         }
@@ -160,14 +160,10 @@ public class Projectile : MonoBehaviour
         if(weaponType != WeaponType.Book) return;
         if (other.CompareTag("Enemy"))
         {
-            if (currentPierceCount < maxPierceCount)
-            {
                 currentPierceCount++;
-            }
-            else
-            {
+
+            if(currentPierceCount > maxPierceCount)
                 Deactivate();
-            }
         }
     }
 } 

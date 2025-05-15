@@ -20,7 +20,7 @@ MonoBehaviour:
   - 
   - 
   currentLevel: 0
-  icon: {fileID: 0}
+  icon: {fileID: -4457850898058260020, guid: cfc939dacda6ce04ba8f93d768383b40, type: 3}
   UpgradeDetails:
   - "\uC5C5\uADF8\uB808\uC774\uB4DC \uB0B4\uC6A9"
   - 

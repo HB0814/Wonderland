@@ -5,7 +5,7 @@ public class ExpGem : ItemAttract
 {
     [Header("경험치 설정")]
     [SerializeField] private float expAmount = 10f; //보석이 제공하는 경험치량
-    bool onMagnet = false;
+    bool onMagnet = false; //자석 아이템 기능 활성화 여부
 
     protected override void Update()
     {
@@ -44,6 +44,6 @@ public class ExpGem : ItemAttract
     protected override void OnDisable()
     {
         base.OnDisable();
-        onMagnet = false;
+        onMagnet = false; //자석 아이템 기능 활성화 여부 거짓
     }
 } 

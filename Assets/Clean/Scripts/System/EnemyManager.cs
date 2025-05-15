@@ -42,7 +42,7 @@ public class EnemyManager : MonoBehaviour
         {
             float ran = Random.Range(25.0f, 35.0f);
             eventTimer = Time.time + ran;
-            chessEvent.Warn();
+            chessEvent.SetPattern();
         }
 
         //현재 웨이브 인덱스가 웨이브 리스트의 카운트보다 적고, 타이머가 웨이브 리스트의 시작시간보다 적을 동안 반복

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class GuillotioneBlade : MonoBehaviour
 {
-    Player player;
-    [SerializeField] float damage;
+    Player player; //플레이어 스크립트
+    [SerializeField] float damage; //데미지
 
     private void Awake()
     {
@@ -14,7 +14,7 @@ public class GuillotioneBlade : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            player.TakeDamage(damage);
+            player.TakeDamage(damage); //플레이어 데미지 함수 실행
         }
     }
 }

@@ -329,7 +329,7 @@ public class ObjectPool : MonoBehaviour
             damageTextComponentMap[objectToSpawn] = dt;
         }
 
-        dt?.Setup(damage, position);
+        dt?.Setup(damage);
 
         return objectToSpawn;
     }

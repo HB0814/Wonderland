@@ -43,30 +43,30 @@ public class ItemAttract : MonoBehaviour
             attractTimer += Time.deltaTime; //자석 타이머 시간 증가
             currentSpeed = Mathf.Min(baseSpeed + (accelerationRate * attractTimer), maxSpeed); //시간에 따라 현재 속도 증가
 
-            transform.position = Vector2.MoveTowards(transform.position, target.position, currentSpeed * Time.deltaTime);
-            // 플레이어 방향으로 이동
+            transform.position = Vector2.MoveTowards(transform.position, target.position, currentSpeed * Time.deltaTime); //플레이어 방향으로 이동
+            
         }
     }
 
     //경험치 잼 튕기는 효과
     protected virtual void Launch()
     {
-        Vector2 randomDir = Random.insideUnitCircle.normalized;
-        force = Random.Range(0.5f, 1.5f);
-        rb.AddForce(randomDir * force, ForceMode2D.Impulse);
-        Invoke(nameof(AddForceZero), 0.1f);
+        Vector2 randomDir = Random.insideUnitCircle.normalized; //원형 모양으로 랜덤한 방향 정규화
+        force = Random.Range(0.5f, 1.5f); //랜덤의 힘 크기
+        rb.AddForce(randomDir * force, ForceMode2D.Impulse); //해당 방향으로 힘을 가함
+        Invoke(nameof(AddForceZero), 0.1f); //AddForce효과를 0.1초만 유지
     }
 
     protected virtual void AddForceZero()
     {
-        rb.linearVelocity = Vector2.zero;
-        spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * -100);
+        rb.linearVelocity = Vector2.zero; //정지 상태
+        spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * -100); //렌더러 레이어 설정
     }
 
     //경험치 잼 활성화 시
     protected virtual void OnEnable()
     {
-        Launch();
+        Launch(); //경험치 잼 튕기기 함수 실행
     }
 
     //비활성화 시
@@ -75,7 +75,7 @@ public class ItemAttract : MonoBehaviour
         isAttracting = false; //기본 자석 기능 여부 비활성화
         currentSpeed = baseSpeed; //속도 초기화
         attractTimer = 0; //타이머 초기화
-        rb.linearVelocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero; //정지 상태
     }
 
 }

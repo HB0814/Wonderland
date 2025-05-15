@@ -113,11 +113,6 @@ public class HitEffect : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        playerCol= null;
-    }
-
     /// <summary>
     /// 콜라이더 진입 시 처리
     /// </summary>
@@ -150,7 +145,17 @@ public class HitEffect : MonoBehaviour
         Projectile projectile = weaponCollider.GetComponent<Projectile>();
         if (projectile != null)
         {
-            ProcessDamage(projectile.WeaponData);
+            if (projectile.weaponType == WeaponType.Book)
+            {
+                if (projectile.currentPierceCount > projectile.maxPierceCount)
+                    return;
+                else
+                {
+                    ProcessDamage(projectile.WeaponData);
+                }
+            }
+            else
+                ProcessDamage(projectile.WeaponData);
             return;
         }
 
@@ -228,6 +233,18 @@ public class HitEffect : MonoBehaviour
         {
             playerCol = null;
         }
+    }
+
+    private void OnDisable()
+    {
+        playerCol= null;
+    }
+
+    public void StopAttack()
+    {
+        playerCol = null;
+        canAttack = false;
+        attackTimer = 0f;
     }
 }
 
