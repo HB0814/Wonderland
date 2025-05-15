@@ -147,12 +147,13 @@ public class HitEffect : MonoBehaviour
         {
             if (projectile.weaponType == WeaponType.Book)
             {
-                if (projectile.currentPierceCount > projectile.maxPierceCount)
-                    return;
-                else
+                if (projectile.currentPierceCount <= projectile.maxPierceCount)
                 {
+                    projectile.currentPierceCount++; //책 의 관통수치 증가
                     ProcessDamage(projectile.WeaponData);
                 }
+                else
+                    return;
             }
             else
                 ProcessDamage(projectile.WeaponData);

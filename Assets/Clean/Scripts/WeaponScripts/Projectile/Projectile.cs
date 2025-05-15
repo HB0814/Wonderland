@@ -155,15 +155,12 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(weaponType != WeaponType.Book) return;
-        if (other.CompareTag("Enemy"))
-        {
-                currentPierceCount++;
-
-            if(currentPierceCount > maxPierceCount)
-                Deactivate();
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if(weaponType != WeaponType.Book) return;
+    //    if (other.CompareTag("Enemy"))
+    //    {
+    //            currentPierceCount++;
+    //    }
+    //}
 } 

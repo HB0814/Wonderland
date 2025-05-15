@@ -17,8 +17,8 @@ public class HeartQueen : Enemy
     private float patternTimer = 0f;
     private bool isPatternExecuting = false;
 
-    private Dictionary<BossPattern, float> phase1_phase1_Cooltimes = new();
-    private Dictionary<BossPattern, float> phase2_phase1_Cooltimes = new();
+    private Dictionary<BossPattern, float> phase1_Cooltimes = new();
+    private Dictionary<BossPattern, float> phase2_Cooltimes = new();
     private Dictionary<BossPattern, float> patternTimers = new();
 
     [SerializeField] Bounds moveBounds; //이동 범위 > 이동 범위를 설정하기 위함
@@ -43,20 +43,14 @@ public class HeartQueen : Enemy
 
     public Gavel gavels; //의사봉 스크립트
 
-    private bool isPhase2 = false; //두번째 페이즈 활성화 여부
-    private float nextSummonTime; //다음 소환 시간
-    private float nextSpecialAttackTime; //다음 특수 공격 시간
-
     WaitForSeconds patternDelay; //패턴 별 딜레이 시간
 
-    protected override void Start()
+    private new void Start()
     {
         base.Start();
         cam = Camera.main;
 
         SetTargetPosition(); //목표위치 설정
-        nextSummonTime = Time.time + summonphase1_Cooltimes;
-        nextSpecialAttackTime = Time.time + specialAttackphase1_Cooltimes;
         InitializePhase_phase1_Cooltimes();
 
     }
@@ -64,16 +58,16 @@ public class HeartQueen : Enemy
     //페이즈, 패턴 별 쿨다운
     private void InitializePhase_phase1_Cooltimes()
     {
-        phase1_phase1_Cooltimes[BossPattern.MovedGuillotine] = 6f;
-        phase1_phase1_Cooltimes[BossPattern.FixedGuillotine] = 8f;
+        phase1_Cooltimes[BossPattern.MovedGuillotine] = 6f;
+        phase1_Cooltimes[BossPattern.FixedGuillotine] = 8f;
         //phase1_phase1_Cooltimes[BossPattern.OnGavel] = 10f;
 
-        phase2_phase1_Cooltimes[BossPattern.MovedGuillotine] = 4f;
-        phase2_phase1_Cooltimes[BossPattern.FixedGuillotine] = 6f;
+        phase2_Cooltimes[BossPattern.MovedGuillotine] = 4f;
+        phase2_Cooltimes[BossPattern.FixedGuillotine] = 6f;
         //phase2_phase1_Cooltimes[BossPattern.OnGavel] = 7f;
 
 
-        foreach (var pattern in phase1_phase1_Cooltimes.Keys)
+        foreach (var pattern in phase1_Cooltimes.Keys)
         {
             patternTimers[pattern] = 0f;
         }
@@ -112,16 +106,17 @@ public class HeartQueen : Enemy
     {
         List<BossPattern> availablePatterns = new();
 
-        foreach (var pattern in phase1_phase1_Cooltimes.Keys)
+        foreach (var pattern in phase1_Cooltimes.Keys)
         {
-            if (patternTimers[pattern] >= phase1_phase1_Cooltimes[pattern])
+            if (patternTimers[pattern] >= phase1_Cooltimes[pattern])
             {
                 availablePatterns.Add(pattern);
             }
         }
 
+        //아직 쿨타임 지난 패턴이 없음
         if (availablePatterns.Count == 0) 
-            return; // 아직 쿨타임 지난 패턴이 없음
+            return; 
 
         BossPattern selected = availablePatterns[Random.Range(0, availablePatterns.Count)];
         currentPattern = selected;
@@ -294,29 +289,14 @@ public class HeartQueen : Enemy
 
     private void EnterPhase2()
     {
-        isPhase2 = true;
-
         // 페이즈2 쿨타임 덮어쓰기
-        foreach (var pattern in phase2_phase1_Cooltimes.Keys)
+        foreach (var pattern in phase2_Cooltimes.Keys)
         {
-            if (phase1_phase1_Cooltimes.ContainsKey(pattern))
+            if (phase1_Cooltimes.ContainsKey(pattern))
             {
-                phase1_phase1_Cooltimes[pattern] = phase2_phase1_Cooltimes[pattern];
+                phase1_Cooltimes[pattern] = phase2_Cooltimes[pattern];
             }
         }
 
-    }
-
-    private void SummonMinions()
-    {
-        if (minionPrefab != null)
-        {
-            // 미니언 소환 로직 구현
-            for (int i = 0; i < 3; i++)
-            {
-                Vector2 spawnPos = (Vector2)transform.position + Random.insideUnitCircle * 2f;
-                Instantiate(minionPrefab, spawnPos, Quaternion.identity);
-            }
-        }
     }
 }

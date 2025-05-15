@@ -204,6 +204,7 @@ public abstract class Enemy : MonoBehaviour
 
         DamageText(totalDamage);
         currentHealth -= totalDamage; //현재 체력 감소
+        Debug.Log("적이 피해를 입음");
 
         if(currentHealth <= 0.0f) //현재 체력이 0이하일 경우 실행
         {

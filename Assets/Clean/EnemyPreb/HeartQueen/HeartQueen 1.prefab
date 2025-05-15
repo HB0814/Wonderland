@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 3761449375506278254}
   - component: {fileID: 8163744936473155875}
   - component: {fileID: 121561913212574054}
-  - component: {fileID: 3343363139464625611}
+  - component: {fileID: 4627651319275184365}
   m_Layer: 3
   m_Name: HeartQueen 1
   m_TagString: Enemy
@@ -251,12 +251,14 @@ MonoBehaviour:
     m_Extent: {x: 5, y: 5, z: 0}
   canMove: 1
   phaseChangeHealth: 0.5
-  summonCooldown: 5
-  specialAttackCooldown: 10
+  summonphase1_Cooltimes: 5
+  specialAttackphase1_Cooltimes: 10
   minionPrefab: {fileID: 0}
-  guillotiones: {fileID: 0}
+  movedGuillotione: {fileID: 0}
+  fixedGuillotiones: []
+  fixedWarn: []
   gavels: {fileID: 0}
---- !u!114 &3343363139464625611
+--- !u!114 &4627651319275184365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
