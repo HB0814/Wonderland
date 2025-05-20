@@ -102,6 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af694977be3a624d83b8230fd1422c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxPierceCount: 0
+  currentPierceCount: 0
   weaponType: 1
 --- !u!61 &8963938408286591653
 BoxCollider2D:

@@ -1,99 +1,155 @@
 using UnityEngine;
 using System.Collections;
-using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 
 public class HeartQueen : Enemy
 {
-    HitEffect takeDamage;
+    private enum BossPattern //보스 패턴
+    {
+        None, //아무것도 아님
+        MovedGuillotine, //이동형 길로틴 패턴
+        FixedGuillotine, //고정형 길로틴 패턴
+        //OnGavel, //의사봉 패턴
+        BlackHeartCardSpawn,
+        BlackCloverCardSpawn,
+    }
+    private BossPattern currentPattern = BossPattern.None;
+    private float patternphase1_Cooltimes = 5f;
+    private float patternTimer = 0f;
+    private bool isPatternExecuting = false;
+
+    private Dictionary<BossPattern, float> phase1_Cooltimes = new();
+    private Dictionary<BossPattern, float> phase2_Cooltimes = new();
+    private Dictionary<BossPattern, float> patternTimers = new();
 
     [SerializeField] Bounds moveBounds; //이동 범위 > 이동 범위를 설정하기 위함
     Vector2 targetPos; //목표위치
     float moveTime = 0.0f; //이동 시간
     float moveTimer = 0.0f; //이동 타이머
 
-    int attackType; //공격타입
-
-    float scaffoldCooltime; //발판 쿨타임
-    float soliderCooltime; //병사 소환 쿨타임
-    float gavelCooltime; //망치 쿨타임
-    float roseCooltime; //장미 쿨타임
-    float guillotioneCooltime; //길로틴 쿨타임
-
-    float attackTimer = 0.0f; //공격 체크 타이머
-
     public bool canMove = true; //이동가능 여부 => 이동가능 여부체크를 애니메이션 bool CanMove로 체크
 
     [Header("보스 특수 속성")]
     public float phaseChangeHealth = 0.5f;  //페이즈 전환 체력 비율
-    public float summonCooldown = 5f;      //소환 쿨다운
-    public float specialAttackCooldown = 10f; //특수 공격 쿨다운
+    public float summonphase1_Cooltimes = 5f;      //소환 쿨다운
+    public float specialAttackphase1_Cooltimes = 10f; //특수 공격 쿨다운
     public GameObject minionPrefab;         //소환할 미니언 프리팹
 
-    [Header("보스 공격 패턴")]
-    public Guillotione guillotiones; //길로틴 스크립트
-    public Gavel gavels; //의사봉 스크립트
+    [Header("길로틴")]
+    public MovedGuillotione movedGuillotione; //이동형 길로틴 스크립트
+    public FixedGuillotione[] fixedGuillotiones; //고정형 길로틴 스크립트
+    public GameObject[] fixedWarn; //고정형 길로틴 경고 오브젝트
 
-    private bool isPhase2 = false; //두번째 페이즈 활성화 여부
-    private float nextSummonTime; //다음 소환 시간
-    private float nextSpecialAttackTime; //다음 특수 공격 시간
+    Camera cam; //카메라
+
+    public Gavel gavels; //의사봉 스크립트
 
     WaitForSeconds patternDelay; //패턴 별 딜레이 시간
 
-    protected override void Start()
+    private new void Start()
     {
         base.Start();
-        takeDamage = GetComponent<HitEffect>();
+        cam = Camera.main;
 
+        SetBoundsCenter();
         SetTargetPosition(); //목표위치 설정
-        nextSummonTime = Time.time + summonCooldown;
-        nextSpecialAttackTime = Time.time + specialAttackCooldown;
+        InitializePhase_phase1_Cooltimes();
+
+    }
+
+    //페이즈, 패턴 별 쿨다운
+    private void InitializePhase_phase1_Cooltimes()
+    {
+        phase1_Cooltimes[BossPattern.MovedGuillotine] = 6f;
+        phase1_Cooltimes[BossPattern.FixedGuillotine] = 8f;
+        phase1_Cooltimes[BossPattern.BlackHeartCardSpawn] = 12f;
+        phase1_Cooltimes[BossPattern.BlackCloverCardSpawn] = 14f;
+        //phase1_phase1_Cooltimes[BossPattern.OnGavel] = 10f;
+
+        phase2_Cooltimes[BossPattern.MovedGuillotine] = 4f;
+        phase2_Cooltimes[BossPattern.FixedGuillotine] = 6f;
+        phase2_Cooltimes[BossPattern.BlackHeartCardSpawn] = 10f;
+        phase2_Cooltimes[BossPattern.BlackCloverCardSpawn] = 12f;
+        //phase2_phase1_Cooltimes[BossPattern.OnGavel] = 7f;
+
+
+        foreach (var pattern in phase1_Cooltimes.Keys)
+        {
+            patternTimers[pattern] = 0f;
+        }
     }
 
     private new void Update()
     {
-        if(Input.GetKeyDown(KeyCode.V)) //테스트용 v키 입력 시 >>> 보스 위치 초기화
-            SetBoundsCenter(); //위치가 초기화, 바운즈 센터 값 설정
-
         moveTimer += Time.deltaTime; //이동 타이머 증가
 
-        if (animator.GetBool("CanMove")) //이동 가능할 때
+        if (animator.GetBool("canMove")) //이동 가능할 때
         {
             MoveToTarget();
         }
 
         UpdateSpriteLayer(); //스프라이트 레이어 업데이트
 
-        // 페이즈 체크
-        if (!isPhase2 && currentHealth <= maxHealth * phaseChangeHealth)
+        foreach (var key in patternTimers.Keys.ToList())
         {
-            EnterPhase2();
+            patternTimers[key] += Time.deltaTime;
         }
 
-        // 특수 공격
-        if (Time.time >= nextSpecialAttackTime)
+        if (!isPatternExecuting)
         {
-            SpecialAttack();
-            nextSpecialAttackTime = Time.time + specialAttackCooldown;
+            patternTimer += Time.deltaTime;
+            if (patternTimer >= patternphase1_Cooltimes)
+            {
+                patternTimer = 0f;
+                SelectRandomPattern();
+            }
+        }
+    }
+    private void SelectRandomPattern()
+    {
+        List<BossPattern> availablePatterns = new();
+
+        foreach (var pattern in phase1_Cooltimes.Keys)
+        {
+            if (patternTimers[pattern] >= phase1_Cooltimes[pattern])
+            {
+                availablePatterns.Add(pattern);
+            }
         }
 
-        // 미니언 소환
-        if (isPhase2 && Time.time >= nextSummonTime)
+        //아직 쿨타임 지난 패턴이 없음
+        if (availablePatterns.Count == 0)
+            return;
+
+        BossPattern selected = availablePatterns[Random.Range(0, availablePatterns.Count)];
+        currentPattern = selected;
+
+        switch (selected)
         {
-            SummonMinions();
-            nextSummonTime = Time.time + summonCooldown;
+            case BossPattern.MovedGuillotine:
+                StartCoroutine(PatternDelay("MovedGuillotine", 1.2f));
+                break;
+
+            case BossPattern.FixedGuillotine:
+                StartCoroutine(PatternDelay("FixedGuillotine", 1.5f));
+                break;
+
+            case BossPattern.BlackHeartCardSpawn:
+                StartCoroutine(PatternDelay("BlackHeartCardSpawn", 1.5f));
+                break;
+
+            case BossPattern.BlackCloverCardSpawn:
+                StartCoroutine(PatternDelay("BlackCloverCardSpawn", 1.5f));
+                break;
+
+                //case BossPattern.OnGavel:
+                //    StartCoroutine(PatternDelay("OnGavel", 2.0f));
+                //    break;
         }
 
-        //임시 길로틴 패턴 테스트용
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            StartCoroutine(PatternDelay("OnGuillotine", 1.2f));
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            StartCoroutine(PatternDelay("OnGavel", 2.0f));
-        }
-
+        patternTimers[selected] = 0f; // 쿨타임 초기화
+        isPatternExecuting = true; //패턴
     }
 
     //패턴 별 딜레이
@@ -102,28 +158,167 @@ public class HeartQueen : Enemy
         patternDelay = new WaitForSeconds(delay); //패턴 별 딜레이 시간 변경
 
         animator.SetTrigger(pattern); //패턴 별 트리거 활성화
-        animator.SetBool("CanMove", false); //걷기 애니메이션 비활성화
+        animator.SetBool("canMove", false); //걷기 애니메이션 비활성화
 
-        switch(pattern)
+        switch (pattern)
         {
-            case "OnGuillotine":
-                guillotiones.Init(_player, 1.0f); //플레이어 스크립트, 무기 활성화 딜레이 시간
-                yield return patternDelay;
+            case "MovedGuillotine":
+                yield return patternDelay; //패턴 딜레이
+                movedGuillotione.gameObject.SetActive(true); //길로틴 활성화
+                break;
+
+            case "FixedGuillotine":
+                //활성화되어있는 길로틴 비활성화
+                for (int i = 0; i < fixedGuillotiones.Length; i++)
+                {
+                    //fixedGuillotiones[i].Set();
+                    fixedGuillotiones[i].gameObject.SetActive(false);
+                }
+
+                yield return patternDelay; //패턴 딜레이 -> 하트여왕의 전조 애니메이션 재생 중
+
+                SetGuillotionePosition();
+
+                yield return patternDelay; //딜레이 -> 경고 표시 애니메이션 종료 후 길로틴 생성
+
+                for (int i = 0; i < fixedGuillotiones.Length; i++)
+                {
+                    fixedWarn[i].SetActive(false); //경고 비활성화
+                    fixedGuillotiones[i].gameObject.SetActive(true); //길로틴 활성화
+                }
+
                 break;
 
             case "OnGavel":
                 yield return patternDelay;
                 gavels.Init(_player, 3.0f);
                 break;
+
+            case "BlackHeartCardSpawn":
+                yield return patternDelay;
+                BlackHeartCardSpawn();
+                break;
+
+            case "BlackCloverCardSpawn":
+                yield return patternDelay;
+                BlackCloverCardSpawn();
+                break;
         }
 
+        isPatternExecuting = false;
+        currentPattern = BossPattern.None;
         ReturnToWalk(); //걷기 상태로 전환
+    }
+
+
+    void SetGuillotionePosition()
+    {
+        Camera cam = Camera.main; //메인카메라
+        Vector2 bottomLeft = cam.ScreenToWorldPoint(new Vector3(0, 0, 0)); //카메라 화면의 좌표값 - 좌측하단
+        Vector2 topRight = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)); //카메라 화면의 좌표값 - 우측 상단
+
+        List<Vector2> placedPos = new List<Vector2>(); //길로틴 위치 저장 리스트
+        float minDistance = 2.5f; //길로틴 생성 시 최소 간격
+
+        for (int i = 0; i < fixedGuillotiones.Length; i++)
+        {
+            Vector2 randomPos; //랜덤 위치
+            int attempts = 0; //시도 횟수
+            bool posValid; //유효한 위치 여부
+
+            do
+            {
+                float x = Random.Range(bottomLeft.x, topRight.x); //x 좌표
+                float y = Random.Range(bottomLeft.y, topRight.y); //y 좌표
+                randomPos = new Vector2(x, y);
+
+                posValid = true; //유효한 위치임
+
+                foreach (Vector2 placed in placedPos)
+                {
+                    //랜덤 위치와 최소 간격 비교, 최소 간격보다 좁을 시 실행
+                    if (Vector2.Distance(randomPos, placed) < minDistance)
+                    {
+                        posValid = false; //유효한 위치가 아님
+                        break;
+                    }
+                }
+
+                attempts++; //시도 횟수 증가
+                            //길로틴 생성을 너무 많이 시도하지 않도록 하기 위한 조건문
+                if (attempts > 100)
+                {
+                    break;
+                }
+
+            } while (!posValid); //유효한 위치가 아닐 동안 반복
+
+            placedPos.Add(randomPos); //길로틴 위치 리스트에 해당 랜덤 위치 값 추가
+
+            //경고 위치 및 활성화
+            fixedWarn[i].transform.position = randomPos;
+            fixedWarn[i].SetActive(true);
+
+            //길로틴 위치 설정
+            fixedGuillotiones[i].transform.position = randomPos;
+        }
+    }
+
+    void BlackHeartCardSpawn()
+    {
+        int ran = Random.Range(5, 8);
+        for (int i = 0; i < ran; i++)
+        {
+            Vector3 spawnPos = GetRandomSpawnPosition_Circle(); //화면 밖 랜덤 스폰 함수의 값 가져오기
+
+            GameObject enemyToSpawn = ObjectPool.Instance.SpawnFromPool_Enemy("BlackHeartCard", spawnPos);
+            //오브젝트 풀링에 해당 적의 타입과 위치의 값을 전달하여 가져오기
+
+            if (enemyToSpawn != null)
+            {
+                enemyToSpawn.SetActive(true); //스폰할 적 활성화하기
+            }
+
+        }
+    }
+
+    void BlackCloverCardSpawn()
+    {
+        int ran = Random.Range(2, 4);
+        for (int i = 0; i < ran; i++)
+        {
+            Vector3 spawnPos = GetRandomSpawnPosition_Circle(); //화면 밖 랜덤 스폰 함수의 값 가져오기
+
+            GameObject enemyToSpawn = ObjectPool.Instance.SpawnFromPool_Enemy("BlackCloverCard", spawnPos);
+            //오브젝트 풀링에 해당 적의 타입과 위치의 값을 전달하여 가져오기
+
+            if (enemyToSpawn != null)
+            {
+                enemyToSpawn.SetActive(true); //스폰할 적 활성화하기
+            }
+
+        }
+    }
+    private Vector3 GetRandomSpawnPosition_Circle()
+    {
+        float angle = Random.Range(0f, 2f * Mathf.PI); // 랜덤한 방향 각도 (0~360도)
+
+        float circleX = 0.7f; // x방향 반지름
+        float circleY = 0.7f; // y방향 반지름
+
+        float x = Mathf.Cos(angle) * circleX + 0.5f; // 중심을 기준으로 이동
+        float y = Mathf.Sin(angle) * circleY + 0.5f;
+
+        float zPos = 10f; // Z축 위치
+
+        Vector3 viewportPos = new Vector3(x, y, zPos);
+        return Camera.main.ViewportToWorldPoint(viewportPos);
     }
 
     //다시 걷기 애니메이션 실행
     public void ReturnToWalk()
     {
-        animator.SetBool("CanMove", true);
+        animator.SetBool("canMove", true);
     }
 
     //바운즈 센터 값 설정 -> 보스 몬스터 스폰 시 실행되게 끔.
@@ -135,7 +330,7 @@ public class HeartQueen : Enemy
                                         transform.position.z);
 
         //바운즈의 센터를 플레이어 위치로 설정
-        moveBounds.center = new Vector3(player.transform.position.x, 
+        moveBounds.center = new Vector3(player.transform.position.x,
                                         player.transform.position.y,
                                         player.transform.position.z);
     }
@@ -144,11 +339,8 @@ public class HeartQueen : Enemy
     private void SetTargetPosition()
     {
         //목표 위치를 랜덤하게 설정
-        targetPos = new Vector2(
-            Random.Range(moveBounds.min.x, moveBounds.max.x),
-            Random.Range(moveBounds.min.y, moveBounds.max.y)
-        );
-
+        targetPos = new Vector2(Random.Range(moveBounds.min.x, moveBounds.max.x),
+                                Random.Range(moveBounds.min.y, moveBounds.max.y));
         //플립
         bool shouldFlip = targetPos.x > transform.position.x;
         if (shouldFlip != spriteRenderer.flipX)
@@ -160,7 +352,7 @@ public class HeartQueen : Enemy
     //목표지점으로 이동
     private void MoveToTarget()
     {
-        if (!animator.GetBool("CanMove"))
+        if (!animator.GetBool("canMove"))
             return;
 
         Vector2 newPosition = Vector2.MoveTowards(rb.position, targetPos, moveSpeed * Time.fixedDeltaTime); //현재 위치에서 목표 위치로 속도에 따라 이동
@@ -174,57 +366,16 @@ public class HeartQueen : Enemy
         }
     }
 
-    //protected override void Attack()
-    //{
-    //    base.Attack();
-
-    //    // 보스 특수 공격 패턴
-    //    if (isPhase2)
-    //    {
-    //        // 원형 공격 패턴
-    //        for (int i = 0; i < 8; i++)
-    //        {
-    //            float angle = i * 45f;
-    //            Vector2 direction = Quaternion.Euler(0, 0, angle) * Vector2.right;
-    //            Vector2 attackPosition = (Vector2)transform.position + direction * attackRange;
-
-    //            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPosition, 1f);
-    //            foreach (Collider2D hitCollider in hitColliders)
-    //            {
-    //                if (hitCollider.CompareTag("Player"))
-    //                {
-    //                    Player player = hitCollider.GetComponent<Player>();
-    //                    if (player != null)
-    //                    {
-    //                        player.TakeDamage(attackDamage * 0.5f);
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
-
     private void EnterPhase2()
     {
-        isPhase2 = true;
-        // 페이즈 2 전환 시 특수 효과나 애니메이션 추가 가능
-    }
-
-    private void SpecialAttack()
-    {
-        // 특수 공격 패턴 구현
-    }
-
-    private void SummonMinions()
-    {
-        if (minionPrefab != null)
+        // 페이즈2 쿨타임 덮어쓰기
+        foreach (var pattern in phase2_Cooltimes.Keys)
         {
-            // 미니언 소환 로직 구현
-            for (int i = 0; i < 3; i++)
+            if (phase1_Cooltimes.ContainsKey(pattern))
             {
-                Vector2 spawnPos = (Vector2)transform.position + Random.insideUnitCircle * 2f;
-                Instantiate(minionPrefab, spawnPos, Quaternion.identity);
+                phase1_Cooltimes[pattern] = phase2_Cooltimes[pattern];
             }
         }
+
     }
 }

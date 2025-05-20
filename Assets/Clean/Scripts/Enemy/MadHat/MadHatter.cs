@@ -30,7 +30,7 @@ public class MadHatter : Enemy
     public GameObject minionPrefab;         //소환할 미니언 프리팹
 
     [Header("보스 공격 패턴")]
-    public Guillotione guillotiones; //길로틴 스크립트
+    public FixedGuillotione guillotiones; //길로틴 스크립트
     public Gavel gavels; //의사봉 스크립트
 
     private bool isPhase2 = false; //두번째 페이즈 활성화 여부
@@ -107,7 +107,7 @@ public class MadHatter : Enemy
         switch(pattern)
         {
             case "OnGuillotine":
-                guillotiones.Init(_player, 1.0f); //플레이어 스크립트, 무기 활성화 딜레이 시간
+                //guillotiones.Init(_player, 1.0f); //플레이어 스크립트, 무기 활성화 딜레이 시간
                 yield return patternDelay;
                 break;
 

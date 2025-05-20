@@ -20,7 +20,7 @@ MonoBehaviour:
   - 
   - 
   currentLevel: 0
-  icon: {fileID: 0}
+  icon: {fileID: 7293598183456022363, guid: b2761b53a67b8ef4890c6c17ffd10f82, type: 3}
   UpgradeDetails:
   - "\uC5C5\uADF8\uB808\uC774\uB4DC \uB0B4\uC6A9"
   - 
@@ -31,16 +31,16 @@ MonoBehaviour:
   levelStats:
     damage:
     - 10
-    - 13
-    - 16
-    - 19
-    - 25
+    - 12
+    - 14
+    - 17
+    - 20
     attackCooldown:
+    - 4
+    - 3.8
     - 3.5
-    - 3.2
     - 3
     - 2.5
-    - 2
     lifeTime:
     - 4
     - 4
@@ -54,11 +54,11 @@ MonoBehaviour:
     - 1
     - 1
     knockbackForce:
-    - 5
-    - 5
-    - 5
-    - 5
-    - 5
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
     slowForce:
     - 0
     - 0
@@ -66,11 +66,11 @@ MonoBehaviour:
     - 0
     - 0
     slowDuration:
+    - 0.5
+    - 0.8
     - 1
-    - 1
-    - 1
-    - 1
-    - 1
+    - 1.2
+    - 1.5
     detectionRange:
     - 10
     - 10
@@ -78,11 +78,11 @@ MonoBehaviour:
     - 10
     - 10
     speed:
-    - 8
-    - 8.5
     - 9
     - 9.5
     - 10
+    - 11
+    - 12
     count: 0100000002000000030000000500000008000000
     attackRangeX: 0
     attackRangeY: 0

@@ -20,7 +20,7 @@ MonoBehaviour:
   - 
   - 
   currentLevel: 0
-  icon: {fileID: 0}
+  icon: {fileID: 1304208510633726333, guid: 965b31845861891418e8432182ab6ae5, type: 3}
   UpgradeDetails:
   - "\uC5C5\uADF8\uB808\uC774\uB4DC \uB0B4\uC6A9"
   - 
@@ -30,11 +30,11 @@ MonoBehaviour:
   weaponType: 6
   levelStats:
     damage:
+    - 3
+    - 4
+    - 5
+    - 6
     - 8
-    - 9
-    - 10
-    - 11
-    - 12
     attackCooldown:
     - 2
     - 1.8
@@ -72,11 +72,11 @@ MonoBehaviour:
     - 0.5
     - 0.5
     detectionRange:
-    - 10
-    - 10
-    - 10
-    - 10
-    - 10
+    - 3
+    - 3
+    - 3
+    - 3
+    - 3
     speed:
     - 10
     - 10

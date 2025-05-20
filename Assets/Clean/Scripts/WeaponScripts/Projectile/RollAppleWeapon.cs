@@ -53,7 +53,6 @@ public class RollAppleWeapon : WeaponBase
 
     private void SpawnApple()
     {
-        nextAttackTime=0f;
         // 랜덤 시작 위치 설정
         Vector3 spawnPosition = GetRandomSpawnPosition();
         
@@ -76,6 +75,7 @@ public class RollAppleWeapon : WeaponBase
                 projectile.BaseInitialize(damage, size, lifeTime, speed);
                 projectile.DebuffInitialize(knockbackForce, slowForce, slowDuration);
             }
+            nextAttackTime = 0f;
         }
     }
 

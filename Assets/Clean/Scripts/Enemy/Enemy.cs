@@ -31,6 +31,8 @@ public abstract class Enemy : MonoBehaviour
     protected Animator animator; //애니메이터
     protected GameObject player; //플레이어 게임오브젝트
     protected Player _player; //플레이어 스크립트
+    protected HitEffect hitEffect;
+    ParticleSystem deathEffect;
     [SerializeField] protected Transform textPos;
 
     // 스프라이트 업데이트 관련 변수
@@ -57,6 +59,11 @@ public abstract class Enemy : MonoBehaviour
         if (_player == null)
             _player = player.GetComponent<Player>();
 
+        if(hitEffect == null)
+            hitEffect = GetComponent<HitEffect>();
+
+        if (deathEffect == null)
+            deathEffect = GetComponent<ParticleSystem>();
         if (rb != null)
         {
             rb.gravityScale = 0.0f; //중력 없애기
@@ -70,7 +77,7 @@ public abstract class Enemy : MonoBehaviour
 
 
         float time = Time.time;
-        currentHealth = (maxHealth + (time * 0.1f)) * (1 + (_player.Level * 0.01f)); ; //현재 체력을 시간과 플레이어 레벨에 맞게 증가하도록 변경
+        currentHealth = (maxHealth + (time * 0.15f)) * (1 + (_player.Level * 0.01f)); ; //현재 체력을 시간과 플레이어 레벨에 맞게 증가하도록 변경
         nextAttackTime = 0.0f; //다음 공격 시간 초기화
         isKnockbacked = false; //넉백 상태 초기화
         isSlowed = false; //슬로우 상태 초기화
@@ -138,7 +145,7 @@ public abstract class Enemy : MonoBehaviour
             }
         }
     }
-     //스파라이트 렌더링 기능
+     //스프라이트 렌더링 기능
     protected virtual bool IsVisible()
     {
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position); //월드 좌표를 뷰포트로 변환하여 범위 내 오브젝트 위치 확인
@@ -168,7 +175,7 @@ public abstract class Enemy : MonoBehaviour
     //플레이어 공격
     public virtual void Attack()
     { 
-        if (_player != null)
+        if (_player != null && gameObject.activeSelf)
         {
             _player.TakeDamage(attackDamage); //플레이어의 몬스터의 피해량 값을 전달하여 피격 함수 실행
         }
@@ -183,7 +190,7 @@ public abstract class Enemy : MonoBehaviour
             StartCoroutine(ApplyKnockback(knockbackForce)); //넉백 코루틴
         }
 
-        if(gameObject.activeSelf) //게임오브젝트가 활성화 상태일 경우에만
+        if(spriteRenderer.isVisible) //게임오브젝트가 활성화 상태일 경우에만
             StartCoroutine(HitColor()); //피격 효과 코루틴 실행
 
         if (slowForce > 0) //슬로우의 크기가 있으면 실행
@@ -197,6 +204,7 @@ public abstract class Enemy : MonoBehaviour
 
         DamageText(totalDamage);
         currentHealth -= totalDamage; //현재 체력 감소
+        Debug.Log("적이 피해를 입음");
 
         if(currentHealth <= 0.0f) //현재 체력이 0이하일 경우 실행
         {
@@ -250,33 +258,28 @@ public abstract class Enemy : MonoBehaviour
     //죽음 
     protected virtual void Die()
     {
-        StopAllCoroutines(); //모든 코루틴 종료
-
-        //드랍 아이템 관련
-        //수정 필요
-        if (dropItems != null && dropItems.Length > 0 && Random.value <= dropChance)
-        {
-            int randomIndex = Random.Range(0, dropItems.Length);
-            Instantiate(dropItems[randomIndex], transform.position, Quaternion.identity);
-        }
-
         //사망 파티클
-        ParticleSystem deathEffect = GetComponent<ParticleSystem>();
         if (deathEffect != null)
         {
             deathEffect.Play(); //파티클 실행
         }
 
-        CreateExpgem(); //경험치 잼 생성
+        if (hitEffect != null)
+        {
+            hitEffect.StopAttack(); //공격 정지 함수 실행 -> 몬스터가 사망 시에도 플레이어에게 피해를 입히는 현상 방지
+        }
 
+        CreateExpgem(); //경험치 잼 생성
+        attackDamage = 0; //데미지 0 초기화
         spriteRenderer.color = originalColor; //스프라이트 색 원래대로
+        StopAllCoroutines(); //모든 코루틴 종료
         gameObject.SetActive(false); //게임오브젝트 비활성화
     }
 
     //경험치 잼 생성
     protected virtual void CreateExpgem()
     {
-        float ran = Random.Range(0.0f, 100.0f);
+        float ran = Random.value;
 
         expGemRate = SetExpGemRate(ran); //레벨 별 경험치 잼 확률
 
@@ -289,6 +292,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    //레벨 별 경험치 잼 등급 확률 설정
     protected virtual string SetExpGemRate(float ran)
     {
         string rate = "Common";
@@ -299,7 +303,7 @@ public abstract class Enemy : MonoBehaviour
         }
         else if (_player.Level <= 10)
         {
-            if (ran < 90)
+            if (ran < 0.95f)
             {
                 rate = "Common";
             }
@@ -310,11 +314,11 @@ public abstract class Enemy : MonoBehaviour
         }
         else if (_player.Level <= 15)
         {
-            if (ran < 70)
+            if (ran < 0.8f)
             {
                 rate = "Common";
             }
-            else if (ran < 90)
+            else if (ran < 0.95f)
             {
                 rate = "Rare";
             }
@@ -325,11 +329,11 @@ public abstract class Enemy : MonoBehaviour
         }
         else
         {
-            if (ran < 60)
+            if (ran < 0.7f)
             {
                 rate = "Common";
             }
-            else if (ran < 85)
+            else if (ran < 0.95f)
             {
                 rate = "Rare";
             }

@@ -61,7 +61,7 @@ public class UpgradeCardUI : MonoBehaviour
         else
         {
             // 신규 무기 시 레벨 1의 스탯 표시
-            UpdateWeaponStats(weapon.currentLevel);
+            UpdateWeaponStats(1);
         }
     }
 

@@ -196,8 +196,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1142911525
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &2603002304318523902
 MonoBehaviour:
@@ -252,5 +252,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 8561170973680350315}
-  floatSpeed: 2
-  lifetime: 1
+  floatSpeed: 1
+  lifetime: 2.5
