@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Enemy
+  - Projectile
+  - Weapon
+  - PlayerWeapon
+  - Boss
+  - ExpGem
+  - Item
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Enemy
+  - Water
+  - UI
+  - Player
+  - PlayerWeapon
+  - Col
+  - Item
+  - EnemyAttackCol
+  - Pit
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: BG
+    uniqueID: 2202404741
+    locked: 0
+  - name: Items
+    uniqueID: 1339128975
+    locked: 0
+  - name: Particle
+    uniqueID: 2880084281
+    locked: 0
+  - name: Object
+    uniqueID: 1031545193
+    locked: 0
+  - name: Over Particle
+    uniqueID: 1142911525
+    locked: 0
+  m_RenderingLayers:
+  - Default
