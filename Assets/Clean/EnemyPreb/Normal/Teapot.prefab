@@ -404,7 +404,7 @@ MonoBehaviour:
   textPos: {fileID: 4100516580381042413}
   isReady: 0
   explosionReadyRange: 5
-  explosionMoveSpeed: 1.2
+  explosionMoveSpeed: 1.4
   explosionRange: 1
   explosionDamage: 30
   explosionEffect: {fileID: 3166401227987715664, guid: e0156672709b1e246a6d296a8cc0f07d, type: 3}

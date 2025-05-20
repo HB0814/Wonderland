@@ -12,7 +12,8 @@ public class RangedEnemy : Enemy
     [SerializeField] private GameObject point; //공격이 시작되는 지점
 
     protected float minAttackRange = 4.0f; // 최소 공격 거리
-    float retreatRange = 3.0f; //후퇴 시 거리
+    [SerializeField]float retreatRange = 3.0f; //후퇴 시 거리
+    bool isRetreat = false;
 
     protected override void Start()
     {
@@ -41,20 +42,23 @@ public class RangedEnemy : Enemy
             {
                 MoveTowardsPlayer(); //플레이어 방향으로 이동
                 canAttack= false; //공격 여부 거짓
+                isRetreat = false;
             }
             else if (dis < retreatRange * retreatRange) // 후퇴 가능한 거리 미만 시 후퇴
             {
                 Retreat(); //후퇴
                 canAttack= false; //공격 여부 거짓
+                isRetreat= true;
             }
             else
             {
                 rb.linearVelocity = Vector2.zero; //이동 정지
                 canAttack = true; //공격 가능
+                isRetreat = false;
             }
         }
 
-        UpdateSprite(); //스프라이트 업데이트 << 상속한 Enemy 스크립트에 있는 함수
+        UpdateSprite();
 
         // 공격이 가능하며, 공격 주기가 완료 시
         if (canAttack && Time.time >= nextAttackTime)
@@ -88,4 +92,73 @@ public class RangedEnemy : Enemy
             }
         }
     }
+
+    //스프라이트 관련 함수
+    new void UpdateSprite()
+    {
+        UpdateSpriteLayer(); // 스프라이트 레이어 업데이트
+        if (Time.time - lastUpdateTime >= 0.1f) //0.1초 딜레이 주기
+        {
+            lastUpdateTime = Time.time; //마지막 업데이트 시간 갱신
+            UpdateSpriteFlip(); //스프라이트 플립 함수 실행
+            spriteRenderer.enabled = IsVisible(); //렌더링 기능 함수 실행 이후 해당 값 적용
+        }
+    }
+    //스프라이트 렌더러 레이어 업데이트
+    new void UpdateSpriteLayer()
+    {
+        if (spriteRenderer != null)
+        {
+            // Y 좌표가 낮을수록(화면 아래) 더 앞에 표시
+            // Y 좌표 값에 따른 레이어 값 변경
+            spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y * -100);
+        }
+    }
+    //스프라이트 플립 업데이트
+    new void UpdateSpriteFlip()
+    {
+        if (spriteRenderer != null && player != null)
+        {
+            bool shouldFlip = player.transform.position.x > transform.position.x; //플레이어 방향 체크
+
+            if(!shouldFlip && !isRetreat)
+            {
+                spriteRenderer.flipX = false;
+                point.transform.localPosition = new Vector3(0.5f, 0.78f, 0f);
+            }
+            else if(!shouldFlip && isRetreat)
+            {
+                spriteRenderer.flipX = true;
+                point.transform.localPosition = new Vector3(-0.5f, 0.78f, 0f);
+            }
+            else if(shouldFlip && isRetreat)
+            {
+                spriteRenderer.flipX = false;
+                point.transform.localPosition = new Vector3(0.5f, 0.78f, 0f);
+            }
+            else if(shouldFlip && !isRetreat)
+            {
+                spriteRenderer.flipX = true;
+                point.transform.localPosition = new Vector3(-0.5f, 0.78f, 0f);
+            }
+
+        }
+    }
+    //스프라이트 렌더링 기능
+    new bool IsVisible()
+    {
+        Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position); //월드 좌표를 뷰포트로 변환하여 범위 내 오브젝트 위치 확인
+        bool newVisibility = screenPoint.x > -marginArea && screenPoint.x < 1 + marginArea &&
+                             screenPoint.y > -marginArea && screenPoint.y < 1 + marginArea;
+        //화면 내 여부에 대한 값
+
+        if (isVisible != newVisibility) //화면 내 여부 변경 확인
+        {
+            isVisible = newVisibility; //상태 업데이트
+            spriteRenderer.enabled = isVisible; //렌더러 상태 변경
+        }
+
+        return isVisible; //상태 반환
+    }
+
 }

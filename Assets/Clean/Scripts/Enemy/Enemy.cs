@@ -145,7 +145,7 @@ public abstract class Enemy : MonoBehaviour
             }
         }
     }
-     //스파라이트 렌더링 기능
+     //스프라이트 렌더링 기능
     protected virtual bool IsVisible()
     {
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position); //월드 좌표를 뷰포트로 변환하여 범위 내 오브젝트 위치 확인
@@ -258,14 +258,6 @@ public abstract class Enemy : MonoBehaviour
     //죽음 
     protected virtual void Die()
     {
-        //드랍 아이템 관련
-        //수정 필요
-        if (dropItems != null && dropItems.Length > 0 && Random.value <= dropChance)
-        {
-            int randomIndex = Random.Range(0, dropItems.Length);
-            Instantiate(dropItems[randomIndex], transform.position, Quaternion.identity);
-        }
-
         //사망 파티클
         if (deathEffect != null)
         {

@@ -1,22 +1,13 @@
 fileFormatVersion: 2
-guid: 36310751b513dc041aef93baaefc33d5
+guid: a93cb4c878fc7b743bd053b5adb34b15
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4231201514747016985
-    second: Guillotione_1_0
+      213: -3890951754223521745
+    second: Clover_0
   - first:
-      213: -4315482995283574036
-    second: Guillotione_1_1
-  - first:
-      213: -7640303065471965076
-    second: Guillotione_1_2
-  - first:
-      213: 7642252667914068022
-    second: Guillotione_1_3
-  - first:
-      213: 1397603349431631356
-    second: Guillotione_1_4
+      213: -9037805442930030577
+    second: Clover_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -63,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -151,89 +142,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Guillotione_1_0
+      name: Clover_1
       rect:
         serializedVersion: 2
-        x: 59
-        y: 135
-        width: 138
-        height: 106
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7e8c864e3a0c745c0800000000000000
-      internalID: -4231201514747016985
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Guillotione_1_1
-      rect:
-        serializedVersion: 2
-        x: 315
-        y: 87
-        width: 138
-        height: 142
+        x: 0
+        y: 7
+        width: 256
+        height: 242
       alignment: 9
-      pivot: {x: 0.5, y: 0.38}
+      pivot: {x: 0.47, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce242e784135c14c0800000000000000
-      internalID: -4315482995283574036
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Guillotione_1_2
-      rect:
-        serializedVersion: 2
-        x: 571
-        y: 28
-        width: 138
-        height: 186
-      alignment: 9
-      pivot: {x: 0.5, y: 0.28}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 630acc2af4cbe0a60800000000000000
-      internalID: 7642252667914068022
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Guillotione_1_3
-      rect:
-        serializedVersion: 2
-        x: 827
-        y: 46
-        width: 138
-        height: 106
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cfdb4cb67d8456310800000000000000
-      internalID: 1397603349431631356
+      spriteID: f08401185d3439280800000000000000
+      internalID: -9037805442930030577
       vertices: []
       indices: 
       edges: []
@@ -242,7 +167,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8a6df3eaea1f28f43a28d4a23a54fb96
+    spriteID: 37c25e6d01524d34090912bba6759dff
     internalID: 0
     vertices: []
     indices: 
@@ -252,10 +177,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Guillotione_1_0: -4231201514747016985
-      Guillotione_1_1: -4315482995283574036
-      Guillotione_1_2: 7642252667914068022
-      Guillotione_1_3: 1397603349431631356
+      Clover_0: -3890951754223521745
+      Clover_1: -9037805442930030577
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

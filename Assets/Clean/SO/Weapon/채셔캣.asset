@@ -30,11 +30,11 @@ MonoBehaviour:
   weaponType: 3
   levelStats:
     damage:
+    - 8
     - 11
     - 14
     - 17
     - 21
-    - 26
     attackCooldown:
     - 2.8
     - 2.7

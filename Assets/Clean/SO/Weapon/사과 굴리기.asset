@@ -31,10 +31,10 @@ MonoBehaviour:
   levelStats:
     damage:
     - 10
-    - 13
-    - 16
-    - 19
-    - 25
+    - 12
+    - 14
+    - 17
+    - 20
     attackCooldown:
     - 4
     - 3.8

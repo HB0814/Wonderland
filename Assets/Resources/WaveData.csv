@@ -2,7 +2,7 @@ startTime,enemyType,spawnCount,spawnInterval
 0,HeartCard,3,0
 1,HeartCard,10,1
 10,HeartCard,13,0.8
-20,HeartCard,17,0.6
+20,HeartCard,13,0.8
 30,HeartCard,13,0.8
 30,DiamondCard,13,0.8
 40,HeartCard,7,0.8
@@ -48,3 +48,8 @@ startTime,enemyType,spawnCount,spawnInterval
 230,Knight,13,0.8
 240,CheshireCat,17,0.6
 240,Rook,17,0.6
+250,HeartCard,20,0.5
+260,DiamondCard,20,0.5
+270,Pawn,20,0.5
+280,Rook,20,0.5
+280,Teapot,20,0.5

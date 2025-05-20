@@ -1,22 +1,19 @@
 fileFormatVersion: 2
-guid: 36310751b513dc041aef93baaefc33d5
+guid: 386b4bd8b88c19249a73d5446c97780c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4231201514747016985
-    second: Guillotione_1_0
+      213: -7072636494762970208
+    second: HeartCard_Black_0
   - first:
-      213: -4315482995283574036
-    second: Guillotione_1_1
+      213: 4264572097389052203
+    second: HeartCard_Black_1
   - first:
-      213: -7640303065471965076
-    second: Guillotione_1_2
+      213: 1065107028686009769
+    second: HeartCard_Black_2
   - first:
-      213: 7642252667914068022
-    second: Guillotione_1_3
-  - first:
-      213: 1397603349431631356
-    second: Guillotione_1_4
+      213: 7241608683530629136
+    second: HeartCard_Black_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -63,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 220
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -151,89 +148,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Guillotione_1_0
+      name: HeartCard_Black_1
       rect:
         serializedVersion: 2
-        x: 59
-        y: 135
-        width: 138
-        height: 106
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7e8c864e3a0c745c0800000000000000
-      internalID: -4231201514747016985
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Guillotione_1_1
-      rect:
-        serializedVersion: 2
-        x: 315
-        y: 87
-        width: 138
-        height: 142
+        x: 0
+        y: 31
+        width: 257
+        height: 194
       alignment: 9
-      pivot: {x: 0.5, y: 0.38}
+      pivot: {x: 0.43, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce242e784135c14c0800000000000000
-      internalID: -4315482995283574036
+      spriteID: b21cae75abdce2b30800000000000000
+      internalID: 4264572097389052203
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Guillotione_1_2
+      name: HeartCard_Black_2
       rect:
         serializedVersion: 2
-        x: 571
-        y: 28
-        width: 138
-        height: 186
+        x: 282
+        y: 31
+        width: 257
+        height: 202
       alignment: 9
-      pivot: {x: 0.5, y: 0.28}
+      pivot: {x: 0.43, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 630acc2af4cbe0a60800000000000000
-      internalID: 7642252667914068022
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Guillotione_1_3
-      rect:
-        serializedVersion: 2
-        x: 827
-        y: 46
-        width: 138
-        height: 106
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cfdb4cb67d8456310800000000000000
-      internalID: 1397603349431631356
+      spriteID: 0103a30eabc5f7460800000000000000
+      internalID: 7241608683530629136
       vertices: []
       indices: 
       edges: []
@@ -242,7 +195,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8a6df3eaea1f28f43a28d4a23a54fb96
+    spriteID: f07a1f5c81b22ed45a4b9f008ea5d648
     internalID: 0
     vertices: []
     indices: 
@@ -252,10 +205,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Guillotione_1_0: -4231201514747016985
-      Guillotione_1_1: -4315482995283574036
-      Guillotione_1_2: 7642252667914068022
-      Guillotione_1_3: 1397603349431631356
+      HeartCard_Black_0: -7072636494762970208
+      HeartCard_Black_1: 4264572097389052203
+      HeartCard_Black_2: 7241608683530629136
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

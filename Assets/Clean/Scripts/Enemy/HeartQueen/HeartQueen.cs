@@ -11,6 +11,8 @@ public class HeartQueen : Enemy
         MovedGuillotine, //이동형 길로틴 패턴
         FixedGuillotine, //고정형 길로틴 패턴
         //OnGavel, //의사봉 패턴
+        BlackHeartCardSpawn,
+        BlackCloverCardSpawn,
     }
     private BossPattern currentPattern = BossPattern.None;
     private float patternphase1_Cooltimes = 5f;
@@ -50,6 +52,7 @@ public class HeartQueen : Enemy
         base.Start();
         cam = Camera.main;
 
+        SetBoundsCenter();
         SetTargetPosition(); //목표위치 설정
         InitializePhase_phase1_Cooltimes();
 
@@ -60,10 +63,14 @@ public class HeartQueen : Enemy
     {
         phase1_Cooltimes[BossPattern.MovedGuillotine] = 6f;
         phase1_Cooltimes[BossPattern.FixedGuillotine] = 8f;
+        phase1_Cooltimes[BossPattern.BlackHeartCardSpawn] = 12f;
+        phase1_Cooltimes[BossPattern.BlackCloverCardSpawn] = 14f;
         //phase1_phase1_Cooltimes[BossPattern.OnGavel] = 10f;
 
         phase2_Cooltimes[BossPattern.MovedGuillotine] = 4f;
         phase2_Cooltimes[BossPattern.FixedGuillotine] = 6f;
+        phase2_Cooltimes[BossPattern.BlackHeartCardSpawn] = 10f;
+        phase2_Cooltimes[BossPattern.BlackCloverCardSpawn] = 12f;
         //phase2_phase1_Cooltimes[BossPattern.OnGavel] = 7f;
 
 
@@ -75,9 +82,6 @@ public class HeartQueen : Enemy
 
     private new void Update()
     {
-        if(Input.GetKeyDown(KeyCode.V)) //테스트용 v키 입력 시 >>> 보스 위치 초기화
-            SetBoundsCenter(); //위치가 초기화, 바운즈 센터 값 설정
-
         moveTimer += Time.deltaTime; //이동 타이머 증가
 
         if (animator.GetBool("canMove")) //이동 가능할 때
@@ -115,8 +119,8 @@ public class HeartQueen : Enemy
         }
 
         //아직 쿨타임 지난 패턴이 없음
-        if (availablePatterns.Count == 0) 
-            return; 
+        if (availablePatterns.Count == 0)
+            return;
 
         BossPattern selected = availablePatterns[Random.Range(0, availablePatterns.Count)];
         currentPattern = selected;
@@ -131,9 +135,17 @@ public class HeartQueen : Enemy
                 StartCoroutine(PatternDelay("FixedGuillotine", 1.5f));
                 break;
 
-            //case BossPattern.OnGavel:
-            //    StartCoroutine(PatternDelay("OnGavel", 2.0f));
-            //    break;
+            case BossPattern.BlackHeartCardSpawn:
+                StartCoroutine(PatternDelay("BlackHeartCardSpawn", 1.5f));
+                break;
+
+            case BossPattern.BlackCloverCardSpawn:
+                StartCoroutine(PatternDelay("BlackCloverCardSpawn", 1.5f));
+                break;
+
+                //case BossPattern.OnGavel:
+                //    StartCoroutine(PatternDelay("OnGavel", 2.0f));
+                //    break;
         }
 
         patternTimers[selected] = 0f; // 쿨타임 초기화
@@ -148,7 +160,7 @@ public class HeartQueen : Enemy
         animator.SetTrigger(pattern); //패턴 별 트리거 활성화
         animator.SetBool("canMove", false); //걷기 애니메이션 비활성화
 
-        switch(pattern)
+        switch (pattern)
         {
             case "MovedGuillotine":
                 yield return patternDelay; //패턴 딜레이
@@ -165,55 +177,7 @@ public class HeartQueen : Enemy
 
                 yield return patternDelay; //패턴 딜레이 -> 하트여왕의 전조 애니메이션 재생 중
 
-                Camera cam = Camera.main; //메인카메라
-                Vector2 bottomLeft = cam.ScreenToWorldPoint(new Vector3(0, 0, 0)); //카메라 화면의 좌표값 - 좌측하단
-                Vector2 topRight = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)); //카메라 화면의 좌표값 - 우측 상단
-
-                List<Vector2> placedPos = new List<Vector2>(); //길로틴 위치 저장 리스트
-                float minDistance = 2.5f; //길로틴 생성 시 최소 간격
-
-                for (int i = 0; i < fixedGuillotiones.Length; i++)
-                {
-                    Vector2 randomPos; //랜덤 위치
-                    int attempts = 0; //시도 횟수
-                    bool posValid; //유효한 위치 여부
-
-                    do
-                    {
-                        float x = Random.Range(bottomLeft.x, topRight.x); //x 좌표
-                        float y = Random.Range(bottomLeft.y, topRight.y); //y 좌표
-                        randomPos = new Vector2(x, y);
-
-                        posValid = true; //유효한 위치임
-
-                        foreach (Vector2 placed in placedPos)
-                        {
-                            //랜덤 위치와 최소 간격 비교, 최소 간격보다 좁을 시 실행
-                            if (Vector2.Distance(randomPos, placed) < minDistance)
-                            {
-                                posValid = false; //유효한 위치가 아님
-                                break;
-                            }
-                        }
-
-                        attempts++; //시도 횟수 증가
-                        //길로틴 생성을 너무 많이 시도하지 않도록 하기 위한 조건문
-                        if (attempts > 100)
-                        {
-                            break;
-                        }
-
-                    } while (!posValid); //유효한 위치가 아닐 동안 반복
-
-                    placedPos.Add(randomPos); //길로틴 위치 리스트에 해당 랜덤 위치 값 추가
-
-                    //경고 위치 및 활성화
-                    fixedWarn[i].transform.position = randomPos;
-                    fixedWarn[i].SetActive(true);
-
-                    //길로틴 위치 설정
-                    fixedGuillotiones[i].transform.position = randomPos;
-                }
+                SetGuillotionePosition();
 
                 yield return patternDelay; //딜레이 -> 경고 표시 애니메이션 종료 후 길로틴 생성
 
@@ -229,11 +193,126 @@ public class HeartQueen : Enemy
                 yield return patternDelay;
                 gavels.Init(_player, 3.0f);
                 break;
+
+            case "BlackHeartCardSpawn":
+                yield return patternDelay;
+                BlackHeartCardSpawn();
+                break;
+
+            case "BlackCloverCardSpawn":
+                yield return patternDelay;
+                BlackCloverCardSpawn();
+                break;
         }
 
         isPatternExecuting = false;
         currentPattern = BossPattern.None;
         ReturnToWalk(); //걷기 상태로 전환
+    }
+
+
+    void SetGuillotionePosition()
+    {
+        Camera cam = Camera.main; //메인카메라
+        Vector2 bottomLeft = cam.ScreenToWorldPoint(new Vector3(0, 0, 0)); //카메라 화면의 좌표값 - 좌측하단
+        Vector2 topRight = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)); //카메라 화면의 좌표값 - 우측 상단
+
+        List<Vector2> placedPos = new List<Vector2>(); //길로틴 위치 저장 리스트
+        float minDistance = 2.5f; //길로틴 생성 시 최소 간격
+
+        for (int i = 0; i < fixedGuillotiones.Length; i++)
+        {
+            Vector2 randomPos; //랜덤 위치
+            int attempts = 0; //시도 횟수
+            bool posValid; //유효한 위치 여부
+
+            do
+            {
+                float x = Random.Range(bottomLeft.x, topRight.x); //x 좌표
+                float y = Random.Range(bottomLeft.y, topRight.y); //y 좌표
+                randomPos = new Vector2(x, y);
+
+                posValid = true; //유효한 위치임
+
+                foreach (Vector2 placed in placedPos)
+                {
+                    //랜덤 위치와 최소 간격 비교, 최소 간격보다 좁을 시 실행
+                    if (Vector2.Distance(randomPos, placed) < minDistance)
+                    {
+                        posValid = false; //유효한 위치가 아님
+                        break;
+                    }
+                }
+
+                attempts++; //시도 횟수 증가
+                            //길로틴 생성을 너무 많이 시도하지 않도록 하기 위한 조건문
+                if (attempts > 100)
+                {
+                    break;
+                }
+
+            } while (!posValid); //유효한 위치가 아닐 동안 반복
+
+            placedPos.Add(randomPos); //길로틴 위치 리스트에 해당 랜덤 위치 값 추가
+
+            //경고 위치 및 활성화
+            fixedWarn[i].transform.position = randomPos;
+            fixedWarn[i].SetActive(true);
+
+            //길로틴 위치 설정
+            fixedGuillotiones[i].transform.position = randomPos;
+        }
+    }
+
+    void BlackHeartCardSpawn()
+    {
+        int ran = Random.Range(5, 8);
+        for (int i = 0; i < ran; i++)
+        {
+            Vector3 spawnPos = GetRandomSpawnPosition_Circle(); //화면 밖 랜덤 스폰 함수의 값 가져오기
+
+            GameObject enemyToSpawn = ObjectPool.Instance.SpawnFromPool_Enemy("BlackHeartCard", spawnPos);
+            //오브젝트 풀링에 해당 적의 타입과 위치의 값을 전달하여 가져오기
+
+            if (enemyToSpawn != null)
+            {
+                enemyToSpawn.SetActive(true); //스폰할 적 활성화하기
+            }
+
+        }
+    }
+
+    void BlackCloverCardSpawn()
+    {
+        int ran = Random.Range(2, 4);
+        for (int i = 0; i < ran; i++)
+        {
+            Vector3 spawnPos = GetRandomSpawnPosition_Circle(); //화면 밖 랜덤 스폰 함수의 값 가져오기
+
+            GameObject enemyToSpawn = ObjectPool.Instance.SpawnFromPool_Enemy("BlackCloverCard", spawnPos);
+            //오브젝트 풀링에 해당 적의 타입과 위치의 값을 전달하여 가져오기
+
+            if (enemyToSpawn != null)
+            {
+                enemyToSpawn.SetActive(true); //스폰할 적 활성화하기
+            }
+
+        }
+    }
+    private Vector3 GetRandomSpawnPosition_Circle()
+    {
+        float angle = Random.Range(0f, 2f * Mathf.PI); // 랜덤한 방향 각도 (0~360도)
+
+        float circleX = 0.7f; // x방향 반지름
+        float circleY = 0.7f; // y방향 반지름
+
+        float x = Mathf.Cos(angle) * circleX + 0.5f; // 중심을 기준으로 이동
+        float y = Mathf.Sin(angle) * circleY + 0.5f;
+
+        float zPos = 10f; // Z축 위치
+
+        Vector3 viewportPos = new Vector3(x, y, zPos);
+        return Camera.main.ViewportToWorldPoint(viewportPos);
     }
 
     //다시 걷기 애니메이션 실행
@@ -251,7 +330,7 @@ public class HeartQueen : Enemy
                                         transform.position.z);
 
         //바운즈의 센터를 플레이어 위치로 설정
-        moveBounds.center = new Vector3(player.transform.position.x, 
+        moveBounds.center = new Vector3(player.transform.position.x,
                                         player.transform.position.y,
                                         player.transform.position.z);
     }
