@@ -324,9 +324,9 @@ public class HeartQueen : Enemy
     //바운즈 센터 값 설정 -> 보스 몬스터 스폰 시 실행되게 끔.
     private void SetBoundsCenter()
     {
-        //보스의 위치를 플레이어 위에서 나타나게 설정
-        transform.position = new Vector3(player.transform.position.x,
-                                        player.transform.position.y + 4.0f,
+        //보스의 위치를 플레이어 우측에 나타나게 설정
+        transform.position = new Vector3(player.transform.position.x + 5.5f,
+                                        player.transform.position.y - 0.6f,
                                         transform.position.z);
 
         //바운즈의 센터를 플레이어 위치로 설정

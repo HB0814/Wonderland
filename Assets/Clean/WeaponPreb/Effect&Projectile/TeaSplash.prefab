@@ -76,8 +76,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1142911525
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0.39215687, b: 0, a: 1}
@@ -102,6 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af694977be3a624d83b8230fd1422c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxPierceCount: 0
+  currentPierceCount: 0
   weaponType: 8
 --- !u!61 &3793323652805783333
 BoxCollider2D:
