@@ -25234,7 +25234,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: ad2151f446abf184b9ead0592ba06711, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -34859,6 +34859,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 121561913212574054, guid: fc3c644aeb7b4e64285fde891e11a372, type: 3}
+      propertyPath: maxHealth
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 121561913212574054, guid: fc3c644aeb7b4e64285fde891e11a372, type: 3}
       propertyPath: moveSpeed
       value: 1
       objectReference: {fileID: 0}
@@ -34972,7 +34976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2490266419496145085, guid: fc3c644aeb7b4e64285fde891e11a372, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2490266419496145085, guid: fc3c644aeb7b4e64285fde891e11a372, type: 3}
       propertyPath: m_TagString
@@ -34989,6 +34993,10 @@ PrefabInstance:
     - target: {fileID: 6206495303316634846, guid: fc3c644aeb7b4e64285fde891e11a372, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8163744936473155875, guid: fc3c644aeb7b4e64285fde891e11a372, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

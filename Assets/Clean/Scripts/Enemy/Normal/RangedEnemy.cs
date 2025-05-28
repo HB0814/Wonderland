@@ -10,6 +10,7 @@ public class RangedEnemy : Enemy
     bool canAttack = true; //공격 가능 여부
     [SerializeField] private EnemyProjectile[] projectiles; //투사체 스크립트 배열
     [SerializeField] private GameObject point; //공격이 시작되는 지점
+    [SerializeField] private Vector3 pointVec;
 
     protected float minAttackRange = 4.0f; // 최소 공격 거리
     [SerializeField]float retreatRange = 3.0f; //후퇴 시 거리
@@ -124,22 +125,22 @@ public class RangedEnemy : Enemy
             if(!shouldFlip && !isRetreat)
             {
                 spriteRenderer.flipX = false;
-                point.transform.localPosition = new Vector3(0.5f, 0.78f, 0f);
+                point.transform.localPosition = new Vector3(pointVec.x, pointVec.y, 0f);
             }
             else if(!shouldFlip && isRetreat)
             {
                 spriteRenderer.flipX = true;
-                point.transform.localPosition = new Vector3(-0.5f, 0.78f, 0f);
+                point.transform.localPosition = new Vector3(-pointVec.x, pointVec.y, 0f);
             }
             else if(shouldFlip && isRetreat)
             {
                 spriteRenderer.flipX = false;
-                point.transform.localPosition = new Vector3(0.5f, 0.78f, 0f);
+                point.transform.localPosition = new Vector3(pointVec.x, pointVec.y, 0f);
             }
             else if(shouldFlip && !isRetreat)
             {
                 spriteRenderer.flipX = true;
-                point.transform.localPosition = new Vector3(-0.5f, 0.78f, 0f);
+                point.transform.localPosition = new Vector3(-pointVec.x, pointVec.y, 0f);
             }
 
         }

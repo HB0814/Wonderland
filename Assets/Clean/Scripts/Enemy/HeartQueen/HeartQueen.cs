@@ -29,6 +29,7 @@ public class HeartQueen : Enemy
     float moveTimer = 0.0f; //이동 타이머
 
     public bool canMove = true; //이동가능 여부 => 이동가능 여부체크를 애니메이션 bool CanMove로 체크
+    bool isDie = false;
 
     [Header("보스 특수 속성")]
     public float phaseChangeHealth = 0.5f;  //페이즈 전환 체력 비율
@@ -106,6 +107,7 @@ public class HeartQueen : Enemy
             }
         }
     }
+
     private void SelectRandomPattern()
     {
         List<BossPattern> availablePatterns = new();
@@ -210,7 +212,6 @@ public class HeartQueen : Enemy
         ReturnToWalk(); //걷기 상태로 전환
     }
 
-
     void SetGuillotionePosition()
     {
         Camera cam = Camera.main; //메인카메라
@@ -299,6 +300,7 @@ public class HeartQueen : Enemy
 
         }
     }
+
     private Vector3 GetRandomSpawnPosition_Circle()
     {
         float angle = Random.Range(0f, 2f * Mathf.PI); // 랜덤한 방향 각도 (0~360도)
@@ -378,4 +380,25 @@ public class HeartQueen : Enemy
         }
 
     }
+
+    //죽음 
+    protected override void Die()
+    {
+        if (hitEffect != null)
+        {
+            hitEffect.StopAttack(); //공격 정지 함수 실행 -> 몬스터가 사망 시에도 플레이어에게 피해를 입히는 현상 방지
+        }
+
+        if(!isDie)
+            animator.SetTrigger("die");
+
+        animator.SetBool("canMove", false);
+        CreateExpgem(); //경험치 잼 생성
+        attackDamage = 0; //데미지 0 초기화
+        spriteRenderer.color = originalColor; //스프라이트 색 원래대로
+        StopAllCoroutines(); //모든 코루틴 종료
+        canMove = false;
+        isDie = true;
+    }
+
 }
