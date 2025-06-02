@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 public class HeartQueen : Enemy
 {
@@ -32,10 +33,7 @@ public class HeartQueen : Enemy
     bool isDie = false;
 
     [Header("보스 특수 속성")]
-    public float phaseChangeHealth = 0.5f;  //페이즈 전환 체력 비율
-    public float summonphase1_Cooltimes = 5f;      //소환 쿨다운
-    public float specialAttackphase1_Cooltimes = 10f; //특수 공격 쿨다운
-    public GameObject minionPrefab;         //소환할 미니언 프리팹
+    [SerializeField]private Image hpImage;
 
     [Header("길로틴")]
     public MovedGuillotione movedGuillotione; //이동형 길로틴 스크립트
@@ -51,6 +49,7 @@ public class HeartQueen : Enemy
     private new void Start()
     {
         base.Start();
+        UpdateHealthUI();
         cam = Camera.main;
 
         SetBoundsCenter();
@@ -106,6 +105,14 @@ public class HeartQueen : Enemy
                 SelectRandomPattern();
             }
         }
+
+        UpdateHealthUI();
+    }
+
+    private void UpdateHealthUI()
+    {
+        float fillAmount = currentHealth / maxHealth;
+        hpImage.fillAmount = fillAmount;
     }
 
     private void SelectRandomPattern()

@@ -96,8 +96,6 @@ public class Player : MonoBehaviour
     {
         HandleInput();
         WeaponAdd();
-
-        //Move_Joystick();
     }
     private void WeaponAdd()
     {

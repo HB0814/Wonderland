@@ -32,7 +32,7 @@ public abstract class Enemy : MonoBehaviour
     protected GameObject player; //플레이어 게임오브젝트
     protected Player _player; //플레이어 스크립트
     protected HitEffect hitEffect;
-    ParticleSystem deathEffect;
+    protected ParticleSystem deathEffect;
     [SerializeField] protected Transform textPos;
 
     // 스프라이트 업데이트 관련 변수
