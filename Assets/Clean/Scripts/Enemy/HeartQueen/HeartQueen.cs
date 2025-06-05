@@ -41,6 +41,7 @@ public class HeartQueen : Enemy
     public GameObject[] fixedWarn; //고정형 길로틴 경고 오브젝트
 
     Camera cam; //카메라
+    [SerializeField] CameraFollow cameraFollow;
 
     public Gavel gavels; //의사봉 스크립트
 
@@ -400,12 +401,12 @@ public class HeartQueen : Enemy
             animator.SetTrigger("die");
 
         animator.SetBool("canMove", false);
-        CreateExpgem(); //경험치 잼 생성
         attackDamage = 0; //데미지 0 초기화
         spriteRenderer.color = originalColor; //스프라이트 색 원래대로
         StopAllCoroutines(); //모든 코루틴 종료
         canMove = false;
         isDie = true;
-    }
 
+        cameraFollow.HeartQueenDeathCameraEffect(transform);
+    }
 }

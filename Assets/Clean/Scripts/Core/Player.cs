@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -28,6 +29,8 @@ public class Player : MonoBehaviour
     private float currentSpeedBonus = 0f;
     private float damageMultiplier = 1f;
 
+    [SerializeField] CameraFollow cameraFollow;
+    [SerializeField] Transform center;
 
     [Header("조이스틱")]
     public FloatingJoystick joy;
@@ -393,6 +396,7 @@ public class Player : MonoBehaviour
         rb.linearVelocity = Vector3.zero; //이동 정지
         animator.SetTrigger("Die"); //죽음 애니메이션 실행
         isDead = true; //죽음 여부 참
+        cameraFollow.PlayerDeathCameraEffect(center);
     }
 
     public void AddSpeedBonus(float bonus)
