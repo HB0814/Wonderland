@@ -55,6 +55,7 @@ public class HatBoomerangWeapon : WeaponBase
             Vector3 direction = GetNearestEnemyDirection();
             projectile.SetDirection(direction);
             nextAttackTime = 0f;
+            SoundManager.Instance?.PlayWeaponSound(weaponData.weaponType);
         }
     }
 

@@ -70,5 +70,6 @@ public class TrumpCardWeapon : WeaponBase
             }
         }
         nextAttackTime = 0f;
+        SoundManager.Instance?.PlayWeaponSound(weaponData.weaponType);
     }
 } 

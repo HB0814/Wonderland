@@ -88,5 +88,6 @@ public class VorpalSwordWeapon : WeaponBase
                 effect.DebuffInitialize(knockbackForce, slowForce, slowDuration);
             }
         }
+        SoundManager.Instance?.PlayWeaponSound(weaponData.weaponType);
     }
 } 

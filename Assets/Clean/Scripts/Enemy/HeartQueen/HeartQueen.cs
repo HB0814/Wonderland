@@ -11,7 +11,6 @@ public class HeartQueen : Enemy
         None, //아무것도 아님
         MovedGuillotine, //이동형 길로틴 패턴
         FixedGuillotine, //고정형 길로틴 패턴
-        //OnGavel, //의사봉 패턴
         BlackHeartCardSpawn,
         BlackCloverCardSpawn,
     }
@@ -42,9 +41,6 @@ public class HeartQueen : Enemy
 
     Camera cam; //카메라
     [SerializeField] CameraFollow cameraFollow;
-
-    public Gavel gavels; //의사봉 스크립트
-
     WaitForSeconds patternDelay; //패턴 별 딜레이 시간
 
     private new void Start()
@@ -62,18 +58,15 @@ public class HeartQueen : Enemy
     //페이즈, 패턴 별 쿨다운
     private void InitializePhase_phase1_Cooltimes()
     {
-        phase1_Cooltimes[BossPattern.MovedGuillotine] = 6f;
-        phase1_Cooltimes[BossPattern.FixedGuillotine] = 8f;
-        phase1_Cooltimes[BossPattern.BlackHeartCardSpawn] = 12f;
-        phase1_Cooltimes[BossPattern.BlackCloverCardSpawn] = 14f;
-        //phase1_phase1_Cooltimes[BossPattern.OnGavel] = 10f;
+        phase1_Cooltimes[BossPattern.MovedGuillotine] = 4f;
+        phase1_Cooltimes[BossPattern.FixedGuillotine] = 6f;
+        phase1_Cooltimes[BossPattern.BlackHeartCardSpawn] = 7f;
+        phase1_Cooltimes[BossPattern.BlackCloverCardSpawn] = 8f;
 
-        phase2_Cooltimes[BossPattern.MovedGuillotine] = 4f;
-        phase2_Cooltimes[BossPattern.FixedGuillotine] = 6f;
-        phase2_Cooltimes[BossPattern.BlackHeartCardSpawn] = 10f;
-        phase2_Cooltimes[BossPattern.BlackCloverCardSpawn] = 12f;
-        //phase2_phase1_Cooltimes[BossPattern.OnGavel] = 7f;
-
+        phase2_Cooltimes[BossPattern.MovedGuillotine] = 3f;
+        phase2_Cooltimes[BossPattern.FixedGuillotine] = 4f;
+        phase2_Cooltimes[BossPattern.BlackHeartCardSpawn] = 5f;
+        phase2_Cooltimes[BossPattern.BlackCloverCardSpawn] = 6f;
 
         foreach (var pattern in phase1_Cooltimes.Keys)
         {
@@ -152,10 +145,6 @@ public class HeartQueen : Enemy
             case BossPattern.BlackCloverCardSpawn:
                 StartCoroutine(PatternDelay("BlackCloverCardSpawn", 1.5f));
                 break;
-
-                //case BossPattern.OnGavel:
-                //    StartCoroutine(PatternDelay("OnGavel", 2.0f));
-                //    break;
         }
 
         patternTimers[selected] = 0f; // 쿨타임 초기화
@@ -181,7 +170,6 @@ public class HeartQueen : Enemy
                 //활성화되어있는 길로틴 비활성화
                 for (int i = 0; i < fixedGuillotiones.Length; i++)
                 {
-                    //fixedGuillotiones[i].Set();
                     fixedGuillotiones[i].gameObject.SetActive(false);
                 }
 
@@ -196,12 +184,6 @@ public class HeartQueen : Enemy
                     fixedWarn[i].SetActive(false); //경고 비활성화
                     fixedGuillotiones[i].gameObject.SetActive(true); //길로틴 활성화
                 }
-
-                break;
-
-            case "OnGavel":
-                yield return patternDelay;
-                gavels.Init(_player, 3.0f);
                 break;
 
             case "BlackHeartCardSpawn":
@@ -220,7 +202,7 @@ public class HeartQueen : Enemy
         ReturnToWalk(); //걷기 상태로 전환
     }
 
-    void SetGuillotionePosition()
+    private void SetGuillotionePosition()
     {
         Camera cam = Camera.main; //메인카메라
         Vector2 bottomLeft = cam.ScreenToWorldPoint(new Vector3(0, 0, 0)); //카메라 화면의 좌표값 - 좌측하단
@@ -273,7 +255,7 @@ public class HeartQueen : Enemy
         }
     }
 
-    void BlackHeartCardSpawn()
+    private void BlackHeartCardSpawn()
     {
         int ran = Random.Range(5, 8);
         for (int i = 0; i < ran; i++)
@@ -287,11 +269,10 @@ public class HeartQueen : Enemy
             {
                 enemyToSpawn.SetActive(true); //스폰할 적 활성화하기
             }
-
         }
     }
 
-    void BlackCloverCardSpawn()
+    private void BlackCloverCardSpawn()
     {
         int ran = Random.Range(2, 4);
         for (int i = 0; i < ran; i++)

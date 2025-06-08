@@ -37,6 +37,7 @@ public class ExpGem : ItemAttract
         if (other.CompareTag("Player")) //플레이어 충돌 시
         {
             player.AddExperience(expAmount); //플레이어 경험치 증가 함수 실행
+            SoundManager.Instance.PlaySFX("expGem");
             gameObject.SetActive(false); //경험치 잼 비활성화
         }
     }

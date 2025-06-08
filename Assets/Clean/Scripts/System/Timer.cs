@@ -5,8 +5,8 @@ public class Timer : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
 
-    private float sec;
-    private int min;
+    private float sec = 0f;
+    private int min = 0;
 
     private void Update()
     {
@@ -14,10 +14,33 @@ public class Timer : MonoBehaviour
 
         if (sec >= 60f)
         {
-            min += 1;
+            min++;
             sec = 0;
+            BGMPitchChange();
         }
 
         timerText.text = string.Format("{0:D2}:{1:D2}", min, (int)sec);
+    }
+
+    private void BGMPitchChange()
+    {
+        switch (min)
+        {
+            case 1:
+                SoundManager.Instance.bgmSource.pitch = 0.9f;
+                break;
+            case 2:
+                SoundManager.Instance.bgmSource.pitch = 0.85f;
+                break;
+            case 3:
+                SoundManager.Instance.bgmSource.pitch = 0.7f;
+                break;
+            case 4:
+                SoundManager.Instance.bgmSource.pitch = 0.65f;
+                break;
+            case 5:
+                SoundManager.Instance.bgmSource.pitch = 0.6f;
+                break;
+        }
     }
 }

@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
 
     [Header("모자 부메랑 속성")]
     private float returnSpeed = 12f;
-    private float maxDistance = 7f;
+    private float maxDistance = 4f;
     private bool isReturning = false;
     private Transform playerTransform;
     private Transform playerCenter;
@@ -83,6 +83,13 @@ public class Projectile : MonoBehaviour
         if (!isActive) return;
 
         currentLifeTime -= Time.deltaTime;
+
+        if (IsOutOfCamera())
+        {
+            Deactivate();
+            return;
+        }
+
         if (currentLifeTime <= 0 || currentPierceCount > maxPierceCount)
         {
             Deactivate();
@@ -153,6 +160,15 @@ public class Projectile : MonoBehaviour
                 transform.position += dir * projectileSpeed * Time.deltaTime;
                 break;
         }
+    }
+
+    //화면 밖 판별 함수
+    private bool IsOutOfCamera()
+    {
+        Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
+
+        return viewportPos.x < -0.15f || viewportPos.x > 1.15f ||
+               viewportPos.y < -0.15f || viewportPos.y > 1.15f;
     }
 
     //private void OnTriggerEnter2D(Collider2D other)

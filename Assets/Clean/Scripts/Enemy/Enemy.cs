@@ -34,6 +34,7 @@ public abstract class Enemy : MonoBehaviour
     protected HitEffect hitEffect;
     protected ParticleSystem deathEffect;
     [SerializeField] protected Transform textPos;
+    protected bool isDead = false;
 
     // 스프라이트 업데이트 관련 변수
     protected float lastUpdateTime = 0.0f; //마지막 업데이트 시간
@@ -64,6 +65,7 @@ public abstract class Enemy : MonoBehaviour
 
         if (deathEffect == null)
             deathEffect = GetComponent<ParticleSystem>();
+
         if (rb != null)
         {
             rb.gravityScale = 0.0f; //중력 없애기
@@ -81,6 +83,7 @@ public abstract class Enemy : MonoBehaviour
         nextAttackTime = 0.0f; //다음 공격 시간 초기화
         isKnockbacked = false; //넉백 상태 초기화
         isSlowed = false; //슬로우 상태 초기화
+        isDead = false;
         moveSpeed = baseSpeed;
     }
 
@@ -206,8 +209,9 @@ public abstract class Enemy : MonoBehaviour
         currentHealth -= totalDamage; //현재 체력 감소
         Debug.Log("적이 피해를 입음");
 
-        if(currentHealth <= 0.0f) //현재 체력이 0이하일 경우 실행
+        if(currentHealth <= 0.0f && !isDead) //현재 체력이 0이하일 경우 실행
         {
+            isDead= true;
             Die(); //사망
         }
     }
@@ -269,6 +273,7 @@ public abstract class Enemy : MonoBehaviour
             hitEffect.StopAttack(); //공격 정지 함수 실행 -> 몬스터가 사망 시에도 플레이어에게 피해를 입히는 현상 방지
         }
 
+        SoundManager.Instance?.PlaySFX("enemyDeath");
         CreateExpgem(); //경험치 잼 생성
         attackDamage = 0; //데미지 0 초기화
         spriteRenderer.color = originalColor; //스프라이트 색 원래대로

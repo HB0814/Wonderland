@@ -20,13 +20,13 @@ public class CameraFollow : MonoBehaviour
     public void PlayerDeathCameraEffect(Transform playerTransform)
     {
         isOver = true;
-        StartCoroutine(CameraZoomAndFocus(playerTransform.position, 2.5f, 1.5f));
+        StartCoroutine(CameraZoomAndFocus(playerTransform.position, 2.5f, 1f));
     }
 
     public void HeartQueenDeathCameraEffect(Transform bossTransform)
     {
         isOver = true;
-        StartCoroutine(CameraZoomAndFocus(bossTransform.position, 2.5f, 1.5f));
+        StartCoroutine(CameraZoomAndFocus(bossTransform.position, 2.5f, 1f));
     }
 
     private IEnumerator CameraZoomAndFocus(Vector3 targetPosition, float zoomTarget, float duration)

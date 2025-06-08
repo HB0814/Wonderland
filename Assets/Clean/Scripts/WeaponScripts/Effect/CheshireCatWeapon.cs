@@ -63,6 +63,7 @@ public class CheshireCatWeapon : WeaponBase
                 }
             }
             nextAttackTime = 0f;
+            SoundManager.Instance?.PlayWeaponSound(weaponData.weaponType);
         }
     }
     private GameObject FindRandomEnemyInRange()

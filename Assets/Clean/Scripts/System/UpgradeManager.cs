@@ -53,6 +53,7 @@ public class UpgradeManager : MonoBehaviour
     {
         if (isUpgrading) return;
 
+        SoundManager.Instance.PlaySFX("levelUp");
         isUpgrading = true;
         Time.timeScale = 0f; // 게임 일시정지
         fadePanel.SetActive(true);

@@ -57,6 +57,7 @@ public class PocketWatchWeapon : WeaponBase
                 }
             }
             nextAttackTime = 0f;
+            SoundManager.Instance?.PlayWeaponSound(weaponData.weaponType);
         }
     }
 
