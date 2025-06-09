@@ -6,7 +6,6 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
 
-
     [Header("오디오 소스")]
     public AudioSource bgmSource;
     [SerializeField] private List<AudioSource> sfxSources;
@@ -23,10 +22,14 @@ public class SoundManager : MonoBehaviour
     public AudioClip appleAttackSound;
     public AudioClip defaultAttackSound;
 
-    [Header("기타 오디오 클립")]
+    [Header("몬스터 오디오 클립")]
+    public AudioClip fixedGuillotione;
+    public AudioClip movedGuillotione;
     [SerializeField] private AudioClip enemyHit;
     [SerializeField] private AudioClip enemyDeath;
     [SerializeField] private AudioClip enemyExplosion;
+
+    [Header("기타 오디오 클립")]
     [SerializeField] private AudioClip heal;
     [SerializeField] private AudioClip expGem;
     [SerializeField] private AudioClip levelUp;

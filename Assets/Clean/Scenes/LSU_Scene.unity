@@ -1686,7 +1686,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -3846,7 +3846,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -13344,7 +13344,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -18917,7 +18917,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -19820,7 +19820,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -20275,15 +20275,17 @@ MonoBehaviour:
   watchAttackSound: {fileID: 8300000, guid: 7e14aeefc8c47c24baebc825a1012508, type: 3}
   teaAttackSound: {fileID: 8300000, guid: 42da299266fd81f42a9c742f27cb62d2, type: 3}
   catAttackSound: {fileID: 8300000, guid: 21274aa6163a75148871d4c6bc7fc127, type: 3}
-  swordAttackSound: {fileID: 8300000, guid: 0d4ad28543a58c44598491d396c4449e, type: 3}
+  swordAttackSound: {fileID: 8300000, guid: 590e5a6d686f76e438d1866e598e30ba, type: 3}
   hatAttackSound: {fileID: 8300000, guid: 7879ea42447018143ae546963f8b9910, type: 3}
   cardAttackSound: {fileID: 8300000, guid: 5910a695d167b214f9e0a806ae4a2d4d, type: 3}
   appleAttackSound: {fileID: 8300000, guid: 71828d61ff3852e4495b71ca91ff575b, type: 3}
   defaultAttackSound: {fileID: 8300000, guid: 3f3eff102a2cb914493f203bf5c5f600, type: 3}
+  fixedGuillotione: {fileID: 8300000, guid: e287c9577ae0d0842957dde27c953fd1, type: 3}
+  movedGuillotione: {fileID: 8300000, guid: 351980b9812538a4b85a4f29a18bb7b9, type: 3}
   enemyHit: {fileID: 8300000, guid: 1e787e33d3bb83c49a8240c9605857d6, type: 3}
   enemyDeath: {fileID: 8300000, guid: d41519aa7e5d69b45bd6f5865ae4606e, type: 3}
   enemyExplosion: {fileID: 8300000, guid: 9f851a94a4c2ba041aa9b1bc1003d155, type: 3}
-  heal: {fileID: 8300000, guid: 0d4676f0992f30e4caa233f378c220ba, type: 3}
+  heal: {fileID: 8300000, guid: eae12bfe84caadb47bff230566e10e41, type: 3}
   expGem: {fileID: 8300000, guid: e9980def4b82e994abac8d75ec259151, type: 3}
   levelUp: {fileID: 8300000, guid: f883ce0c1ac4da54c98183888f01a210, type: 3}
   magnet: {fileID: 8300000, guid: e2453cb3f285f214eaa3882db465457a, type: 3}
@@ -24433,7 +24435,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
