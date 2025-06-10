@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
     public int currentPierceCount = 0; // 현재 관통 수
 
     [Header("모자 부메랑 속성")]
-    private float returnSpeed = 12f;
+    private float returnSpeed = 8f;
     private float maxDistance = 4f;
     private bool isReturning = false;
     private Transform playerTransform;

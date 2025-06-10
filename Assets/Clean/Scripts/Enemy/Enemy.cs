@@ -79,7 +79,8 @@ public abstract class Enemy : MonoBehaviour
 
 
         float time = Time.time;
-        currentHealth = (maxHealth + (time * 0.15f)) * (1 + (_player.Level * 0.01f)); ; //현재 체력을 시간과 플레이어 레벨에 맞게 증가하도록 변경
+        maxHealth = (maxHealth + (time * 0.15f)) * (1 + (_player.Level * 0.01f)); //현재 체력을 시간과 플레이어 레벨에 맞게 증가하도록 변경
+        currentHealth = maxHealth; 
         nextAttackTime = 0.0f; //다음 공격 시간 초기화
         isKnockbacked = false; //넉백 상태 초기화
         isSlowed = false; //슬로우 상태 초기화
@@ -302,13 +303,13 @@ public abstract class Enemy : MonoBehaviour
     {
         string rate = "Common";
 
-        if (_player.Level <= 5)
+        if (_player.Level <= 3)
         {
                 rate = "Common";
         }
-        else if (_player.Level <= 10)
+        else if (_player.Level <= 8)
         {
-            if (ran < 0.95f)
+            if (ran < 0.80f)
             {
                 rate = "Common";
             }
@@ -317,9 +318,9 @@ public abstract class Enemy : MonoBehaviour
                 rate = "Rare";
             }
         }
-        else if (_player.Level <= 15)
+        else if (_player.Level <= 13)
         {
-            if (ran < 0.8f)
+            if (ran < 0.75f)
             {
                 rate = "Common";
             }
@@ -334,11 +335,11 @@ public abstract class Enemy : MonoBehaviour
         }
         else
         {
-            if (ran < 0.7f)
+            if (ran < 0.65f)
             {
                 rate = "Common";
             }
-            else if (ran < 0.95f)
+            else if (ran < 0.90f)
             {
                 rate = "Rare";
             }

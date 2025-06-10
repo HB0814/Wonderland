@@ -100,6 +100,7 @@ public class Player : MonoBehaviour
         HandleInput();
         WeaponAdd();
     }
+
     private void WeaponAdd()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -354,18 +355,11 @@ public class Player : MonoBehaviour
 
     private int GetRequiredExp(int level)
     {
-        if (level <= 20)
-            return 10 + (level - 1) * 5; // 10, 15, 20, 25, ...
-        else if (level <= 40)
-            return 100 + (level - 20) * 10; // 점점 커짐
-        else if (level <= 80)
-            return 300 + (level - 40) * 20;
-        else if (level <= 100)
-            return 1100 + (level - 80) * 30;
-        else
-            return 1700 + (level - 100) * 10; // 레벨 100 이후 완화
+        if (level <= 30)
+            return 10 + (level - 1) * 5; //10, 15, 20, 25, ...
+        else 
+            return 100 + (level - 20) * 10; //점점 커짐
     }
-
 
     public void TakeDamage(float damage)
     {

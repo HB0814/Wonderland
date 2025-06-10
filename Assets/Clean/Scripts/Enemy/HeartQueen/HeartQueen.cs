@@ -60,13 +60,13 @@ public class HeartQueen : Enemy
     {
         phase1_Cooltimes[BossPattern.MovedGuillotine] = 4f;
         phase1_Cooltimes[BossPattern.FixedGuillotine] = 6f;
-        phase1_Cooltimes[BossPattern.BlackHeartCardSpawn] = 7f;
-        phase1_Cooltimes[BossPattern.BlackCloverCardSpawn] = 8f;
+        phase1_Cooltimes[BossPattern.BlackHeartCardSpawn] = 5f;
+        phase1_Cooltimes[BossPattern.BlackCloverCardSpawn] = 6f;
 
         phase2_Cooltimes[BossPattern.MovedGuillotine] = 3f;
-        phase2_Cooltimes[BossPattern.FixedGuillotine] = 4f;
-        phase2_Cooltimes[BossPattern.BlackHeartCardSpawn] = 5f;
-        phase2_Cooltimes[BossPattern.BlackCloverCardSpawn] = 6f;
+        phase2_Cooltimes[BossPattern.FixedGuillotine] = 5f;
+        phase2_Cooltimes[BossPattern.BlackHeartCardSpawn] = 4f;
+        phase2_Cooltimes[BossPattern.BlackCloverCardSpawn] = 4f;
 
         foreach (var pattern in phase1_Cooltimes.Keys)
         {
@@ -99,7 +99,10 @@ public class HeartQueen : Enemy
                 SelectRandomPattern();
             }
         }
+    }
 
+    private void LateUpdate()
+    {
         UpdateHealthUI();
     }
 

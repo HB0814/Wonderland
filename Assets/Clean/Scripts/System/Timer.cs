@@ -26,11 +26,8 @@ public class Timer : MonoBehaviour
     {
         switch (min)
         {
-            case 1:
-                SoundManager.Instance.bgmSource.pitch = 0.9f;
-                break;
             case 2:
-                SoundManager.Instance.bgmSource.pitch = 0.85f;
+                SoundManager.Instance.bgmSource.pitch = 0.75f;
                 break;
             case 3:
                 SoundManager.Instance.bgmSource.pitch = 0.7f;
