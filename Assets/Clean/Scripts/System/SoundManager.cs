@@ -95,6 +95,16 @@ public class SoundManager : MonoBehaviour
             case "magnet":
                 source.PlayOneShot(magnet);
                 break;
+
+            case "fixedGuillotione":
+                source.pitch = Random.Range(0.9f, 1.1f);
+                source.PlayOneShot(fixedGuillotione);
+                break;
+
+            case "movedGuillotione":
+                source.pitch = Random.Range(0.9f, 1.1f);
+                source.PlayOneShot(movedGuillotione);
+                break;
         }
 
         currentSfxIndex = (currentSfxIndex + 1) % sfxSources.Count;
