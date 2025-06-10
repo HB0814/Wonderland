@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 public class HeartQueen : Enemy
 {
@@ -10,7 +11,6 @@ public class HeartQueen : Enemy
         None, //아무것도 아님
         MovedGuillotine, //이동형 길로틴 패턴
         FixedGuillotine, //고정형 길로틴 패턴
-        //OnGavel, //의사봉 패턴
         BlackHeartCardSpawn,
         BlackCloverCardSpawn,
     }
@@ -29,12 +29,10 @@ public class HeartQueen : Enemy
     float moveTimer = 0.0f; //이동 타이머
 
     public bool canMove = true; //이동가능 여부 => 이동가능 여부체크를 애니메이션 bool CanMove로 체크
+    bool isDie = false;
 
     [Header("보스 특수 속성")]
-    public float phaseChangeHealth = 0.5f;  //페이즈 전환 체력 비율
-    public float summonphase1_Cooltimes = 5f;      //소환 쿨다운
-    public float specialAttackphase1_Cooltimes = 10f; //특수 공격 쿨다운
-    public GameObject minionPrefab;         //소환할 미니언 프리팹
+    [SerializeField]private Image hpImage;
 
     [Header("길로틴")]
     public MovedGuillotione movedGuillotione; //이동형 길로틴 스크립트
@@ -42,14 +40,13 @@ public class HeartQueen : Enemy
     public GameObject[] fixedWarn; //고정형 길로틴 경고 오브젝트
 
     Camera cam; //카메라
-
-    public Gavel gavels; //의사봉 스크립트
-
+    [SerializeField] CameraFollow cameraFollow;
     WaitForSeconds patternDelay; //패턴 별 딜레이 시간
 
     private new void Start()
     {
         base.Start();
+        UpdateHealthUI();
         cam = Camera.main;
 
         SetBoundsCenter();
@@ -61,18 +58,15 @@ public class HeartQueen : Enemy
     //페이즈, 패턴 별 쿨다운
     private void InitializePhase_phase1_Cooltimes()
     {
-        phase1_Cooltimes[BossPattern.MovedGuillotine] = 6f;
-        phase1_Cooltimes[BossPattern.FixedGuillotine] = 8f;
-        phase1_Cooltimes[BossPattern.BlackHeartCardSpawn] = 12f;
-        phase1_Cooltimes[BossPattern.BlackCloverCardSpawn] = 14f;
-        //phase1_phase1_Cooltimes[BossPattern.OnGavel] = 10f;
+        phase1_Cooltimes[BossPattern.MovedGuillotine] = 4f;
+        phase1_Cooltimes[BossPattern.FixedGuillotine] = 6f;
+        phase1_Cooltimes[BossPattern.BlackHeartCardSpawn] = 5f;
+        phase1_Cooltimes[BossPattern.BlackCloverCardSpawn] = 6f;
 
-        phase2_Cooltimes[BossPattern.MovedGuillotine] = 4f;
-        phase2_Cooltimes[BossPattern.FixedGuillotine] = 6f;
-        phase2_Cooltimes[BossPattern.BlackHeartCardSpawn] = 10f;
-        phase2_Cooltimes[BossPattern.BlackCloverCardSpawn] = 12f;
-        //phase2_phase1_Cooltimes[BossPattern.OnGavel] = 7f;
-
+        phase2_Cooltimes[BossPattern.MovedGuillotine] = 3f;
+        phase2_Cooltimes[BossPattern.FixedGuillotine] = 5f;
+        phase2_Cooltimes[BossPattern.BlackHeartCardSpawn] = 4f;
+        phase2_Cooltimes[BossPattern.BlackCloverCardSpawn] = 4f;
 
         foreach (var pattern in phase1_Cooltimes.Keys)
         {
@@ -106,6 +100,18 @@ public class HeartQueen : Enemy
             }
         }
     }
+
+    private void LateUpdate()
+    {
+        UpdateHealthUI();
+    }
+
+    private void UpdateHealthUI()
+    {
+        float fillAmount = currentHealth / maxHealth;
+        hpImage.fillAmount = fillAmount;
+    }
+
     private void SelectRandomPattern()
     {
         List<BossPattern> availablePatterns = new();
@@ -142,10 +148,6 @@ public class HeartQueen : Enemy
             case BossPattern.BlackCloverCardSpawn:
                 StartCoroutine(PatternDelay("BlackCloverCardSpawn", 1.5f));
                 break;
-
-                //case BossPattern.OnGavel:
-                //    StartCoroutine(PatternDelay("OnGavel", 2.0f));
-                //    break;
         }
 
         patternTimers[selected] = 0f; // 쿨타임 초기화
@@ -171,7 +173,6 @@ public class HeartQueen : Enemy
                 //활성화되어있는 길로틴 비활성화
                 for (int i = 0; i < fixedGuillotiones.Length; i++)
                 {
-                    //fixedGuillotiones[i].Set();
                     fixedGuillotiones[i].gameObject.SetActive(false);
                 }
 
@@ -186,12 +187,6 @@ public class HeartQueen : Enemy
                     fixedWarn[i].SetActive(false); //경고 비활성화
                     fixedGuillotiones[i].gameObject.SetActive(true); //길로틴 활성화
                 }
-
-                break;
-
-            case "OnGavel":
-                yield return patternDelay;
-                gavels.Init(_player, 3.0f);
                 break;
 
             case "BlackHeartCardSpawn":
@@ -210,8 +205,7 @@ public class HeartQueen : Enemy
         ReturnToWalk(); //걷기 상태로 전환
     }
 
-
-    void SetGuillotionePosition()
+    private void SetGuillotionePosition()
     {
         Camera cam = Camera.main; //메인카메라
         Vector2 bottomLeft = cam.ScreenToWorldPoint(new Vector3(0, 0, 0)); //카메라 화면의 좌표값 - 좌측하단
@@ -264,7 +258,7 @@ public class HeartQueen : Enemy
         }
     }
 
-    void BlackHeartCardSpawn()
+    private void BlackHeartCardSpawn()
     {
         int ran = Random.Range(5, 8);
         for (int i = 0; i < ran; i++)
@@ -278,11 +272,10 @@ public class HeartQueen : Enemy
             {
                 enemyToSpawn.SetActive(true); //스폰할 적 활성화하기
             }
-
         }
     }
 
-    void BlackCloverCardSpawn()
+    private void BlackCloverCardSpawn()
     {
         int ran = Random.Range(2, 4);
         for (int i = 0; i < ran; i++)
@@ -299,6 +292,7 @@ public class HeartQueen : Enemy
 
         }
     }
+
     private Vector3 GetRandomSpawnPosition_Circle()
     {
         float angle = Random.Range(0f, 2f * Mathf.PI); // 랜덤한 방향 각도 (0~360도)
@@ -324,9 +318,9 @@ public class HeartQueen : Enemy
     //바운즈 센터 값 설정 -> 보스 몬스터 스폰 시 실행되게 끔.
     private void SetBoundsCenter()
     {
-        //보스의 위치를 플레이어 위에서 나타나게 설정
-        transform.position = new Vector3(player.transform.position.x,
-                                        player.transform.position.y + 4.0f,
+        //보스의 위치를 플레이어 우측에 나타나게 설정
+        transform.position = new Vector3(player.transform.position.x + 5.5f,
+                                        player.transform.position.y - 0.6f,
                                         transform.position.z);
 
         //바운즈의 센터를 플레이어 위치로 설정
@@ -377,5 +371,26 @@ public class HeartQueen : Enemy
             }
         }
 
+    }
+
+    //죽음 
+    protected override void Die()
+    {
+        if (hitEffect != null)
+        {
+            hitEffect.StopAttack(); //공격 정지 함수 실행 -> 몬스터가 사망 시에도 플레이어에게 피해를 입히는 현상 방지
+        }
+
+        if(!isDie)
+            animator.SetTrigger("die");
+
+        animator.SetBool("canMove", false);
+        attackDamage = 0; //데미지 0 초기화
+        spriteRenderer.color = originalColor; //스프라이트 색 원래대로
+        StopAllCoroutines(); //모든 코루틴 종료
+        canMove = false;
+        isDie = true;
+
+        cameraFollow.HeartQueenDeathCameraEffect(transform);
     }
 }

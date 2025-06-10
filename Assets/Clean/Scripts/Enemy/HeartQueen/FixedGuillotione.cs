@@ -1,6 +1,4 @@
-using TMPro;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class FixedGuillotione : MonoBehaviour
 {
@@ -71,6 +69,11 @@ public class FixedGuillotione : MonoBehaviour
     {
         isDrop = true;
         animator.SetBool("isDrop", true);
+    }
+
+    private void SoundPlay()
+    {
+        SoundManager.Instance.PlaySFX("fixedGuillotione");
     }
 
     //¹Ù´Ú¿¡ ¶³¾îÁü

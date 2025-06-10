@@ -8,6 +8,7 @@ public class MagnetItem : ItemAttract
         if (other.CompareTag("Player")) //플레이어 충돌 시
         {
             AttractAllExpGems(); //경험치 잼 자석 기능 함수 호출
+            SoundManager.Instance.PlaySFX("magnet");
             gameObject.SetActive(false); //자석 아이템 비활성화
         }
     }

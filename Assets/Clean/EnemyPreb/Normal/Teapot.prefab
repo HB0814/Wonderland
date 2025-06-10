@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1414883015
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: 6242969243588262432, guid: a6649b1553f984a4f94d6182d1242bca, type: 3}
   m_Color: {r: 0.8962264, g: 0, b: 0, a: 0.39215687}
@@ -192,8 +192,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -360344375
-  m_SortingLayer: 0
+  m_SortingLayerID: -1414883015
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
@@ -407,7 +407,7 @@ MonoBehaviour:
   explosionMoveSpeed: 1.4
   explosionRange: 1
   explosionDamage: 30
-  explosionEffect: {fileID: 3166401227987715664, guid: e0156672709b1e246a6d296a8cc0f07d, type: 3}
+  explosionEffect: {fileID: 3166401227987715664, guid: fd6c7804a26426e4e812a35e87cf475b, type: 3}
   center: {fileID: 1186596148103241679}
 --- !u!114 &8501459909480053200
 MonoBehaviour:

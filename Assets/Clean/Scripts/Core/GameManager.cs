@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 /// <summary>
 /// 게임 전체를 관리하는 매니저 클래스
 /// </summary>
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadMainMenu()
     {
-        // TODO: 메인 메뉴 씬으로 전환
+        SceneManager.LoadScene("MainScene");
         Debug.Log("Loading main menu...");
     }
 

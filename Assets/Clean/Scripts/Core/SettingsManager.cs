@@ -94,6 +94,24 @@ public class SettingsManager : MonoBehaviour
         if (graphicsPanel != null) graphicsPanel.SetActive(false);
     }
 
+    private void Update()
+    {
+        // ESC 키를 눌렀을 때 설정 창이 열려있으면 닫기
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (audioPanel != null && audioPanel.activeSelf)
+            {
+                CloseSettings();
+                return;
+            }
+            if (graphicsPanel != null && graphicsPanel.activeSelf)
+            {
+                CloseSettings();
+                return;
+            }
+        }
+    }
+
     /// <summary>
     /// 사용 가능한 해상도 목록 가져오기
     /// </summary>

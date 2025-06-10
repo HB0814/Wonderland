@@ -178,6 +178,7 @@ public class HitEffect : MonoBehaviour
         int index = weaponData.currentLevel;
         var stats = weaponData.levelStats;
 
+
         // 데미지, 넉백, 슬로우 효과 적용
         enemy.TakeDamage(
             stats.damage[index-1],
@@ -185,6 +186,10 @@ public class HitEffect : MonoBehaviour
             stats.slowForce[index-1],
             stats.slowDuration[index-1]
         );
+
+        if(enemy.currentHealth > 0)
+            SoundManager.Instance?.PlayHitSound(weaponData.weaponType);
+
     }
 
     /// <summary>

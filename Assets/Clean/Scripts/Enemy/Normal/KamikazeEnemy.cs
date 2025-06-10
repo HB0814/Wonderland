@@ -42,6 +42,7 @@ public class KamikazeEnemy : Enemy
         if (explosionEffect != null)
         {
             Instantiate(explosionEffect, transform.position, Quaternion.identity); //폭발 파티클 생성
+            SoundManager.Instance?.PlaySFX("explosion");
         }
 
         // 폭발 범위 내의 콜라이더 검출

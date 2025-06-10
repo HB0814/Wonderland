@@ -238,6 +238,7 @@ MonoBehaviour:
   - {fileID: 2282767554947516310}
   - {fileID: 7166403226704469050}
   point: {fileID: 611545777107523085}
+  pointVec: {x: 0.5, y: 0.78, z: 0}
   retreatRange: 3
 --- !u!114 &3525140758267621448
 MonoBehaviour:
@@ -314,7 +315,7 @@ GameObject:
   - component: {fileID: 40698368033672264}
   - component: {fileID: 3189436523274986371}
   - component: {fileID: 2293837512763056430}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Bullet
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -483,7 +484,7 @@ GameObject:
   - component: {fileID: 3004553271240421396}
   - component: {fileID: 7166403226704469050}
   - component: {fileID: 5759518978545166151}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Bullet (2)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -730,7 +731,7 @@ GameObject:
   - component: {fileID: 3683169938494206292}
   - component: {fileID: 2282767554947516310}
   - component: {fileID: 8922903373887359464}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Bullet (1)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
