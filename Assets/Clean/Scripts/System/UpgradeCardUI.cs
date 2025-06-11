@@ -145,16 +145,25 @@ public class UpgradeCardUI : MonoBehaviour
     // 아이템 효과 값 텍스트 생성
     private string GetEffectValueText(ItemData item)
     {
-        switch (item.effectType)
+        string result = "";
+        foreach (var effect in item.effects)
         {
-            case ItemEffectType.Damage:
-                return $"+{item.effectValue}% Damage";
-            case ItemEffectType.Speed:
-                return $"+{item.effectValue}% Speed";
-            case ItemEffectType.Health:
-                return $"+{item.effectValue}% Health";
-            default:
-                return "";
+            switch (effect.effectType)
+            {
+                case ItemEffectType.Damage:
+                    result += $"+{effect.effectValue}% Damage\n";
+                    break;
+                case ItemEffectType.Speed:
+                    result += $"+{effect.effectValue}% Speed\n";
+                    break;
+                case ItemEffectType.Health:
+                    result += $"+{effect.effectValue}% Health\n";
+                    break;
+                default:
+                    result += $"Unknown effect: {effect.effectType}\n";
+                    break;
+            }
         }
+        return result.TrimEnd('\n');
     }
 } 

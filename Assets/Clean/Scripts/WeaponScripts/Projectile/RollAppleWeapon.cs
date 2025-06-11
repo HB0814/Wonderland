@@ -76,6 +76,7 @@ public class RollAppleWeapon : WeaponBase
                 projectile.DebuffInitialize(knockbackForce, slowForce, slowDuration);
             }
             nextAttackTime = 0f;
+            SoundManager.Instance?.PlayWeaponSound(weaponData.weaponType);
         }
     }
 

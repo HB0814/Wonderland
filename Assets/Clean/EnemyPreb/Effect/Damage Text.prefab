@@ -252,5 +252,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 8561170973680350315}
-  floatSpeed: 1
-  lifetime: 2.5
+  floatSpeed: 0.8
+  lifetime: 5

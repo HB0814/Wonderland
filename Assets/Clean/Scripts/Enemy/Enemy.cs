@@ -32,8 +32,9 @@ public abstract class Enemy : MonoBehaviour
     protected GameObject player; //플레이어 게임오브젝트
     protected Player _player; //플레이어 스크립트
     protected HitEffect hitEffect;
-    ParticleSystem deathEffect;
+    protected ParticleSystem deathEffect;
     [SerializeField] protected Transform textPos;
+    protected bool isDead = false;
 
     // 스프라이트 업데이트 관련 변수
     protected float lastUpdateTime = 0.0f; //마지막 업데이트 시간
@@ -64,6 +65,7 @@ public abstract class Enemy : MonoBehaviour
 
         if (deathEffect == null)
             deathEffect = GetComponent<ParticleSystem>();
+
         if (rb != null)
         {
             rb.gravityScale = 0.0f; //중력 없애기
@@ -77,10 +79,12 @@ public abstract class Enemy : MonoBehaviour
 
 
         float time = Time.time;
-        currentHealth = (maxHealth + (time * 0.15f)) * (1 + (_player.Level * 0.01f)); ; //현재 체력을 시간과 플레이어 레벨에 맞게 증가하도록 변경
+        maxHealth = (maxHealth + (time * 0.15f)) * (1 + (_player.Level * 0.01f)); //현재 체력을 시간과 플레이어 레벨에 맞게 증가하도록 변경
+        currentHealth = maxHealth; 
         nextAttackTime = 0.0f; //다음 공격 시간 초기화
         isKnockbacked = false; //넉백 상태 초기화
         isSlowed = false; //슬로우 상태 초기화
+        isDead = false;
         moveSpeed = baseSpeed;
     }
 
@@ -204,10 +208,10 @@ public abstract class Enemy : MonoBehaviour
 
         DamageText(totalDamage);
         currentHealth -= totalDamage; //현재 체력 감소
-        Debug.Log("적이 피해를 입음");
 
-        if(currentHealth <= 0.0f) //현재 체력이 0이하일 경우 실행
+        if(currentHealth <= 0.0f && !isDead) //현재 체력이 0이하일 경우 실행
         {
+            isDead= true;
             Die(); //사망
         }
     }
@@ -269,6 +273,7 @@ public abstract class Enemy : MonoBehaviour
             hitEffect.StopAttack(); //공격 정지 함수 실행 -> 몬스터가 사망 시에도 플레이어에게 피해를 입히는 현상 방지
         }
 
+        SoundManager.Instance?.PlaySFX("enemyDeath");
         CreateExpgem(); //경험치 잼 생성
         attackDamage = 0; //데미지 0 초기화
         spriteRenderer.color = originalColor; //스프라이트 색 원래대로
@@ -297,13 +302,13 @@ public abstract class Enemy : MonoBehaviour
     {
         string rate = "Common";
 
-        if (_player.Level <= 5)
+        if (_player.Level <= 3)
         {
                 rate = "Common";
         }
-        else if (_player.Level <= 10)
+        else if (_player.Level <= 8)
         {
-            if (ran < 0.95f)
+            if (ran < 0.80f)
             {
                 rate = "Common";
             }
@@ -312,9 +317,9 @@ public abstract class Enemy : MonoBehaviour
                 rate = "Rare";
             }
         }
-        else if (_player.Level <= 15)
+        else if (_player.Level <= 13)
         {
-            if (ran < 0.8f)
+            if (ran < 0.75f)
             {
                 rate = "Common";
             }
@@ -329,11 +334,11 @@ public abstract class Enemy : MonoBehaviour
         }
         else
         {
-            if (ran < 0.7f)
+            if (ran < 0.65f)
             {
                 rate = "Common";
             }
-            else if (ran < 0.95f)
+            else if (ran < 0.90f)
             {
                 rate = "Rare";
             }

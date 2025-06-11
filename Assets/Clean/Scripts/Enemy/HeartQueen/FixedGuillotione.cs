@@ -71,6 +71,11 @@ public class FixedGuillotione : MonoBehaviour
         animator.SetBool("isDrop", true);
     }
 
+    private void SoundPlay()
+    {
+        SoundManager.Instance.PlaySFX("fixedGuillotione");
+    }
+
     //¹Ù´Ú¿¡ ¶³¾îÁü
     private void OnHit()
     {

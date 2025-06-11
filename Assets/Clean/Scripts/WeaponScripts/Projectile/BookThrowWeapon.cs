@@ -66,6 +66,7 @@ public class BookThrowWeapon : WeaponBase
                 }
             }
             nextAttackTime = 0f;
+            SoundManager.Instance?.PlayWeaponSound(weaponData.weaponType);
         }
     }
 

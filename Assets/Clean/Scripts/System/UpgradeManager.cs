@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class UpgradeManager : MonoBehaviour
 {
     // 싱글톤 인스턴스
-    public static UpgradeManager Instance { get; private set; }
+    //public static UpgradeManager Instance { get; private set; }
 
     [Header("UI Components")]
     public GameObject upgradePanel; // 업그레이드 선택 패널
@@ -25,17 +25,7 @@ public class UpgradeManager : MonoBehaviour
 
     private void Awake()
     {
-        // 싱글톤 패턴 구현
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+
     }
 
     private void Start()
@@ -57,6 +47,7 @@ public class UpgradeManager : MonoBehaviour
         Time.timeScale = 0f; // 게임 일시정지
         fadePanel.SetActive(true);
         upgradePanel.SetActive(true);
+        SoundManager.Instance.PlaySFX("levelUp");
 
         // 업그레이드 카드 생성
         GenerateUpgradeCards();
@@ -106,43 +97,43 @@ public class UpgradeManager : MonoBehaviour
         ShuffleList(availableItemUpgrades);
 
         // 카드 배치
-        int weaponUpgradeIndex = 0;
-        int newWeaponIndex = 0;
-        int itemIndex = 0;
-
         for (int i = 0; i < upgradeCards.Length; i++)
         {
-            // 무기 업그레이드와 신규 무기의 확률 계산
-            float upgradeChance = 0.6f; // 업그레이드 확률 60%
-            float newWeaponChance = 0.3f; // 신규 무기 확률 30%
-            float itemChance = 0.1f; // 아이템 확률 10%
-
-            // 확률에 따른 카드 타입 결정
-            float randomValue = Random.value;
-            if (randomValue < upgradeChance && weaponUpgradeIndex < availableWeaponUpgrades.Count)
-            {
-                // 무기 업그레이드 카드 설정
-                SetupWeaponCard(upgradeCards[i], availableWeaponUpgrades[weaponUpgradeIndex], true);
-                weaponUpgradeIndex++;
-            }
-            else if (randomValue < upgradeChance + newWeaponChance && newWeaponIndex < availableNewWeapons.Count)
-            {
-                // 신규 무기 카드 설정
-                SetupWeaponCard(upgradeCards[i], availableNewWeapons[newWeaponIndex], false);
-                newWeaponIndex++;
-            }
-            else if (itemIndex < availableItemUpgrades.Count)
-            {
-                // 아이템 카드 설정
-                SetupItemCard(upgradeCards[i], availableItemUpgrades[itemIndex]);
-                itemIndex++;
-            }
-            else
-            {
-                // 남은 카드는 비활성화
-                upgradeCards[i].SetActive(false);
-            }
+            upgradeCards[i].SetActive(false); // 일단 모두 비활성화
         }
+
+        // 1. 무기 업그레이드/신규 무기 개수 계산 (7:3 비율)
+        int totalWeaponCards = Mathf.Min(weaponUpgradeCount, upgradeCards.Length);
+        int upgradeCount = Mathf.RoundToInt(totalWeaponCards * 0.7f);
+        int newWeaponCount = totalWeaponCards - upgradeCount;
+
+        // 실제 가능한 개수로 조정
+        upgradeCount = Mathf.Min(upgradeCount, availableWeaponUpgrades.Count);
+        newWeaponCount = Mathf.Min(newWeaponCount, availableNewWeapons.Count);
+
+        // 2. 무기 업그레이드 카드 배치
+        int cardIdx = 0;
+        for (int i = 0; i < upgradeCount && cardIdx < upgradeCards.Length; i++, cardIdx++)
+        {
+            SetupWeaponCard(upgradeCards[cardIdx], availableWeaponUpgrades[i], true);
+            upgradeCards[cardIdx].SetActive(true);
+        }
+
+        // 3. 신규 무기 카드 배치
+        for (int i = 0; i < newWeaponCount && cardIdx < upgradeCards.Length; i++, cardIdx++)
+        {
+            SetupWeaponCard(upgradeCards[cardIdx], availableNewWeapons[i], false);
+            upgradeCards[cardIdx].SetActive(true);
+        }
+
+        // 4. 남은 카드에 아이템 배치
+        for (int i = 0; i < availableItemUpgrades.Count && cardIdx < upgradeCards.Length; i++, cardIdx++)
+        {
+            SetupItemCard(upgradeCards[cardIdx], availableItemUpgrades[i]);
+            upgradeCards[cardIdx].SetActive(true);
+        }
+
+        // 남은 카드는 이미 비활성화 상태
     }
 
     // 무기 카드 설정 (isUpgrade: true면 업그레이드, false면 신규 무기)
@@ -226,19 +217,34 @@ public class UpgradeManager : MonoBehaviour
     // 아이템 효과 적용
     private void ApplyItemEffect(ItemData item)
     {
-        // 아이템 효과 적용
-        switch (item.effectType)
+        Player player = FindObjectOfType<Player>();
+        if (player != null)
         {
-            case ItemEffectType.Damage:
-                // 데미지 증가
-                break;
-            case ItemEffectType.Speed:
-                // 속도 증가
-                break;
-            case ItemEffectType.Health:
-                // 체력 증가
-                break;
-            // 기타 효과들...
+            foreach (var effect in item.effects)
+            {
+                switch (effect.effectType)
+                {
+                    case ItemEffectType.Damage:
+                        player.IncreaseDamage(effect.effectValue);
+                        Debug.Log($"{item.itemName} applied: Damage increased by {effect.effectValue}");
+                        break;
+                    case ItemEffectType.Speed:
+                        player.IncreaseSpeed(effect.effectValue);
+                        Debug.Log($"{item.itemName} applied: Speed increased by {effect.effectValue}");
+                        break;
+                    case ItemEffectType.Health:
+                        player.IncreaseHealth(effect.effectValue);
+                        Debug.Log($"{item.itemName} applied: Health increased by {effect.effectValue}");
+                        break;
+                    default:
+                        Debug.LogWarning($"Unknown effect type: {effect.effectType}");
+                        break;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("Player not found in the scene!");
         }
     }
 
