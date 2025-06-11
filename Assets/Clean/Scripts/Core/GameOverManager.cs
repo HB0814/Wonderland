@@ -46,6 +46,7 @@ public class GameOverManager : MonoBehaviour
     private void OnRetryButtonClick()
     {
         Time.timeScale = 1f; // 게임 시간 복원
+        WeaponManager.Instance.RemoveAllWeapons();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // 현재 씬 다시 로드
     }
 

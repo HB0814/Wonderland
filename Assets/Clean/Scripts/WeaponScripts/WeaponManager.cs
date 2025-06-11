@@ -30,15 +30,38 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        objectPool = ObjectPool.Instance;
+        FindPlayer();
+        FindObjectPool();
+    }
 
-        AddWeapon(WeaponManager.Instance.CreateWeapon((int)WeaponType.Book));
+    private void FindPlayer()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError("Player not found in the scene!");
+        }
+    }
+
+    private void FindObjectPool()
+    {
+        objectPool = ObjectPool.Instance;
+        if (objectPool == null)
+        {
+            Debug.LogError("ObjectPool not found in the scene!");
+        }
     }
 
     public bool AddWeapon(WeaponBase weapon)
     {
         if (weapon == null) return false;
+
+        // 플레이어 참조가 없으면 다시 찾기
+        if (player == null)
+        {
+            FindPlayer();
+            if (player == null) return false;
+        }
 
         // 이미 같은 타입의 무기가 있는지 확인
         foreach (var equippedWeapon in equippedWeapons)
@@ -70,6 +93,23 @@ public class WeaponManager : MonoBehaviour
             equippedWeapons.Remove(weapon);
             Destroy(weapon.gameObject);
         }
+    }
+
+    public void RemoveAllWeapons()
+    {
+        // 리스트를 복사하여 안전하게 순회
+        var weaponsToRemove = new List<WeaponBase>(equippedWeapons);
+        foreach (var weapon in weaponsToRemove)
+        {
+            if (weapon != null)
+            {
+                Destroy(weapon.gameObject);
+            }
+        }
+        equippedWeapons.Clear();
+
+        // ObjectPool 참조 업데이트
+        FindObjectPool();
     }
 
     public void LevelUpWeapon(WeaponBase weapon)
@@ -133,6 +173,13 @@ public class WeaponManager : MonoBehaviour
     // ObjectPool을 통해 투사체 생성
     public GameObject SpawnProjectile(string projectileTag, Vector3 position, Quaternion rotation)
     {
+        // ObjectPool 참조가 없으면 다시 찾기
+        if (objectPool == null)
+        {
+            FindObjectPool();
+            if (objectPool == null) return null;
+        }
+
         return objectPool.SpawnFromPool(projectileTag, position, rotation);
     }
 } 

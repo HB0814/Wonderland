@@ -22986,6 +22986,7 @@ MonoBehaviour:
   settingsButton: {fileID: 1896526713}
   pauseTransitionTime: 0.3
   timeScaleWhenPaused: 0
+  gameManager: {fileID: 1646853390}
 --- !u!4 &1503246112
 Transform:
   m_ObjectHideFlags: 0
@@ -36404,8 +36405,12 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 506820814017238879, guid: 75807386bf951894686c172e7e06294a, type: 3}
+      propertyPath: maxHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 506820814017238879, guid: 75807386bf951894686c172e7e06294a, type: 3}
       propertyPath: moveSpeed
-      value: 1.5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 506820814017238879, guid: 75807386bf951894686c172e7e06294a, type: 3}
       propertyPath: cameraFollow
@@ -36417,8 +36422,12 @@ PrefabInstance:
       objectReference: {fileID: 1548393761}
     - target: {fileID: 506820814017238879, guid: 75807386bf951894686c172e7e06294a, type: 3}
       propertyPath: currentHealth
-      value: 20
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 506820814017238879, guid: 75807386bf951894686c172e7e06294a, type: 3}
+      propertyPath: upgradeManager
+      value: 
+      objectReference: {fileID: 101334460}
     - target: {fileID: 513545117207028192, guid: 75807386bf951894686c172e7e06294a, type: 3}
       propertyPath: m_Value
       value: 1

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class UpgradeManager : MonoBehaviour
 {
     // 싱글톤 인스턴스
-    public static UpgradeManager Instance { get; private set; }
+    //public static UpgradeManager Instance { get; private set; }
 
     [Header("UI Components")]
     public GameObject upgradePanel; // 업그레이드 선택 패널
@@ -25,17 +25,7 @@ public class UpgradeManager : MonoBehaviour
 
     private void Awake()
     {
-        // 싱글톤 패턴 구현
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+
     }
 
     private void Start()

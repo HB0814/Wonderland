@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -47,6 +49,8 @@ public class Player : MonoBehaviour
     private Vector2 currentVelocity;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+
+    public UpgradeManager upgradeManager;
     public bool isDead = false;
 
     // 프로퍼티
@@ -61,6 +65,17 @@ public class Player : MonoBehaviour
         InitializeComponents();
         SetupRigidbody();
         InitializeStats();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        StopAllCoroutines();
     }
 
     private void InitializeComponents()
@@ -350,7 +365,7 @@ public class Player : MonoBehaviour
         onLevelChanged?.Invoke(currentLevel); //레벨 변경
         currentExp += temp; //초과된 경험치량만큼 현재 경험치량 증가
         onExpChanged?.Invoke(currentExp, maxExp); //경험치 변경
-        UpgradeManager.Instance.ShowUpgradeOptions(); //업그레이드 옵션 보여주기
+        upgradeManager.ShowUpgradeOptions(); //업그레이드 옵션 보여주기
     }
 
     private int GetRequiredExp(int level)
@@ -396,12 +411,15 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log($"[{nameof(Player)}] Player died!");
-        rb.linearVelocity = Vector3.zero; //이동 정지
-        animator.SetTrigger("Die"); //죽음 애니메이션 실행
-        isDead = true; //죽음 여부 참
+        if (isDead) return; // 이미 죽은 상태면 중복 실행 방지
 
-        // 3초 후에 게임 오버 UI 표시
+        Debug.Log($"[{nameof(Player)}] Player died!");
+        rb.linearVelocity = Vector3.zero;
+        animator.SetTrigger("Die");
+        isDead = true;
+
+        // 이전 코루틴 중단 후 새로운 코루틴 시작
+        StopAllCoroutines();
         StartCoroutine(ShowGameOverAfterDelay(3f));
     }
 
@@ -484,5 +502,79 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, 0.5f);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == SceneManager.GetActiveScene().name)
+        {
+            StartCoroutine(ResetPlayerStateWithDelay());
+        }
+    }
+
+    private IEnumerator ResetPlayerStateWithDelay()
+    {
+        // WeaponManager가 초기화될 때까지 대기
+        yield return new WaitUntil(() => WeaponManager.Instance != null);
+        
+        // 추가로 한 프레임 대기하여 모든 초기화가 완료되도록 함
+        yield return null;
+
+        ResetPlayerState();
+    }
+
+    private void ResetPlayerState()
+    {
+        // 기본 스탯 초기화
+        currentHealth = maxHealth;
+        currentExp = 0f;
+        currentLevel = 1;
+        maxExp = 100f;
+        currentSpeedBonus = 0f;
+        damageMultiplier = 1f;
+        moveSpeed = baseSpeed;
+        isDead = false;
+
+        // 컴포넌트 재참조
+        InitializeComponents();
+        SetupRigidbody();
+        InitializeStats();
+
+        // 조이스틱 재참조
+        if (joy == null)
+        {
+            joy = FindObjectOfType<FloatingJoystick>();
+        }
+
+        // 힐링 파티클 재참조
+        if (healParticle == null)
+        {
+            healParticle = GetComponentInChildren<ParticleSystem>();
+        }
+
+        // 리지드바디 초기화
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        // 초기 무기 생성
+        if (WeaponManager.Instance != null)
+        {
+            // 기존 무기 제거
+            WeaponManager.Instance.RemoveAllWeapons();
+            
+            // 초기 무기 생성 (책 무기)
+            WeaponManager.Instance.CreateWeapon(1);
+            Debug.Log("Initial Book Weapon Added");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // 이벤트 구독 해제
+        onExpChanged = null;
+        onLevelChanged = null;
+        onHealthChanged = null;
     }
 } 
