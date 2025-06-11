@@ -21,6 +21,8 @@ public class PauseManager : MonoBehaviour
     private float previousTimeScale = 1f;
     private CanvasGroup pausePanelCanvasGroup;
 
+    public GameManager gameManager;
+
     private void Start()
     {
         // 초기화
@@ -92,7 +94,7 @@ public class PauseManager : MonoBehaviour
         }
 
         // 게임 상태 변경 이벤트 발생
-        GameManager.Instance.OnGamePaused();
+        gameManager.OnGamePaused();
     }
 
     /// <summary>
@@ -112,7 +114,7 @@ public class PauseManager : MonoBehaviour
         }
 
         // 게임 상태 변경 이벤트 발생
-        GameManager.Instance.OnGameResumed();
+        gameManager.OnGameResumed();
     }
 
     /// <summary>
@@ -121,7 +123,7 @@ public class PauseManager : MonoBehaviour
     private void LoadMainMenu()
     {
         Time.timeScale = 1f;  // 시간 스케일 초기화
-        GameManager.Instance.LoadMainMenu();
+        gameManager.LoadMainMenu();
     }
 
     /// <summary>

@@ -1,5 +1,6 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -10,9 +11,9 @@ public class Player : MonoBehaviour
 
     [Header("경험치 시스템")]
     [SerializeField] private float currentExp = 0f;
-    [SerializeField] private float maxExp = 100f;
+    [SerializeField] private float maxExp = 10f;
     [SerializeField] private int currentLevel = 1;
-    [SerializeField] private float insanityExp = 0.01f;
+    //[SerializeField] private float insanityExp = 0.01f;
     // 경험치 변경 이벤트
     public System.Action<float, float> onExpChanged;  // (현재 경험치, 최대 경험치)
     public System.Action<int> onLevelChanged;         // (현재 레벨)
@@ -27,10 +28,9 @@ public class Player : MonoBehaviour
     [Header("이동 설정")]
     [SerializeField] private float baseSpeed = 5f;
     private float currentSpeedBonus = 0f;
-    private float damageMultiplier = 1f;
 
-    [SerializeField] CameraFollow cameraFollow;
-    [SerializeField] Transform center;
+    [Header("데미지 배율")]
+    [SerializeField]public float damageMultiplier = 1f;
 
     [Header("조이스틱")]
     public FloatingJoystick joy;
@@ -40,14 +40,17 @@ public class Player : MonoBehaviour
     [Header("파티클")]
     public ParticleSystem healParticle;
 
-    private InsanitySystem insanitySystem;
+    //private InsanitySystem insanitySystem;
     // 광기 변경 이벤트
-    public System.Action<float> onInsanityChanged;
+    //public System.Action<float> onInsanityChanged;
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private Vector2 currentVelocity;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+
+    CameraFollow cam;
+    public UpgradeManager upgradeManager;
     public bool isDead = false;
 
     // 프로퍼티
@@ -62,6 +65,19 @@ public class Player : MonoBehaviour
         InitializeComponents();
         SetupRigidbody();
         InitializeStats();
+
+        cam = GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        StopAllCoroutines();
     }
 
     private void InitializeComponents()
@@ -69,11 +85,11 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        insanitySystem = GetComponent<InsanitySystem>();
-        if (insanitySystem == null)
-        {
-            Debug.LogError($"[{nameof(Player)}] InsanitySystem component not found!");
-        }
+        //insanitySystem = GetComponent<InsanitySystem>();
+        //if (insanitySystem == null)
+        //{
+        //    Debug.LogError($"[{nameof(Player)}] InsanitySystem component not found!");
+        //}
     }
 
     private void SetupRigidbody()
@@ -92,15 +108,16 @@ public class Player : MonoBehaviour
         onHealthChanged?.Invoke(currentHealth, maxHealth);
         onLevelChanged?.Invoke(currentLevel);
         onExpChanged?.Invoke(currentExp, maxExp);
-        onInsanityChanged?.Invoke(insanitySystem?.GetInsanity() ?? 0f);
+        //onInsanityChanged?.Invoke(insanitySystem?.GetInsanity() ?? 0f);
     }
 
     private void Update()
     {
         HandleInput();
         WeaponAdd();
-    }
 
+        //Move_Joystick();
+    }
     private void WeaponAdd()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -174,7 +191,7 @@ public class Player : MonoBehaviour
         ).normalized;
 
         // 75 이상일 때 컨트롤 반전
-        if (insanitySystem?.AreControlsInverted() ?? false)
+        //if (insanitySystem?.AreControlsInverted() ?? false)
         {
             moveInput = -moveInput;
         }
@@ -204,11 +221,11 @@ public class Player : MonoBehaviour
         Vector2 joystickInput = new Vector2(joy.Horizontal, joy.Vertical);
 
         // 조작 반전 적용
-        if (insanitySystem?.AreControlsInverted() ?? false)
-        {
-            keyboardInput = -keyboardInput;
-            joystickInput = -joystickInput;
-        }
+        //if (insanitySystem?.AreControlsInverted() ?? false)
+        //{
+        //    keyboardInput = -keyboardInput;
+        //    joystickInput = -joystickInput;
+        //}
 
         // 입력 합산 (키보드 우선, 조이스틱은 아날로그 감도 적용)
         Vector2 combinedInput = Vector2.zero;
@@ -227,7 +244,7 @@ public class Player : MonoBehaviour
             combinedInput = Vector2.zero;
 
         // 이동
-        rb.linearVelocity = combinedInput * speed;
+        rb.linearVelocity = combinedInput * moveSpeed;
 
         // 스프라이트 방향
         if (combinedInput.x != 0)
@@ -335,10 +352,10 @@ public class Player : MonoBehaviour
         }
 
         // 경험치 획득 시 광기 2 증가
-        if (insanitySystem != null)
+        //if (insanitySystem != null)
         {
-            insanitySystem.AddInsanity(insanityExp);
-            onInsanityChanged?.Invoke(insanitySystem.GetInsanity());
+            //insanitySystem.AddInsanity(insanityExp);
+            //onInsanityChanged?.Invoke(insanitySystem.GetInsanity());
         }
     }
 
@@ -350,23 +367,25 @@ public class Player : MonoBehaviour
         onLevelChanged?.Invoke(currentLevel); //레벨 변경
         currentExp += temp; //초과된 경험치량만큼 현재 경험치량 증가
         onExpChanged?.Invoke(currentExp, maxExp); //경험치 변경
-        UpgradeManager.Instance.ShowUpgradeOptions(); //업그레이드 옵션 보여주기
+        upgradeManager.ShowUpgradeOptions(); //업그레이드 옵션 보여주기
     }
 
     private int GetRequiredExp(int level)
     {
-        if (level <= 30)
-            return 10 + (level - 1) * 5; //10, 15, 20, 25, ...
-        else 
-            return 100 + (level - 20) * 10; //점점 커짐
+        if (level <= 20)
+            return 10 + (level - 1) * 5; // 10, 15, 20, 25, ...
+        else
+            return 100 + (level - 20) * 10; // 점점 커짐
     }
+
 
     public void TakeDamage(float damage)
     {
-        if (insanitySystem == null) return;
+        //if (insanitySystem == null) return;
 
         // 광기 수준에 따른 데미지 증가 적용
-        float finalDamage = damage * insanitySystem.GetDamageMultiplier();
+        //float finalDamage = damage * insanitySystem.GetDamageMultiplier();
+        float finalDamage = damage;
         currentHealth = Mathf.Max(0, currentHealth - finalDamage);
         onHealthChanged?.Invoke(currentHealth, maxHealth);
 
@@ -379,23 +398,91 @@ public class Player : MonoBehaviour
     public void Heal(float amount)
     {
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
-        healParticle.Play();
+        if (healParticle != null)
+        {
+            healParticle.Play();
+        }
         onHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     private void Die()
     {
+        if (isDead) return; // 이미 죽은 상태면 중복 실행 방지
+
         Debug.Log($"[{nameof(Player)}] Player died!");
-        // TODO: 사망 처리 로직 추가
-        rb.linearVelocity = Vector3.zero; //이동 정지
-        animator.SetTrigger("Die"); //죽음 애니메이션 실행
-        isDead = true; //죽음 여부 참
-        cameraFollow.PlayerDeathCameraEffect(center);
+        rb.linearVelocity = Vector3.zero;
+        animator.SetTrigger("Die");
+        isDead = true;
+        cam.PlayerDeathCameraEffect(transform);
+
+        // 이전 코루틴 중단 후 새로운 코루틴 시작
+        StopAllCoroutines();
+        StartCoroutine(ShowGameOverAfterDelay(3f));
+    }
+
+    private IEnumerator ShowGameOverAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        
+        // 게임 오버 UI 표시
+        GameOverManager gameOverManager = FindObjectOfType<GameOverManager>();
+        if (gameOverManager != null)
+        {
+            gameOverManager.ShowGameOver();
+        }
+    }
+
+    public void SetIncreaseSpeed(float speed)
+    {
+        moveSpeed += speed;
+    }
+    public void SetIncreaseDamage(float damage)
+    {
+        damageMultiplier += damage;
+    }
+    public void SetIncreaseMaxHealth(float health)
+    {
+        maxHealth += health;
+    }
+
+    public void OnSpecialWeaponPickup()
+    {
+        //if (insanitySystem == null) return;
+
+        //insanitySystem.AddInsanity(25f);     // 광기 25 증가
+        //insanitySystem.IncreaseMinInsanity(); // 최소 광기 25 증가
+        //onInsanityChanged?.Invoke(insanitySystem.GetInsanity());
+    }
+
+    public void OnSpecialMonsterHit()
+    {
+        //if (insanitySystem == null) return;
+
+        //insanitySystem.AddInsanity(3f);
+        //onInsanityChanged?.Invoke(insanitySystem.GetInsanity());
+    }
+
+    public void IncreaseDamage(float amount)
+    {
+        SetIncreaseDamage(amount);
+    }
+
+    public void IncreaseSpeed(float amount)
+    {
+        SetIncreaseSpeed(amount);
+    }
+
+    public void IncreaseHealth(float amount)
+    {
+        maxHealth += amount;
+        currentHealth += amount;
+        onHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     public void AddSpeedBonus(float bonus)
     {
         currentSpeedBonus += bonus;
+        moveSpeed = baseSpeed + currentSpeedBonus;
     }
 
     public void SetDamageMultiplier(float multiplier)
@@ -403,25 +490,88 @@ public class Player : MonoBehaviour
         damageMultiplier = multiplier;
     }
 
-    public void OnSpecialWeaponPickup()
+    public float GetDamageMultiplier()
     {
-        if (insanitySystem == null) return;
-
-        insanitySystem.AddInsanity(25f);     // 광기 25 증가
-        insanitySystem.IncreaseMinInsanity(); // 최소 광기 25 증가
-        onInsanityChanged?.Invoke(insanitySystem.GetInsanity());
+        return damageMultiplier;
     }
 
-    public void OnSpecialMonsterHit()
-    {
-        if (insanitySystem == null) return;
-
-        insanitySystem.AddInsanity(3f);
-        onInsanityChanged?.Invoke(insanitySystem.GetInsanity());
-    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, 0.5f);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == SceneManager.GetActiveScene().name)
+        {
+            StartCoroutine(ResetPlayerStateWithDelay());
+        }
+    }
+
+    private IEnumerator ResetPlayerStateWithDelay()
+    {
+        // WeaponManager가 초기화될 때까지 대기
+        yield return new WaitUntil(() => WeaponManager.Instance != null);
+        
+        // 추가로 한 프레임 대기하여 모든 초기화가 완료되도록 함
+        yield return null;
+
+        ResetPlayerState();
+    }
+
+    private void ResetPlayerState()
+    {
+        // 기본 스탯 초기화
+        currentHealth = maxHealth;
+        currentExp = 0f;
+        currentLevel = 1;
+        maxExp = 10f;
+        currentSpeedBonus = 0f;
+        damageMultiplier = 1f;
+        moveSpeed = baseSpeed;
+        isDead = false;
+
+        // 컴포넌트 재참조
+        InitializeComponents();
+        SetupRigidbody();
+        InitializeStats();
+
+        // 조이스틱 재참조
+        if (joy == null)
+        {
+            joy = FindObjectOfType<FloatingJoystick>();
+        }
+
+        // 힐링 파티클 재참조
+        if (healParticle == null)
+        {
+            healParticle = GetComponentInChildren<ParticleSystem>();
+        }
+
+        // 리지드바디 초기화
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        // 초기 무기 생성
+        if (WeaponManager.Instance != null)
+        {
+            // 기존 무기 제거
+            WeaponManager.Instance.RemoveAllWeapons();
+            
+            // 초기 무기 생성 (책 무기)
+            WeaponManager.Instance.CreateWeapon(1);
+            Debug.Log("Initial Book Weapon Added");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // 이벤트 구독 해제
+        onExpChanged = null;
+        onLevelChanged = null;
+        onHealthChanged = null;
     }
 } 
