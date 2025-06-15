@@ -4,9 +4,12 @@ using UnityEngine.UI;
 public class MainPanel : MonoBehaviour
 {
     [SerializeField] private GameObject difficultyPanel;
+    [SerializeField] private GameObject setting;
+    [SerializeField] private GameObject graphicSetting;
     [SerializeField] private Button startButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private Button achievementButton;
+
 
     private void Start()
     {
@@ -46,6 +49,25 @@ public class MainPanel : MonoBehaviour
     private void OnAchievementButtonClick()
     {
         // 여기에 업적 패널 활성화 로직 추가
-        Debug.Log("업적 패널 활성화");
+        //
+        setting.SetActive(true);
+    }
+
+    public void GraphicSetting()
+    {
+        setting.SetActive(false);
+        graphicSetting.SetActive(true);
+    }
+
+    public void SettingExit()
+    {
+        setting.SetActive(false);
+        graphicSetting.SetActive(false);
+    }
+
+    public void SoundSetting()
+    {
+        graphicSetting.SetActive(false);
+        setting.SetActive(true);
     }
 } 

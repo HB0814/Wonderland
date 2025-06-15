@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: ItemB
   description: "\uD50C\uB808\uC774\uC5B4\uC758 \uC18D\uB3C4\uAC00 20% \uC99D\uAC00\uD569\uB2C8\uB2E4."
-  icon: {fileID: 5181654206020448988, guid: 0cad49d0cde22fe4aa23f988b1bab40e, type: 3}
+  icon: {fileID: 5181654206020448988, guid: db3e7a1ab2f50914797e03113120f0c4, type: 3}
   effects:
   - effectType: 1
     effectValue: 0.4

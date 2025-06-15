@@ -7,6 +7,7 @@ using UnityEngine;
 public class HitEffect : MonoBehaviour
 {
     private Enemy enemy;  // 적 컴포넌트 참조
+    private Player player;
     [SerializeField] private List<WeaponData> allWeaponData;  // 모든 무기 데이터 리스트
 
     // 각 무기별 쿨다운 시간 상수
@@ -22,6 +23,7 @@ public class HitEffect : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         InitializeComponents();
         LoadAllWeaponData();
         InitializeWeaponTimers();
@@ -178,10 +180,9 @@ public class HitEffect : MonoBehaviour
         int index = weaponData.currentLevel;
         var stats = weaponData.levelStats;
 
-
         // 데미지, 넉백, 슬로우 효과 적용
         enemy.TakeDamage(
-            stats.damage[index-1],
+            stats.damage[index-1] * player.damageMultiplier,
             stats.knockbackForce[index-1],
             stats.slowForce[index-1],
             stats.slowDuration[index-1]
