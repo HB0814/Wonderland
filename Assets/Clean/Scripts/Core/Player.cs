@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -12,7 +11,7 @@ public class Player : MonoBehaviour
 
     [Header("경험치 시스템")]
     [SerializeField] private float currentExp = 0f;
-    [SerializeField] private float maxExp = 100f;
+    [SerializeField] private float maxExp = 10f;
     [SerializeField] private int currentLevel = 1;
     //[SerializeField] private float insanityExp = 0.01f;
     // 경험치 변경 이벤트
@@ -50,6 +49,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
+    CameraFollow cam;
     public UpgradeManager upgradeManager;
     public bool isDead = false;
 
@@ -65,6 +65,8 @@ public class Player : MonoBehaviour
         InitializeComponents();
         SetupRigidbody();
         InitializeStats();
+
+        cam = GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>();
     }
 
     private void OnEnable()
@@ -372,14 +374,8 @@ public class Player : MonoBehaviour
     {
         if (level <= 20)
             return 10 + (level - 1) * 5; // 10, 15, 20, 25, ...
-        else if (level <= 40)
-            return 100 + (level - 20) * 10; // 점점 커짐
-        else if (level <= 80)
-            return 300 + (level - 40) * 20;
-        else if (level <= 100)
-            return 1100 + (level - 80) * 30;
         else
-            return 1700 + (level - 100) * 10; // 레벨 100 이후 완화
+            return 100 + (level - 20) * 10; // 점점 커짐
     }
 
 
@@ -417,6 +413,7 @@ public class Player : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         animator.SetTrigger("Die");
         isDead = true;
+        cam.PlayerDeathCameraEffect(transform);
 
         // 이전 코루틴 중단 후 새로운 코루틴 시작
         StopAllCoroutines();
@@ -529,7 +526,7 @@ public class Player : MonoBehaviour
         currentHealth = maxHealth;
         currentExp = 0f;
         currentLevel = 1;
-        maxExp = 100f;
+        maxExp = 10f;
         currentSpeedBonus = 0f;
         damageMultiplier = 1f;
         moveSpeed = baseSpeed;

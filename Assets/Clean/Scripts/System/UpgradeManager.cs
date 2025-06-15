@@ -47,6 +47,7 @@ public class UpgradeManager : MonoBehaviour
         Time.timeScale = 0f; // 게임 일시정지
         fadePanel.SetActive(true);
         upgradePanel.SetActive(true);
+        SoundManager.Instance.PlaySFX("levelUp");
 
         // 업그레이드 카드 생성
         GenerateUpgradeCards();

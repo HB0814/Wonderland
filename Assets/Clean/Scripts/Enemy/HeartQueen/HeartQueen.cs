@@ -392,5 +392,12 @@ public class HeartQueen : Enemy
         isDie = true;
 
         cameraFollow.HeartQueenDeathCameraEffect(transform);
+
+        // 게임 클리어 호출
+        GameOverManager gameOverManager = FindObjectOfType<GameOverManager>();
+        if (gameOverManager != null)
+        {
+            gameOverManager.ShowGameClear();
+        }
     }
 }
