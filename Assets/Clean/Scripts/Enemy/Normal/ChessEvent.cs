@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ChessEvent : MonoBehaviour
@@ -52,8 +51,8 @@ public class ChessEvent : MonoBehaviour
         isSpawn = true; //스폰 진행 여부 참
         timer = 0f; //타이머 초기화
 
-        type = Random.Range(0, 2); // 0: 룩, 1: 비숍
-        num = Random.Range(0, 6);  // 0~5 패턴
+        type = Random.Range(0, 2); //0: 룩, 1: 비숍
+        num = Random.Range(0, 6);  //0~5 패턴
 
         SetWarning(true); //해당 패턴의 경고 오브젝트 활성화
         Invoke(nameof(SetEvent), 1f); //공격 패턴 활성화
@@ -110,7 +109,7 @@ public class ChessEvent : MonoBehaviour
         {
             0 => new[] { 0, 1 }, //0번, 1번 오브젝트 활성화
             1 => new[] { 2, 3 }, //2번. 3번 오브젝트 활성화
-            2 => new[] { 0, 3 }, //...
+            2 => new[] { 0, 3 }, 
             3 => new[] { 0, 2 },
             4 => new[] { 1, 3 },
             5 => new[] { 1, 2 },

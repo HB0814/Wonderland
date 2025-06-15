@@ -2705,6 +2705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -2713,7 +2714,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -3678,6 +3678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -3686,7 +3687,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -4629,6 +4629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -4637,7 +4638,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -7635,6 +7635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -7643,7 +7644,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -11368,6 +11368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -11376,7 +11377,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -11674,6 +11674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -11682,7 +11683,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -13317,6 +13317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -13325,7 +13326,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -13789,7 +13789,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 988.3895, y: 29.885376}
+  m_AnchoredPosition: {x: 988.38965, y: 29.885254}
   m_SizeDelta: {x: 1999.3262, y: 59.7707}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &912639192
@@ -17904,6 +17904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -17912,7 +17913,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -20508,6 +20508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -20516,7 +20517,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -22210,6 +22210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -22218,7 +22219,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -22590,6 +22590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -22598,7 +22599,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -23149,6 +23149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -23157,7 +23158,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -25081,6 +25081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -25089,7 +25090,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -26590,6 +26590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -26598,7 +26599,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -33399,6 +33399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -33407,7 +33408,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -34833,6 +34833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   moveSpeed: 0
   baseSpeed: 0
   deffense: 0
@@ -34841,7 +34842,6 @@ MonoBehaviour:
   attackCooldown: 1
   knockbackResistance: 0.8
   expGemRate: Common
-  currentHealth: 0
   nextAttackTime: 0
   isKnockbacked: 0
   isSlowed: 0
@@ -36871,7 +36871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4823834572028210124, guid: fe1df3986fe08e64a8e8f9eb64e3f7a2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5989910768349025940, guid: fe1df3986fe08e64a8e8f9eb64e3f7a2, type: 3}
       propertyPath: m_IsActive

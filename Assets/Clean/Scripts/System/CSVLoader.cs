@@ -10,7 +10,7 @@ public class CSVLoader
         Dictionary<float, WaveData> waveMap = new Dictionary<float, WaveData>();
         //시간 별 웨이브 데이터를 저장할 딕셔너리 생성
 
-        TextAsset csvFile = Resources.Load<TextAsset>(fileName); // Resources 폴더 안에 있는 CSV 로드
+        TextAsset csvFile = Resources.Load<TextAsset>(fileName); //Resources 폴더 안에 있는 CSV 로드
         StringReader reader = new StringReader(csvFile.text); //텍스트 줄 단위로 읽기 위해 초기화
 
         bool isFirstLine = true; //첫번째 줄 건너뛰기 위한 불

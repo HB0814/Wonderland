@@ -29,7 +29,7 @@ public class ItemAttract : MonoBehaviour
 
     protected virtual void Update()
     {
-        float distanceToPlayer = Vector2.Distance(transform.position, target.position); //경험치 잼과 타겟의 거리
+        float distanceToPlayer = Vector2.Distance(transform.position, target.position); //아이템과 타겟의 거리
 
         // 플레이어와의 거리가 자석 거리보다 가까우면
         if (distanceToPlayer <= magnetDistance)

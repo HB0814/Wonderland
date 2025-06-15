@@ -5,14 +5,6 @@ using System.Collections;
 
 public class EnemyManager : MonoBehaviour
 {
-    //적타입
-    //public enum EnemyType
-    //{
-    //    HeartCard, DiamondCard, SpadeCard, CloverCard,
-    //    Pawn, Rook, Bishop, Rook_Event, Bishop_Event,
-    //    Teapot, CheshireCat
-    //}
-
     [SerializeField] private List<WaveData> waveList; //웨이브 데이터 리스트
     [SerializeField] private float timer = 0.0f; //타이머
     private int currentWaveIndex = 0; //현재 웨이브의 인덱스 

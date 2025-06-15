@@ -3,11 +3,12 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    WaitForSeconds hitCool = new(0.1f); //피격 쿨타임
+    WaitForSeconds hitCool = new(0.1f); //피격 효과 쿨타임
     WaitForSeconds knockbackDuration = new(0.1f); //넉백 지속시간
 
     [Header("기본 속성")]
     public float maxHealth = 10.0f;  //최대 체력
+    public float currentHealth; //현재 체력
     public float moveSpeed = 2.0f; //이동속도
     public float baseSpeed = 1.3f;
     public float deffense = 0.0f; //방어력
@@ -17,11 +18,8 @@ public abstract class Enemy : MonoBehaviour
     public float knockbackResistance = 0.5f; //넉백 저항력
 
     [Header("드롭 아이템")]
-    protected GameObject[] dropItems; //드랍 아이템
-    protected float dropChance = 0.3f; //아이템을 떨어트릴 확률
     public string expGemRate; //경험치 잼 종류
 
-    public float currentHealth; //현재 체력
     public float nextAttackTime; //다음 공격 시간
     public bool isKnockbacked; //넉백 상태 여부
     public bool isSlowed; //슬로우 여부
@@ -31,10 +29,9 @@ public abstract class Enemy : MonoBehaviour
     protected Animator animator; //애니메이터
     protected GameObject player; //플레이어 게임오브젝트
     protected Player _player; //플레이어 스크립트
-    protected HitEffect hitEffect;
-    protected ParticleSystem deathEffect;
-    [SerializeField] protected Transform textPos;
-    protected bool isDead = false;
+    protected HitEffect hitEffect; //피격 스크립트
+    [SerializeField] protected Transform textPos; //텍스트 위치
+    protected bool isDead = false; //사망 여부
 
     // 스프라이트 업데이트 관련 변수
     protected float lastUpdateTime = 0.0f; //마지막 업데이트 시간
@@ -63,9 +60,6 @@ public abstract class Enemy : MonoBehaviour
         if(hitEffect == null)
             hitEffect = GetComponent<HitEffect>();
 
-        if (deathEffect == null)
-            deathEffect = GetComponent<ParticleSystem>();
-
         if (rb != null)
         {
             rb.gravityScale = 0.0f; //중력 없애기
@@ -74,18 +68,18 @@ public abstract class Enemy : MonoBehaviour
 
         if (spriteRenderer != null)
         {
-            originalColor = spriteRenderer.color; //스프라이트 렌더러 원래 색
+            originalColor = spriteRenderer.color; //스프라이트 렌더러 기존 색상
         }
 
 
         float time = Time.time;
         maxHealth = (maxHealth + (time * 0.15f)) * (1 + (_player.Level * 0.01f)); //현재 체력을 시간과 플레이어 레벨에 맞게 증가하도록 변경
-        currentHealth = maxHealth; 
+        currentHealth = maxHealth; //현재 체력을 최대 체력으로 설정
         nextAttackTime = 0.0f; //다음 공격 시간 초기화
         isKnockbacked = false; //넉백 상태 초기화
         isSlowed = false; //슬로우 상태 초기화
-        isDead = false;
-        moveSpeed = baseSpeed;
+        isDead = false; //사망 여부 초기화
+        moveSpeed = baseSpeed; //이동속도 초기화
     }
 
     protected virtual void Start()
@@ -181,7 +175,7 @@ public abstract class Enemy : MonoBehaviour
     { 
         if (_player != null && gameObject.activeSelf)
         {
-            _player.TakeDamage(attackDamage); //플레이어의 몬스터의 피해량 값을 전달하여 피격 함수 실행
+            _player.TakeDamage(attackDamage); //플레이어에게 몬스터의 피해량 값을 전달하여 피격 함수 실행
         }
     }
 
@@ -202,16 +196,16 @@ public abstract class Enemy : MonoBehaviour
             StartCoroutine(ApplySlow(slowForce, slowDuration)); //슬로우 코루틴
         }
 
-        damage -= deffense; //damage = (damage * 플레이어 공격력 * 0.01) - 적 방어력 <- 이후 해당 식으로 변경 예정?
-        damage = Random.Range(damage - 1, damage + 1);
+        damage -= deffense; //방어력만큼 데미지 감소
+        damage = Random.Range(damage - 1, damage + 1); //데미지 +- 1씩하여 같은 데미지가 나오는걸 방지
         float totalDamage = Mathf.Max(1, damage); //총합 데미지, 피해량 0을 방지하기 위한 Max() 함수
 
-        DamageText(totalDamage);
+        DamageText(totalDamage); //데미지 텍스트 함수
         currentHealth -= totalDamage; //현재 체력 감소
 
         if(currentHealth <= 0.0f && !isDead) //현재 체력이 0이하일 경우 실행
         {
-            isDead= true;
+            isDead= true; //사망 여부 참
             Die(); //사망
         }
     }
@@ -235,7 +229,6 @@ public abstract class Enemy : MonoBehaviour
         Vector3 knockbackDir = transform.position - player.transform.position; //넉백 방향
         rb.AddForce(knockbackDir.normalized * knockbackForce, ForceMode2D.Impulse); //AddForce 함수로 순간적인 힘을 가한 넉백 효과
         yield return knockbackDuration; //넉백 지속시간 종료 후 호출
-        //rb.linearVelocity = Vector2.zero; //넉백 종료
         isKnockbacked = false; //넉백 상태 거짓 -> 이동 가능
     }
 
@@ -245,11 +238,11 @@ public abstract class Enemy : MonoBehaviour
         moveSpeed *= (1 - slowForce); //이동속도 감소
         yield return slowDuration; //슬로우 지속시간 종료 후 호출
 
-        moveSpeed = baseSpeed; //원래 이동속도로
+        moveSpeed = baseSpeed; //원래 이동속도로 초기화
     }
 
     //피격 효과
-    protected virtual System.Collections.IEnumerator HitColor()
+    protected virtual IEnumerator HitColor()
     {
         if (spriteRenderer != null)
         {
@@ -262,18 +255,12 @@ public abstract class Enemy : MonoBehaviour
     //죽음 
     protected virtual void Die()
     {
-        //사망 파티클
-        if (deathEffect != null)
-        {
-            deathEffect.Play(); //파티클 실행
-        }
-
         if (hitEffect != null)
         {
             hitEffect.StopAttack(); //공격 정지 함수 실행 -> 몬스터가 사망 시에도 플레이어에게 피해를 입히는 현상 방지
         }
 
-        SoundManager.Instance?.PlaySFX("enemyDeath");
+        SoundManager.Instance?.PlaySFX("enemyDeath"); //사망 사운드 재생
         CreateExpgem(); //경험치 잼 생성
         attackDamage = 0; //데미지 0 초기화
         spriteRenderer.color = originalColor; //스프라이트 색 원래대로
