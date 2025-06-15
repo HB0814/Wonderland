@@ -85,7 +85,7 @@ public class RangedEnemy : Enemy
 
         foreach (var projectile in projectiles) //투사체 반복문
         {
-            if(!projectile.gameObject.activeInHierarchy) //투사체가 활성화 상태 시
+            if(!projectile.gameObject.activeInHierarchy) //투사체가 비활성화 상태 시
             {
                 projectile.transform.position = point.transform.position; //투사체의 위치를 공격 포인트로 이동
                 projectile.gameObject.SetActive(true); //투사체 활성화

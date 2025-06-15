@@ -209,25 +209,16 @@ public class Player : MonoBehaviour
         //Move_Joystick(); //조이스틱 이동
     }
 
+    //키보드 + 조이스틱 이동
     private void MoveCombined()
     {
-        // 키보드 입력
-        Vector2 keyboardInput = new Vector2(
-            Input.GetAxisRaw("Horizontal"),
-            Input.GetAxisRaw("Vertical")
-        );
+        //키보드 입력
+        Vector2 keyboardInput = new Vector2(  Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        // 조이스틱 입력
+        //조이스틱 입력
         Vector2 joystickInput = new Vector2(joy.Horizontal, joy.Vertical);
 
-        // 조작 반전 적용
-        //if (insanitySystem?.AreControlsInverted() ?? false)
-        //{
-        //    keyboardInput = -keyboardInput;
-        //    joystickInput = -joystickInput;
-        //}
-
-        // 입력 합산 (키보드 우선, 조이스틱은 아날로그 감도 적용)
+        //입력 합산 (키보드 우선, 조이스틱은 아날로그 감도 적용)
         Vector2 combinedInput = Vector2.zero;
 
         if (keyboardInput != Vector2.zero)
@@ -236,21 +227,21 @@ public class Player : MonoBehaviour
         }
         else
         {
-            combinedInput = joystickInput; // magnitude 유지
+            combinedInput = joystickInput; //magnitude 유지
         }
 
-        // 너무 작으면 정지 처리
+        //너무 작으면 정지 처리
         if (combinedInput.magnitude < 0.01f)
             combinedInput = Vector2.zero;
 
-        // 이동
+        //이동
         rb.linearVelocity = combinedInput * moveSpeed;
 
-        // 스프라이트 방향
+        //스프라이트 방향
         if (combinedInput.x != 0)
             spriteRenderer.flipX = combinedInput.x < 0;
 
-        // 애니메이션
+        //애니메이션
         animator.SetBool("isWalk", combinedInput.magnitude > 0.01f);
     }
 
@@ -381,17 +372,12 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        //if (insanitySystem == null) return;
+        currentHealth = Mathf.Max(0, currentHealth - damage); //현재 체력 변경
+        onHealthChanged?.Invoke(currentHealth, maxHealth); //체력바 UI 변경
 
-        // 광기 수준에 따른 데미지 증가 적용
-        //float finalDamage = damage * insanitySystem.GetDamageMultiplier();
-        float finalDamage = damage;
-        currentHealth = Mathf.Max(0, currentHealth - finalDamage);
-        onHealthChanged?.Invoke(currentHealth, maxHealth);
-
-        if (currentHealth <= 0 && !isDead)
+        if (currentHealth <= 0 && !isDead) //사망 조건문
         {
-            Die();
+            Die(); //사망
         }
     }
 

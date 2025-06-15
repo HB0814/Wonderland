@@ -15,19 +15,8 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters:
-  - guid: 8c4a0c5f9eb2d4e4d8c9c4f5e6b7a8d9
-    name: MasterVolume
-  - guid: 9d4a0c5f9eb2d4e4d8c9c4f5e6b7a8d9
-    name: BGMVolume
-  - guid: 7d4a0c5f9eb2d4e4d8c9c4f5e6b7a8d9
-    name: SFXVolume
-  m_AudioMixerGroupViews:
-  - guids:
-    - 68164602521e3da4180ead7cd0aa53a9
-    - 78164602521e3da4180ead7cd0aa53a9
-    - 88164602521e3da4180ead7cd0aa53a9
-    name: View
+  m_ExposedParameters: []
+  m_AudioMixerGroupViews: []
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
@@ -39,50 +28,13 @@ AudioMixerGroupController:
   m_Name: Master
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 68164602521e3da4180ead7cd0aa53a9
-  m_Children:
-  - {fileID: 24300003}
-  - {fileID: 24300004}
+  m_Children: []
   m_Volume: 4b060c231f33c5149a26830daa23bd7f
   m_Pitch: d331725a2e950eb4a938ec372a7fdfff
   m_Send: 00000000000000000000000000000000
-  m_Effects: []
+  m_Effects:
+  - {fileID: 24400004}
   m_UserColorIndex: 0
-  m_Mute: 0
-  m_Solo: 0
-  m_BypassEffects: 0
---- !u!243 &24300003
-AudioMixerGroupController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BGM
-  m_AudioMixer: {fileID: 24100000}
-  m_GroupID: 78164602521e3da4180ead7cd0aa53a9
-  m_Children: []
-  m_Volume: 4b060c231f33c5149a26830daa23bd7f
-  m_Pitch: d331725a2e950eb4a938ec372a7fdfff
-  m_Send: 00000000000000000000000000000000
-  m_Effects: []
-  m_UserColorIndex: 1
-  m_Mute: 0
-  m_Solo: 0
-  m_BypassEffects: 0
---- !u!243 &24300004
-AudioMixerGroupController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: SFX
-  m_AudioMixer: {fileID: 24100000}
-  m_GroupID: 88164602521e3da4180ead7cd0aa53a9
-  m_Children: []
-  m_Volume: 4b060c231f33c5149a26830daa23bd7f
-  m_Pitch: d331725a2e950eb4a938ec372a7fdfff
-  m_Send: 00000000000000000000000000000000
-  m_Effects: []
-  m_UserColorIndex: 2
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
@@ -109,6 +61,5 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 40b4da72b6ba55b49b6419baf30d50fb
-  m_FloatValues:
-    00000000000000000000000000000000: 0
+  m_FloatValues: {}
   m_TransitionOverrides: {}

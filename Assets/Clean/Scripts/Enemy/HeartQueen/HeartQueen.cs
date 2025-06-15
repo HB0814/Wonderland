@@ -11,17 +11,17 @@ public class HeartQueen : Enemy
         None, //아무것도 아님
         MovedGuillotine, //이동형 길로틴 패턴
         FixedGuillotine, //고정형 길로틴 패턴
-        BlackHeartCardSpawn,
-        BlackCloverCardSpawn,
+        BlackHeartCardSpawn, //하트 병사 소환 패턴
+        BlackCloverCardSpawn, //클로버 병사 소환 패턴
     }
     private BossPattern currentPattern = BossPattern.None;
-    private float patternphase1_Cooltimes = 5f;
-    private float patternTimer = 0f;
-    private bool isPatternExecuting = false;
+    private float patternphase1_Cooltimes = 5f; //패턴 페이즈 1 쿨타임
+    private float patternTimer = 0f; //패턴 타이머
+    private bool isPatternExecuting = false; //패턴 실행 여부
 
-    private Dictionary<BossPattern, float> phase1_Cooltimes = new();
-    private Dictionary<BossPattern, float> phase2_Cooltimes = new();
-    private Dictionary<BossPattern, float> patternTimers = new();
+    private Dictionary<BossPattern, float> phase1_Cooltimes = new(); //페이즈 1 쿨타임
+    private Dictionary<BossPattern, float> phase2_Cooltimes = new(); //페이즈 2 쿨타임
+    private Dictionary<BossPattern, float> patternTimers = new(); //패턴 별 타이머
 
     [SerializeField] Bounds moveBounds; //이동 범위 > 이동 범위를 설정하기 위함
     Vector2 targetPos; //목표위치
@@ -29,10 +29,10 @@ public class HeartQueen : Enemy
     float moveTimer = 0.0f; //이동 타이머
 
     public bool canMove = true; //이동가능 여부 => 이동가능 여부체크를 애니메이션 bool CanMove로 체크
-    bool isDie = false;
+    bool isDie = false; //사망 여부
 
     [Header("보스 특수 속성")]
-    [SerializeField]private Image hpImage;
+    [SerializeField]private Image hpImage; //HP UI 이미지
 
     [Header("길로틴")]
     public MovedGuillotione movedGuillotione; //이동형 길로틴 스크립트
@@ -40,34 +40,37 @@ public class HeartQueen : Enemy
     public GameObject[] fixedWarn; //고정형 길로틴 경고 오브젝트
 
     Camera cam; //카메라
-    [SerializeField] CameraFollow cameraFollow;
+    [SerializeField] CameraFollow cameraFollow; //카메라 스크립트
     WaitForSeconds patternDelay; //패턴 별 딜레이 시간
 
     private new void Start()
     {
         base.Start();
-        UpdateHealthUI();
-        cam = Camera.main;
+        UpdateHealthUI(); //HP UI 업데이트
+        cam = Camera.main; //메인 카메라 설정
 
-        SetBoundsCenter();
+        SetBoundsCenter(); //바운즈 센터 설정
         SetTargetPosition(); //목표위치 설정
-        InitializePhase_phase1_Cooltimes();
+        InitializePhase_phase1_Cooltimes(); //페이즈 1 쿨타임 설정
 
     }
 
     //페이즈, 패턴 별 쿨다운
     private void InitializePhase_phase1_Cooltimes()
     {
+        //페이즈 1 쿨타임
         phase1_Cooltimes[BossPattern.MovedGuillotine] = 4f;
         phase1_Cooltimes[BossPattern.FixedGuillotine] = 6f;
         phase1_Cooltimes[BossPattern.BlackHeartCardSpawn] = 5f;
         phase1_Cooltimes[BossPattern.BlackCloverCardSpawn] = 6f;
 
+        //페이즈 2 쿨타임
         phase2_Cooltimes[BossPattern.MovedGuillotine] = 3f;
         phase2_Cooltimes[BossPattern.FixedGuillotine] = 5f;
         phase2_Cooltimes[BossPattern.BlackHeartCardSpawn] = 4f;
         phase2_Cooltimes[BossPattern.BlackCloverCardSpawn] = 4f;
 
+        //패턴 쿨타임
         foreach (var pattern in phase1_Cooltimes.Keys)
         {
             patternTimers[pattern] = 0f;
@@ -207,7 +210,6 @@ public class HeartQueen : Enemy
 
     private void SetGuillotionePosition()
     {
-        Camera cam = Camera.main; //메인카메라
         Vector2 bottomLeft = cam.ScreenToWorldPoint(new Vector3(0, 0, 0)); //카메라 화면의 좌표값 - 좌측하단
         Vector2 topRight = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)); //카메라 화면의 좌표값 - 우측 상단
 
@@ -239,7 +241,8 @@ public class HeartQueen : Enemy
                 }
 
                 attempts++; //시도 횟수 증가
-                            //길로틴 생성을 너무 많이 시도하지 않도록 하기 위한 조건문
+
+                 //길로틴 생성을 너무 많이 시도하지 않도록 하기 위한 조건문
                 if (attempts > 100)
                 {
                     break;
@@ -392,12 +395,5 @@ public class HeartQueen : Enemy
         isDie = true;
 
         cameraFollow.HeartQueenDeathCameraEffect(transform);
-
-        // 게임 클리어 호출
-        GameOverManager gameOverManager = FindObjectOfType<GameOverManager>();
-        if (gameOverManager != null)
-        {
-            gameOverManager.ShowGameClear();
-        }
     }
 }

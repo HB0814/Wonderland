@@ -6,12 +6,12 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
 
-    [Header("ì˜¤ë””ì˜¤ ì†ŒìŠ¤")]
+    [Header("¿Àµğ¿À ¼Ò½º")]
     public AudioSource bgmSource;
     [SerializeField] private List<AudioSource> sfxSources;
     private int currentSfxIndex = 0;
 
-    [Header("ë¬´ê¸° ê³µê²© ì‚¬ìš´ë“œ í´ë¦½")]
+    [Header("¹«±â ¿Àµğ¿À Å¬¸³")]
     public AudioClip bookAttackSound;
     public AudioClip watchAttackSound;
     public AudioClip teaAttackSound;
@@ -22,21 +22,18 @@ public class SoundManager : MonoBehaviour
     public AudioClip appleAttackSound;
     public AudioClip defaultAttackSound;
 
-    [Header("ë³´ìŠ¤ ê³µê²© ì‚¬ìš´ë“œ í´ë¦½")]
+    [Header("¸ó½ºÅÍ ¿Àµğ¿À Å¬¸³")]
     public AudioClip fixedGuillotione;
     public AudioClip movedGuillotione;
     [SerializeField] private AudioClip enemyHit;
     [SerializeField] private AudioClip enemyDeath;
     [SerializeField] private AudioClip enemyExplosion;
 
-    [Header("ê¸°íƒ€ ì‚¬ìš´ë“œ í´ë¦½")]
+    [Header("±âÅ¸ ¿Àµğ¿À Å¬¸³")]
     [SerializeField] private AudioClip heal;
     [SerializeField] private AudioClip expGem;
     [SerializeField] private AudioClip levelUp;
     [SerializeField] private AudioClip magnet;
-
-    [Header("ì˜¤ë””ì˜¤ ë¯¹ì„œ")]
-    [SerializeField] private AudioMixer audioMixer;
 
     float hitTimer = 0;
     float expTimer = 0;
@@ -48,20 +45,6 @@ public class SoundManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
-
-        // ì˜¤ë””ì˜¤ ì†ŒìŠ¤ë“¤ì˜ ì¶œë ¥ ê·¸ë£¹ ì„¤ì •
-        if (bgmSource != null)
-        {
-            bgmSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("BGM")[0];
-        }
-
-        foreach (var source in sfxSources)
-        {
-            if (source != null)
-            {
-                source.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
-            }
-        }
     }
 
     private void Update()
@@ -167,5 +150,6 @@ public class SoundManager : MonoBehaviour
             source.PlayOneShot(clip);
             currentSfxIndex = (currentSfxIndex + 1) % sfxSources.Count;
         }
+
     }
 }

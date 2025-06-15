@@ -8,7 +8,7 @@ public class KamikazeEnemy : Enemy
     public float explosionMoveSpeed = 3.0f; //폭발 준비 시 이동속도
     public float explosionRange = 1.0f; //폭발  범위
     public float explosionDamage = 50.0f; //폭발 데미지
-    public GameObject explosionEffect; //폭발 이펙트 -> 게임오브젝트 대신 파티클시스템 사용할수도
+    public GameObject explosionEffect; //폭발 이펙트
     public GameObject center; //중앙에 위치한 게임오브젝트
 
     protected override void Update()
@@ -21,12 +21,12 @@ public class KamikazeEnemy : Enemy
         if (dis <= explosionReadyRange && !isReady)
         {
             isReady = true; //폭발 준비 참
-            ExplodeReaby(); //폭발 준비
+            ExplodeReady(); //폭발 준비
         }
     }
 
     //폭발 애니메이션 재생 -> 인보크로 일정 시간 뒤 폭발 -> 폭발 시 데미지
-    private void ExplodeReaby()
+    private void ExplodeReady()
     {
         //폭발 애니메이션 실행
         animator.SetTrigger("isReady"); //애니메이터 트리거 설정
@@ -38,7 +38,6 @@ public class KamikazeEnemy : Enemy
     //폭발
     private void Explode()
     {
-        // 폭발 이펙트 생성 -> 오브젝트 풀링 필요
         if (explosionEffect != null)
         {
             Instantiate(explosionEffect, transform.position, Quaternion.identity); //폭발 파티클 생성

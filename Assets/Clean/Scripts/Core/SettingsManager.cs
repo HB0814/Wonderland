@@ -193,14 +193,7 @@ public class SettingsManager : MonoBehaviour
         masterVolume = Mathf.Clamp01(volume);
         if (audioMixer != null)
         {
-            if (masterVolume <= 0)
-            {
-                audioMixer.SetFloat("MasterVolume", -80f); // -80dB는 거의 무음
-            }
-            else
-            {
-                audioMixer.SetFloat("MasterVolume", Mathf.Log10(masterVolume) * 20);
-            }
+            audioMixer.SetFloat("MasterVolume", Mathf.Log10(masterVolume) * 20);
         }
         PlayerPrefs.SetFloat(MASTER_VOLUME_KEY, masterVolume);
         OnMasterVolumeChanged?.Invoke(masterVolume);
@@ -214,14 +207,7 @@ public class SettingsManager : MonoBehaviour
         bgmVolume = Mathf.Clamp01(volume);
         if (audioMixer != null)
         {
-            if (bgmVolume <= 0)
-            {
-                audioMixer.SetFloat("BGMVolume", -80f);
-            }
-            else
-            {
-                audioMixer.SetFloat("BGMVolume", Mathf.Log10(bgmVolume) * 20);
-            }
+            audioMixer.SetFloat("BGMVolume", Mathf.Log10(bgmVolume) * 20);
         }
         PlayerPrefs.SetFloat(BGM_VOLUME_KEY, bgmVolume);
         OnBGMVolumeChanged?.Invoke(bgmVolume);
@@ -235,14 +221,7 @@ public class SettingsManager : MonoBehaviour
         sfxVolume = Mathf.Clamp01(volume);
         if (audioMixer != null)
         {
-            if (sfxVolume <= 0)
-            {
-                audioMixer.SetFloat("SFXVolume", -80f);
-            }
-            else
-            {
-                audioMixer.SetFloat("SFXVolume", Mathf.Log10(sfxVolume) * 20);
-            }
+            audioMixer.SetFloat("SFXVolume", Mathf.Log10(sfxVolume) * 20);
         }
         PlayerPrefs.SetFloat(SFX_VOLUME_KEY, sfxVolume);
         OnSFXVolumeChanged?.Invoke(sfxVolume);
