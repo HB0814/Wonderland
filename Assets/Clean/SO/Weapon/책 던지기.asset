@@ -48,11 +48,11 @@ MonoBehaviour:
     - 4
     - 4
     size:
-    - 1
-    - 1
-    - 1
-    - 1
-    - 1
+    - 0.3
+    - 0.3
+    - 0.3
+    - 0.3
+    - 0.3
     knockbackForce:
     - 0
     - 0

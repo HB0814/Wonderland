@@ -13,6 +13,7 @@ public class WeaponManager : MonoBehaviour
     public GameObject[] weaponPrefabs; // 사용 가능한 모든 무기 프리팹
 
     private GameObject player;
+    private GameObject center;
     private ObjectPool objectPool;
 
     private void Awake()
@@ -37,6 +38,7 @@ public class WeaponManager : MonoBehaviour
     private void FindPlayer()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        center = player.transform.GetChild(0).gameObject;
         if (player == null)
         {
             Debug.LogError("Player not found in the scene!");
@@ -81,7 +83,7 @@ public class WeaponManager : MonoBehaviour
 
         equippedWeapons.Add(weapon);
         // 무기를 플레이어의 자식으로 설정
-        weapon.transform.SetParent(player.transform);
+        weapon.transform.SetParent(center.transform);
         weapon.transform.localPosition = Vector3.zero;
         return true;
     }

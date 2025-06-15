@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCooldown: 6
+  size: 0.8
   nextAttackTime: 0
   projectilePrefab: {fileID: 0}
   weaponData: {fileID: 0}

@@ -17,7 +17,7 @@ public abstract class WeaponBase : MonoBehaviour
     protected float damage;      // 데미지
     protected float detectionRange; // 탐지 범위
     protected float lifeTime;     // 수명
-    protected float size;         // 크기
+    [SerializeField] protected float size;         // 크기
     protected float speed;        // 투사체 속도
 
     [Header("부가 효과")]

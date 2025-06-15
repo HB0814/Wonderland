@@ -50,29 +50,33 @@ public class TeaSplashWeapon : WeaponBase
         GameObject nearestEnemy = FindNearestEnemy();
         if (nearestEnemy != null)
         {
-            // 적의 방향 계산
-            Vector2 baseDirection = (nearestEnemy.transform.position - transform.position).normalized;
-            float baseAngle = Mathf.Atan2(baseDirection.y, baseDirection.x) * Mathf.Rad2Deg;
 
-            // 투사체 발사
+            Vector2 rawDirection = nearestEnemy.transform.position - transform.position;
+            Vector2 baseDirection = rawDirection.sqrMagnitude > 0.0001f
+                ? rawDirection.normalized
+                : Vector2.right;
+
+            float baseAngle = Mathf.Atan2(baseDirection.y, baseDirection.x) * Mathf.Rad2Deg;
+            if (float.IsNaN(baseAngle)) baseAngle = 0f;
+
             for (int i = 0; i < projectileCount; i++)
             {
-                // 각 투사체의 각도 계산
-                float angleStep = spreadAngle / (projectileCount - 1);
+                float angleStep = projectileCount > 1 ? spreadAngle / (projectileCount - 1) : 0f;
                 float currentAngle = baseAngle - (spreadAngle / 2) + (angleStep * i);
+                if (float.IsNaN(currentAngle)) currentAngle = 0f;
+
                 Vector2 direction = Quaternion.Euler(0, 0, currentAngle) * Vector2.right;
 
-                // 홍차 투사체 생성 및 발사
                 GameObject tea = WeaponManager.Instance.SpawnProjectile(teaPoolTag, transform.position, Quaternion.Euler(0, 0, currentAngle));
                 if (tea != null)
                 {
                     Rigidbody2D rb = tea.GetComponent<Rigidbody2D>();
                     if (rb != null)
                     {
-                        rb.linearVelocity = direction * teaSpeed;
+                        Vector2 velocity = direction * teaSpeed;
+                        rb.linearVelocity = float.IsNaN(velocity.x) || float.IsNaN(velocity.y) ? Vector2.zero : velocity;
                     }
 
-                    // 투사체에 데미지와 넉백 설정
                     Projectile teaProjectile = tea.GetComponent<Projectile>();
                     if (teaProjectile != null)
                     {
@@ -80,9 +84,41 @@ public class TeaSplashWeapon : WeaponBase
                         teaProjectile.DebuffInitialize(knockbackForce, slowForce, slowDuration);
                     }
                 }
+
+                //// 적의 방향 계산
+                //Vector2 baseDirection = (nearestEnemy.transform.position - transform.position).normalized;
+                //float baseAngle = Mathf.Atan2(baseDirection.y, baseDirection.x) * Mathf.Rad2Deg;
+
+                //// 투사체 발사
+                //for (int i = 0; i < projectileCount; i++)
+                //{
+                //    // 각 투사체의 각도 계산
+                //    float angleStep = spreadAngle / (projectileCount - 1);
+                //    float currentAngle = baseAngle - (spreadAngle / 2) + (angleStep * i);
+                //    Vector2 direction = Quaternion.Euler(0, 0, currentAngle) * Vector2.right;
+
+                //    // 홍차 투사체 생성 및 발사
+                //    GameObject tea = WeaponManager.Instance.SpawnProjectile(teaPoolTag, transform.position, Quaternion.Euler(0, 0, currentAngle));
+                //    if (tea != null)
+                //    {
+                //        Rigidbody2D rb = tea.GetComponent<Rigidbody2D>();
+                //        if (rb != null)
+                //        {
+                //            rb.linearVelocity = direction * teaSpeed;
+                //        }
+
+                //        // 투사체에 데미지와 넉백 설정
+                //        Projectile teaProjectile = tea.GetComponent<Projectile>();
+                //        if (teaProjectile != null)
+                //        {
+                //            teaProjectile.BaseInitialize(damage, size, lifeTime, speed);
+                //            teaProjectile.DebuffInitialize(knockbackForce, slowForce, slowDuration);
+                //        }
+                //    }
+                //}
+                nextAttackTime = 0f;
+                SoundManager.Instance?.PlayWeaponSound(weaponData.weaponType);
             }
-            nextAttackTime = 0f;
-            SoundManager.Instance?.PlayWeaponSound(weaponData.weaponType);
         }
     }
 
